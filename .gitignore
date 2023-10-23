@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Assets/Code/IEnemyFactory.cs
+/Assets/Code/EnemyPool.cs
+/Assets/Code/Enemy.cs
+/Assets/Code/Asteroid.cs
+/Library
+/Temp
+/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs
+/Assets/TutorialInfo/Scripts/Readme.cs
+/Assets/TutorialInfo
