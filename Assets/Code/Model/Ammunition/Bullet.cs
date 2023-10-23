@@ -5,7 +5,7 @@ using UnityEngine;
 namespace WORLDGAMEDEVELOPMENT
 {
     [Serializable]
-    internal sealed class Bullet
+    internal sealed class Bullet : AmmunitionView
     {
         [SerializeField, Range(0, 10)] private float _timeDestroy;
 

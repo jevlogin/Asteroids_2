@@ -17,31 +17,17 @@ namespace WORLDGAMEDEVELOPMENT
             var playerInitialization = new PlayerInitialization(playerFactory);
 
             var inputInitialization = new InputInitialization();
-
             _controllers.Add(new InputController(inputInitialization));
 
             var ammunitionFactory = new AmmunitionFactory(_data.AmmunitionData);
             var ammunitionInitialization = new AmmunitionInitialization(ammunitionFactory);
-
-
 
             _controllers.Add(new PlayerController(inputInitialization, playerInitialization, camera));
 
             _controllers.Add(new CameraController(camera.GetComponent<CameraView>(), playerInitialization.PlayerModel.Components.PlayerTransform));
 
 
-            Enemy.CreateAsteroidEnemy(new Health(100.0f, 100.0f));
 
-            IEnemyFactory factory = new AsteroidFactory();
-            factory.Create(new Health(100.0f, 100.0f));
-
-            Enemy.Factory = factory;
-            Enemy.Factory.Create(new Health(100.0f, 100.0f));
-
-            EnemyPool enemyPool = new EnemyPool(5);
-            var enemy = enemyPool.GetEnemy("Asteroid");
-            enemy.transform.position = Vector3.one;
-            enemy.gameObject.SetActive(true);
 
             _controllers.Initialization();
         }

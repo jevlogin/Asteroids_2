@@ -7,8 +7,12 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal struct AmmunitionStruct
     {
-        [SerializeField] private Bullet _bullet;
+        [SerializeField] private int _poolSize;
 
-        internal Bullet Bullet => _bullet;
+        internal int PoolSize => _poolSize;
+        
+        internal Bullet Bullet;
+        internal Pool<Bullet> PoolBullet;
+        internal BulletPool PoolBulletGeneric;
     }
 }

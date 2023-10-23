@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3362d14a17f2cae43aa025eea8880c74, type: 3}
   m_Name: AmmunitionData
   m_EditorClassIdentifier: 
-  _bulletStruct:
-    _bullet:
-      _timeDestroy: 3.09
+  _ammunitionStruct:
+    _poolSize: 1000000
   _settings:
-    _bulletPrefab: {fileID: 4036930183268571887, guid: 62c48c6dfa0bc0647b6c3d21eccff63d, type: 3}
+    _bulletPrefab: {fileID: 352394773893797789, guid: 62c48c6dfa0bc0647b6c3d21eccff63d, type: 3}
+    _nameBullet: Bullet
