@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462abc130ac97324a9a815e78f9bd42e, type: 3}
+  m_Name: PlayerData
+  m_EditorClassIdentifier: 
+  _playerStruct:
+    _speed:
+      _maxSpeed: 30
+      _currentSpeed: 10
+      _acceleration: 23.7
+    _health:
+      _maxHealth: 100
+      _currentHealth: 100
+    _force: 400
+  _playerSettings:
+    _spritePlayer: {fileID: 21300000, guid: 38ceccf2cc1310c4ca6fb20a2bc0ee45, type: 3}
+    _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
+    _materialTrailRenderer: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+    _startColor: {r: 1, g: 0, b: 0, a: 1}
+    _endColor: {r: 0, g: 0, b: 1, a: 1}
+    _startWidth: 0.053
+    _endWidth: 0.155
+    _time: 0.184
+    _offsetVectorTrailrenderer: {x: 0, y: 0}
+    _offsetVectorBullet: {x: -0.125, y: 0.5}

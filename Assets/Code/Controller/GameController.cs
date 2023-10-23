@@ -1,0 +1,65 @@
+using UnityEngine;
+
+
+namespace WORLDGAMEDEVELOPMENT
+{
+    internal sealed class GameController : MonoBehaviour, ICleanup
+    {
+        [SerializeField] private Data _data;
+        private Controllers _controllers;
+
+        private void Start()
+        {
+            Camera camera = Camera.main;
+            _controllers = new Controllers();
+
+            var playerFactory = new PlayerFactory(_data.PlayerData);
+            var playerInitialization = new PlayerInitialization(playerFactory);
+
+            var inputInitialization = new InputInitialization();
+
+            _controllers.Add(new InputController(inputInitialization));
+
+            var ammunitionFactory = new AmmunitionFactory(_data.AmmunitionData);
+            var ammunitionInitialization = new AmmunitionInitialization(ammunitionFactory);
+
+
+
+            _controllers.Add(new PlayerController(inputInitialization, playerInitialization, camera));
+
+            _controllers.Add(new CameraController(camera.GetComponent<CameraView>(), playerInitialization.PlayerModel.Components.PlayerTransform));
+
+
+            Enemy.CreateAsteroidEnemy(new Health(100.0f, 100.0f));
+
+            IEnemyFactory factory = new AsteroidFactory();
+            factory.Create(new Health(100.0f, 100.0f));
+
+            Enemy.Factory = factory;
+            Enemy.Factory.Create(new Health(100.0f, 100.0f));
+
+            EnemyPool enemyPool = new EnemyPool(5);
+            var enemy = enemyPool.GetEnemy("Asteroid");
+            enemy.transform.position = Vector3.one;
+            enemy.gameObject.SetActive(true);
+
+            _controllers.Initialization();
+        }
+
+
+        private void Update()
+        {
+            _controllers.Execute(Time.deltaTime);
+        }
+
+        private void LateUpdate()
+        {
+            _controllers.LateExecute(Time.deltaTime);
+        }
+
+        public void Cleanup()
+        {
+            _controllers.Cleanup();
+        }
+    }
+}
