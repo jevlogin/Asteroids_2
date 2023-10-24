@@ -65,6 +65,7 @@
     <Compile Include="Assets\Code\View\Player\PlayerView.cs" />
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionSettings.cs" />
     <Compile Include="Assets\Code\Controller\CameraController.cs" />
+    <Compile Include="Assets\Code\Helper\AmmunitionType.cs" />
     <Compile Include="Assets\Code\IEnemyFactory.cs" />
     <Compile Include="Assets\Code\Controller\PlayerController.cs" />
     <Compile Include="Assets\Code\Helper\Extentions.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets\Code\View\Ammunition\AmmunitionView.cs" />
     <Compile Include="Assets\Code\Asteroid.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Code\Controller\PlayerShooterController.cs" />
     <Compile Include="Assets\Code\Data\Data.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
     <Compile Include="Assets\Code\Interface\IMove.cs" />

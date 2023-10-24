@@ -8,11 +8,16 @@ namespace WORLDGAMEDEVELOPMENT
     internal struct AmmunitionStruct
     {
         [SerializeField] private int _poolSize;
+        [SerializeField] private float _refireTimer;
+        [SerializeField] private AmmunitionType _typeAmmunition;
 
-        internal int PoolSize => _poolSize;
-        
+
         internal Bullet Bullet;
         internal Pool<Bullet> PoolBullet;
         internal BulletPool PoolBulletGeneric;
+
+        internal AmmunitionType AmmunitionType => _typeAmmunition;
+        internal float RefireTimer { get => _refireTimer; private set => _refireTimer = value; }
+        internal readonly int PoolSize => _poolSize;
     }
 }

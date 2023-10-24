@@ -21,7 +21,7 @@ namespace WORLDGAMEDEVELOPMENT
                 var components = new AmmunitionComponents();
                 var settings = new AmmunitionSettings();
 
-                ammunitionStruct.Bullet = Object.Instantiate(_ammunitionData.AmmunitionSettings.BulletPrefab);
+                ammunitionStruct.Bullet = Object.Instantiate(_ammunitionData.AmmunitionSettings.BulletPrefab) as Bullet;
                 ammunitionStruct.Bullet.name = _ammunitionData.AmmunitionSettings.NameBullet;
 
                 ammunitionStruct.PoolBullet = new Pool<Bullet>(ammunitionStruct.Bullet, ammunitionStruct.PoolSize);

@@ -26,7 +26,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _controllers.Add(new CameraController(camera.GetComponent<CameraView>(), playerInitialization.PlayerModel.Components.PlayerTransform));
 
-
+            _controllers.Add(new PlayerShooterController(inputInitialization.GetInputMouse(), playerInitialization, ammunitionInitialization.AmmunitionFactoryModel));
 
 
             _controllers.Initialization();

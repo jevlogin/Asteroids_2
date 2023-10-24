@@ -10,5 +10,7 @@
             _ammunitionFactory = ammunitionFactory;
             _ammunitionFactoryModel = ammunitionFactory.CreateAmmunitionModel();
         }
+
+        internal AmmunitionModel AmmunitionFactoryModel => _ammunitionFactoryModel;
     }
 }

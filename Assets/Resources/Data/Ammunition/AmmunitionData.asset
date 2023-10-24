@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: AmmunitionData
   m_EditorClassIdentifier: 
   _ammunitionStruct:
-    _poolSize: 1000000
+    _poolSize: 10
+    _refireTimer: 0.3
   _settings:
-    _bulletPrefab: {fileID: 352394773893797789, guid: 62c48c6dfa0bc0647b6c3d21eccff63d, type: 3}
+    _bulletPrefab: {fileID: 4004462262310059156, guid: 62c48c6dfa0bc0647b6c3d21eccff63d, type: 3}
     _nameBullet: Bullet
