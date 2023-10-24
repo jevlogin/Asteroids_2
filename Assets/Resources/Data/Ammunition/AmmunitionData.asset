@@ -15,6 +15,7 @@ MonoBehaviour:
   _ammunitionStruct:
     _poolSize: 10
     _refireTimer: 0.3
+    _typeAmmunition: 0
   _settings:
     _bulletPrefab: {fileID: 4004462262310059156, guid: 62c48c6dfa0bc0647b6c3d21eccff63d, type: 3}
     _nameBullet: Bullet
