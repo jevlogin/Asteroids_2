@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +15,6 @@ namespace WORLDGAMEDEVELOPMENT
         private float _fireTimer;
         public float MoveSpeed = 10.0f;
         private List<Bullet> _listBullets;
-        private readonly float _maxLifeTime = 5.0f;
         private Dictionary<int, Rigidbody2D> _rigidbodyBullets;
 
 
@@ -71,7 +68,10 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (_rigidbodyBullets.TryGetValue(bullet.GetInstanceID(), out var rigidbody))
             {
-                rigidbody.velocity = rigidbody.transform.up * MoveSpeed;
+                if (rigidbody.velocity.magnitude <= 0.1f)
+                {
+                    rigidbody.velocity = rigidbody.transform.up * MoveSpeed;
+                }
             }
             else
             {

@@ -9,8 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{F84AA790-555F-F23C-27F5-55AC447F06D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -84,6 +83,7 @@
     <Compile Include="Assets\Code\Initialization\InputInitialization.cs" />
     <Compile Include="Assets\Code\View\Ammunition\AmmunitionView.cs" />
     <Compile Include="Assets\Code\Asteroid.cs" />
+    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Code\Controller\PlayerShooterController.cs" />
     <Compile Include="Assets\Code\Data\Data.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
