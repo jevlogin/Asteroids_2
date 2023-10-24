@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,17 +6,19 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class PlayerShooterController : IController
+    internal sealed class PlayerShooterController : IExecute
     {
         private IUserInputBool _userInputMouse;
         private PlayerInitialization _playerInitialization;
         private AmmunitionModel _ammunitionFactoryModel;
         private readonly Transform _barrelTransform;
         private bool _valueChange;
-        private float _refireTimer = 0.3f;
+        private float _refireTimer;
         private float _fireTimer;
-        public float MoveSpeed = 5.0f;
+        public float MoveSpeed = 10.0f;
+        private List<Bullet> _listBullets;
         private readonly float _maxLifeTime = 5.0f;
+        private Dictionary<int, Rigidbody2D> _rigidbodyBullets;
 
 
         public PlayerShooterController(IUserInputBool userInputBool, PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel)
@@ -25,8 +28,78 @@ namespace WORLDGAMEDEVELOPMENT
             _ammunitionFactoryModel = ammunitionFactoryModel;
 
             _barrelTransform = _playerInitialization.PlayerModel.Components.BarrelTransform;
-
+            _refireTimer = ammunitionFactoryModel.AmmunitionStruct.RefireTimer;
             _fireTimer = _refireTimer;
+            _listBullets = new List<Bullet>();
+            _rigidbodyBullets = new Dictionary<int, Rigidbody2D>();
+
+            _userInputMouse.OnInputBoolOnChange += _OnInputOnChangeMouse;
+        }
+
+        private void _OnInputOnChangeMouse(bool value)
+        {
+            _valueChange = value;
+        }
+
+        public void Execute(float deltatime)
+        {
+            _fireTimer += deltatime;
+            BulletShoot();
+            BulletControl(deltatime);
+        }
+
+        private void BulletControl(float deltatime)
+        {
+            for (int i = 0; i < _listBullets.Count; i++)
+            {
+                if (_listBullets[i].isActiveAndEnabled)
+                {
+                    MoveConcreteBullet(deltatime, _listBullets[i]);
+
+                    _listBullets[i].LifeTime += deltatime;
+                    if (_listBullets[i].LifeTime > _listBullets[i].MaxLifeTimeOutsideThePool)
+                    {
+                        _listBullets[i].LifeTime = 0.0f;
+                        _ammunitionFactoryModel.AmmunitionStruct.PoolBulletGeneric.ReturnToPool(_listBullets[i]);
+                        _listBullets.RemoveAt(i);
+                    }
+                }
+            }
+        }
+
+        private void MoveConcreteBullet(float deltatime, Bullet bullet)
+        {
+            if (_rigidbodyBullets.TryGetValue(bullet.GetInstanceID(), out var rigidbody))
+            {
+                rigidbody.velocity = rigidbody.transform.up * MoveSpeed;
+            }
+            else
+            {
+                bullet.transform.Translate(Vector2.up * MoveSpeed * deltatime);
+            }
+        }
+
+        private void BulletShoot()
+        {
+            if (_fireTimer >= _refireTimer)
+            {
+                if (_valueChange)
+                {
+                    _fireTimer = 0;
+                    _listBullets.Add(GetBullet());
+                }
+            }
+        }
+
+        private Bullet GetBullet()
+        {
+            var bullet = _ammunitionFactoryModel.AmmunitionStruct.PoolBulletGeneric.Get();
+            bullet.transform.SetParent(null);
+            bullet.transform.localPosition = _barrelTransform.position;
+            bullet.transform.rotation = _barrelTransform.rotation;
+            bullet.gameObject.SetActive(true);
+            _rigidbodyBullets[bullet.GetInstanceID()] = bullet.gameObject.GetOrAddComponent<Rigidbody2D>();
+            return bullet;
         }
     }
 }

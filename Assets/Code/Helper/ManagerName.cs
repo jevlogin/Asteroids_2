@@ -7,5 +7,6 @@ namespace WORLDGAMEDEVELOPMENT
         public const string BULLET = "Bullet";
         public const string POOL_ASTEROID = "[Pool_Asteroid]";
         public const string POOL_BULLET = "[Pool_Bullet]";
+        public const string POOL = "[Pool]";
     }
 }
