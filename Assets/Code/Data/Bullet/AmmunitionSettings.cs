@@ -8,7 +8,9 @@ namespace WORLDGAMEDEVELOPMENT
     internal sealed class AmmunitionSettings
     {
         [SerializeField] private AmmunitionView _bulletPrefab;
+        [SerializeField] private string _nameBullet;
 
+        public string NameBullet  => _nameBullet;
         internal AmmunitionView BulletPrefab  => _bulletPrefab;
     }
 }
