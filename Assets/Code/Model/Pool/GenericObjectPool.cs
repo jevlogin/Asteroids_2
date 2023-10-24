@@ -76,16 +76,16 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void AddObjects(int count)
         {
-            string name = "ObjectPool";
+            string name = ManagerName.POOL;
 
             switch (Pool.Prefab.GetType().Name)
             {
                 case ManagerName.BULLET:
-                    _transformPool = new GameObject(ManagerName.POOL_BULLET).transform;
+                    _transformPool = _transformPool ?? new GameObject(ManagerName.POOL_BULLET).transform;
                     name = ManagerName.BULLET;
                     break;
                 case ManagerName.ASTEROID:
-                    _transformPool = new GameObject(ManagerName.POOL_ASTEROID).transform;
+                    _transformPool = _transformPool ?? new GameObject(ManagerName.POOL_ASTEROID).transform;
                     name = ManagerName.ASTEROID;
                     break;
                 default:

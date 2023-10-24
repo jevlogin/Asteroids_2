@@ -7,9 +7,16 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal sealed class Bullet : AmmunitionView
     {
-        [SerializeField, Range(0, 10)] private float _timeDestroy;
-        
+        [SerializeField, Range(0, 10)] private float _maxLifetimeOutsideThePool;
 
-        public float TimeDestroy { get => _timeDestroy; private set => _timeDestroy = value; }
+        public float LifeTime { get; set; } = 0.0f;
+
+        public float MaxLifeTimeOutsideThePool
+        {
+            get
+            {
+                return _maxLifetimeOutsideThePool;
+            }
+        }
     }
 }
