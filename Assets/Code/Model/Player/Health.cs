@@ -11,7 +11,7 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField, Range(0, 100)] private float _currentHealth;
 
         public float MaxHealth { get => _maxHealth; }
-        public float CurrentHealth { get => (float)_currentHealth; }
+        public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
 
         public Health(float maxHealth, float currentHealth)
         {

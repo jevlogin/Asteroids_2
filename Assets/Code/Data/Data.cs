@@ -10,9 +10,32 @@ namespace WORLDGAMEDEVELOPMENT
     {
         [SerializeField] private string _playerDataPath;
         [SerializeField] private string _ammunitionDataPath;
+        [SerializeField] private string _enemyDataPath;
 
         private PlayerData _playerData;
         private AmmunitionData _ammunitionData;
+        private EnemyData _enemyData;
+
+
+        public EnemyData EnemyData
+        {
+            get
+            {
+                if (_enemyData == null)
+                {
+                    _enemyData = Resources.Load<EnemyData>(Path.Combine(ManagerPath.DATA, _enemyDataPath));
+                    if (_enemyData == null)
+                    {
+                        _enemyData = Resources.Load<EnemyData>(Path.Combine(_enemyDataPath));
+                    }
+                    if (_enemyData == null)
+                    {
+                        AssetNotFound(nameof(_enemyData));
+                    }
+                }
+                return _enemyData;
+            }
+        }
 
         public PlayerData PlayerData
         {

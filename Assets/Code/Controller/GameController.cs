@@ -22,11 +22,15 @@ namespace WORLDGAMEDEVELOPMENT
             var ammunitionFactory = new AmmunitionFactory(_data.AmmunitionData);
             var ammunitionInitialization = new AmmunitionInitialization(ammunitionFactory);
 
+            var enemyFactory = new EnemyFactory(_data.EnemyData);
+
             _controllers.Add(new PlayerController(inputInitialization, playerInitialization, camera));
 
             _controllers.Add(new CameraController(camera.GetComponent<CameraView>(), playerInitialization.PlayerModel.Components.PlayerTransform));
 
             _controllers.Add(new PlayerShooterController(inputInitialization.GetInputMouse(), playerInitialization, ammunitionInitialization.AmmunitionFactoryModel));
+
+
 
 
             _controllers.Initialization();

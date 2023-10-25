@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6502671850912735528}
   - component: {fileID: 7110455991844544618}
+  - component: {fileID: -5316802571989964626}
   - component: {fileID: 7739711996125240297}
   m_Layer: 0
   m_Name: Asteroid
@@ -85,6 +86,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &-5316802571989964626
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526031691182139402}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.3545
 --- !u!114 &7739711996125240297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,3 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20877b88f9d79a540a20d52a19fb66fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health:
+    _maxHealth: 44
+    _currentHealth: 32.7
+  _type: 1

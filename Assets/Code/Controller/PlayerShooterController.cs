@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class PlayerShooterController : IExecute
+    internal sealed class PlayerShooterController : IExecute, ICleanup
     {
         private IUserInputBool _userInputMouse;
         private PlayerInitialization _playerInitialization;
@@ -57,6 +57,7 @@ namespace WORLDGAMEDEVELOPMENT
                     if (_listBullets[i].LifeTime > _listBullets[i].MaxLifeTimeOutsideThePool)
                     {
                         _listBullets[i].LifeTime = 0.0f;
+                        _listBullets[i].OnCollisionEnterDetect -= Bullet_OnCollisionEnterDetect;
                         _ammunitionFactoryModel.AmmunitionStruct.PoolBulletGeneric.ReturnToPool(_listBullets[i]);
                         _listBullets.RemoveAt(i);
                     }
@@ -86,9 +87,17 @@ namespace WORLDGAMEDEVELOPMENT
                 if (_valueChange)
                 {
                     _fireTimer = 0;
-                    _listBullets.Add(GetBullet());
+                    var bullet = GetBullet();
+                    _listBullets.Add(bullet);
+                    bullet.OnCollisionEnterDetect += Bullet_OnCollisionEnterDetect;
                 }
             }
+        }
+
+        private void Bullet_OnCollisionEnterDetect(Collider2D colliderEnemy)
+        {
+            Debug.Log($"Произошло столкновение с объектом - {colliderEnemy}");
+
         }
 
         private Bullet GetBullet()
@@ -100,6 +109,14 @@ namespace WORLDGAMEDEVELOPMENT
             bullet.gameObject.SetActive(true);
             _rigidbodyBullets[bullet.GetInstanceID()] = bullet.gameObject.GetOrAddComponent<Rigidbody2D>();
             return bullet;
+        }
+
+        public void Cleanup()
+        {
+            for (int i = 0; i < _listBullets.Count; i++)
+            {
+                _listBullets[i].OnCollisionEnterDetect -= Bullet_OnCollisionEnterDetect;
+            }
         }
     }
 }
