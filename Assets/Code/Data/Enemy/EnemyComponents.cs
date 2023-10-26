@@ -8,7 +8,7 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal class EnemyComponents
     {
-        internal Dictionary<int, Rigidbody2D> _rigidbodiesEnemies = new();
-        internal Dictionary<int, Action<Collider2D>> _onCollisionChanges = new();
+        internal Dictionary<int, Rigidbody2D> RigidbodiesEnemies = new();
+        internal Dictionary<int, Collider2D> ColliderEnemies = new();
     }
 }

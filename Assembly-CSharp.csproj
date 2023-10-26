@@ -59,36 +59,36 @@
     <Analyzer Include="D:\Program Files\Unity Hub\Editor\2022.3.11f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Code\Controller\EnemyFactory.cs" />
+    <Compile Include="Assets\Code\View\Enemy\EnemyView.cs" />
     <Compile Include="Assets\Code\Initialization\PlayerInitialization.cs" />
     <Compile Include="Assets\Code\Helper\AxisManager.cs" />
     <Compile Include="Assets\Code\Controller\RotationController.cs" />
     <Compile Include="Assets\Code\View\Player\PlayerView.cs" />
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionSettings.cs" />
+    <Compile Include="Assets\Code\Model\Enemy\EnemyModel.cs" />
     <Compile Include="Assets\Code\Controller\CameraController.cs" />
     <Compile Include="Assets\Code\Helper\AmmunitionType.cs" />
-    <Compile Include="Assets\Code\IEnemyFactory.cs" />
+    <Compile Include="Assets\Code\Model\Pool\EmptyPool.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyComponents.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyStruct.cs" />
     <Compile Include="Assets\Code\Controller\PlayerController.cs" />
     <Compile Include="Assets\Code\Helper\Extentions.cs" />
-    <Compile Include="Assets\Code\EnemyPool.cs" />
+    <Compile Include="Assets\Code\Factory\EnemyFactory.cs" />
+    <Compile Include="Assets\Code\Model\Enemy\Asteroid.cs" />
     <Compile Include="Assets\Code\Model\Player\PlayerModel.cs" />
     <Compile Include="Assets\Code\Model\Pool\BulletPool.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputMouse.cs" />
     <Compile Include="Assets\Code\Factory\PlayerFactory.cs" />
     <Compile Include="Assets\Code\Controller\GameController.cs" />
     <Compile Include="Assets\Code\View\Camera\CameraView.cs" />
+    <Compile Include="Assets\Code\Initialization\EnemyInitialization.cs" />
     <Compile Include="Assets\Code\Controller\MoveController.cs" />
-    <Compile Include="Assets\Code\Factory\AsteroidFactory.cs" />
     <Compile Include="Assets\Code\Model\Ammunition\Bullet.cs" />
     <Compile Include="Assets\Code\Interface\IDamageable.cs" />
     <Compile Include="Assets\Code\Initialization\InputInitialization.cs" />
     <Compile Include="Assets\Code\View\Ammunition\AmmunitionView.cs" />
-    <Compile Include="Assets\Code\Asteroid.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Code\Controller\PlayerShooterController.cs" />
-    <Compile Include="Assets\Code\Data\Enemy\AsteroidPool.cs" />
     <Compile Include="Assets\Code\Data\Data.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
     <Compile Include="Assets\Code\Interface\IMove.cs" />
@@ -97,19 +97,20 @@
     <Compile Include="Assets\Code\Interface\IRotation.cs" />
     <Compile Include="Assets\Code\Interface\IFixedExecute.cs" />
     <Compile Include="Assets\Code\Model\Pool\Pool.cs" />
-    <Compile Include="Assets\Code\Controller\AmmunitionFactory.cs" />
+    <Compile Include="Assets\Code\Model\Pool\AsteroidPool.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemySettingsGroup.cs" />
-    <Compile Include="Assets\Code\EnemyView.cs" />
     <Compile Include="Assets\Code\Interface\IUserInputProxy.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputHorizontal.cs" />
     <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
     <Compile Include="Assets\Code\Helper\ManagerName.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerStruct.cs" />
     <Compile Include="Assets\Code\Interface\IExecute.cs" />
+    <Compile Include="Assets\Code\Controller\EnemyController.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerSettings.cs" />
     <Compile Include="Assets\Code\Interface\ICollisionDetect.cs" />
     <Compile Include="Assets\Code\Interface\IInitialization.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyData.cs" />
+    <Compile Include="Assets\Code\Interface\ICleanup.cs" />
     <Compile Include="Assets\Code\Model\Player\Speed.cs" />
     <Compile Include="Assets\Code\Helper\ManagerPath.cs" />
     <Compile Include="Assets\Code\Interface\ILateExecute.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionData.cs" />
     <Compile Include="Assets\Code\Interface\IController.cs" />
     <Compile Include="Assets\Code\Controller\InputController.cs" />
-    <Compile Include="Assets\Code\Controller\ICleanup.cs" />
+    <Compile Include="Assets\Code\Factory\AmmunitionFactory.cs" />
     <Compile Include="Assets\Code\Helper\AsteroidType.cs" />
   </ItemGroup>
   <ItemGroup>

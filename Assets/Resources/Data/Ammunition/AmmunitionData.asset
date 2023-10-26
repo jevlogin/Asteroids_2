@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ammunitionStruct:
     _poolSize: 3
-    _refireTimer: 0.01
+    _refireTimer: 0.2
     _typeAmmunition: 0
   _settings:
     _bulletPrefab: {fileID: 6297243637823816585, guid: 62c48c6dfa0bc0647b6c3d21eccff63d, type: 3}

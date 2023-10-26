@@ -18,7 +18,8 @@ namespace WORLDGAMEDEVELOPMENT
 
         #region Properties
 
-        internal Pool<T> Pool { get => _pool; private set => _pool = value; } 
+        internal int PoolSize => _objects.Count;
+        public Pool<T> Pool { get => _pool; protected set => _pool = value; }
 
         #endregion
 
@@ -29,11 +30,15 @@ namespace WORLDGAMEDEVELOPMENT
             Pool = pool;
             _transformParent = transformParent;
 
-            if (_transformParent == null)
+            if (_transformParent == null && pool != null)
             {
                 _transformParent = new GameObject(nameof(Pool.Prefab)).transform;
             }
-        } 
+            else
+            {
+                return;
+            }
+        }
 
         #endregion
 
@@ -74,25 +79,19 @@ namespace WORLDGAMEDEVELOPMENT
             ReturnToPool(obj);
         }
 
+        protected void ExpandPool(Pool<T> pool, T expandObject)
+        {
+            Pool = pool;
+
+            AddObjects(Pool.Size);
+            ReturnToPool(expandObject);
+        }
+
         private void AddObjects(int count)
         {
-            string name = ManagerName.POOL;
+            string name = Pool.Prefab.name;
 
-            switch (Pool.Prefab.GetType().Name)
-            {
-                case ManagerName.BULLET:
-                    _transformPool = _transformPool ?? new GameObject(ManagerName.POOL_BULLET).transform;
-                    name = ManagerName.BULLET;
-                    break;
-                case ManagerName.ASTEROID:
-                    _transformPool = _transformPool ?? new GameObject(ManagerName.POOL_ASTEROID).transform;
-                    name = ManagerName.ASTEROID;
-                    break;
-                default:
-                    throw new System.ArgumentException("Нет такого типа", nameof(T));
-            }
-
-            _transformPool.SetParent(_transformParent);
+            SetParentTransformPool();
 
             for (int i = 0; i < count; i++)
             {
@@ -106,13 +105,31 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
+        private void SetParentTransformPool()
+        {
+            if (_transformPool == null)
+            {
+                switch (Pool.Prefab.GetType().Name)
+                {
+                    case ManagerName.BULLET:
+                        _transformPool = new GameObject(ManagerName.POOL_BULLET).transform;
+                        break;
+                    case ManagerName.ASTEROID:
+                        _transformPool = new GameObject(ManagerName.POOL_ASTEROID).transform;
+                        break;
+                    default:
+                        throw new System.ArgumentException("Нет такого типа", nameof(T));
+                }
+                _transformPool.SetParent(_transformParent);
+            }
+        }
+
         public void ReturnToPool(T objectToReturn)
         {
             objectToReturn.gameObject.SetActive(false);
             objectToReturn.transform.position = Vector3.zero;
             objectToReturn.transform.rotation = Quaternion.identity;
             objectToReturn.transform.SetParent(_transformPool);
-
             _objects.Enqueue(objectToReturn);
         }
 

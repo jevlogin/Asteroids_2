@@ -13,12 +13,26 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   _enemySettings:
-    enemies:
+    Enemies:
     - Type: 1
-      sprite: {fileID: 21300000, guid: 264f9fc257019d74a92ea3508776b6f5, type: 3}
-      defaultDamage: 15
-      speed: 5
+      Sprite: {fileID: 21300000, guid: 264f9fc257019d74a92ea3508776b6f5, type: 3}
+      DefaultDamage: 15
+      Speed:
+        _maxSpeed: 20
+        _currentSpeed: 10
+        _acceleration: 0
+      Health:
+        _maxHealth: 100
+        _currentHealth: 50
+      PoolSize: 3
     - Type: 2
-      sprite: {fileID: 21300000, guid: d6220a8269060814b86f9a0969bca95d, type: 3}
-      defaultDamage: 10
-      speed: 10
+      Sprite: {fileID: 21300000, guid: d6220a8269060814b86f9a0969bca95d, type: 3}
+      DefaultDamage: 10
+      Speed:
+        _maxSpeed: 30
+        _currentSpeed: 15
+        _acceleration: 0
+      Health:
+        _maxHealth: 100
+        _currentHealth: 30
+      PoolSize: 3

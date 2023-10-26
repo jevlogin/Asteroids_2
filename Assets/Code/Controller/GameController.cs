@@ -23,6 +23,7 @@ namespace WORLDGAMEDEVELOPMENT
             var ammunitionInitialization = new AmmunitionInitialization(ammunitionFactory);
 
             var enemyFactory = new EnemyFactory(_data.EnemyData);
+            var enemyInitialization = new EnemyInitialization(enemyFactory);
 
             _controllers.Add(new PlayerController(inputInitialization, playerInitialization, camera));
 
@@ -30,8 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _controllers.Add(new PlayerShooterController(inputInitialization.GetInputMouse(), playerInitialization, ammunitionInitialization.AmmunitionFactoryModel));
 
-
-
+            _controllers.Add(new EnemyController(enemyInitialization.Model));
 
             _controllers.Initialization();
         }

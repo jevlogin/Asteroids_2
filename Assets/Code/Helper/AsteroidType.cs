@@ -1,9 +1,8 @@
 namespace WORLDGAMEDEVELOPMENT
 {
-    public enum AsteroidType
+    internal enum AsteroidType
     {
-        None = 0,
-        TypeOne = 1,
-        TypeTwo = 2,
+        Meteorite = 1,
+        Cometa = 2,
     }
 }

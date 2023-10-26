@@ -7,6 +7,6 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal class EnemySettings
     {
-        public List<EnemySettingsGroup> enemies = new();
+        public List<EnemySettingsGroup> Enemies = new();
     }
 }

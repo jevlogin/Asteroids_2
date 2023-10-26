@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -11,5 +9,9 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private EnemyStruct _enemyStruct;
         [SerializeField] private EnemyComponents _enemyComponents;
         [SerializeField] private EnemySettings _enemySettings;
+
+        internal EnemyStruct EnemyStruct => _enemyStruct; 
+        internal EnemyComponents EnemyComponents => _enemyComponents;
+        internal EnemySettings EnemySettings => _enemySettings;
     }
 }
