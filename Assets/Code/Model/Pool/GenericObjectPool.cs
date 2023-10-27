@@ -9,9 +9,10 @@ namespace WORLDGAMEDEVELOPMENT
         #region Fields
 
         private Queue<T> _objects = new Queue<T>();
-        private Pool<T> _pool;
+        [SerializeField] private Pool<T> _pool;
         private Transform _transformParent;
         private Transform _transformPool;
+        internal event System.Action<List<T>, T> OnAddedPool;
 
         #endregion
 
@@ -20,6 +21,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal int PoolSize => _objects.Count;
         public Pool<T> Pool { get => _pool; protected set => _pool = value; }
+        internal Transform TransformParent => _transformParent;
 
         #endregion
 
@@ -79,14 +81,6 @@ namespace WORLDGAMEDEVELOPMENT
             ReturnToPool(obj);
         }
 
-        protected void ExpandPool(Pool<T> pool, T expandObject)
-        {
-            Pool = pool;
-
-            AddObjects(Pool.Size);
-            ReturnToPool(expandObject);
-        }
-
         private void AddObjects(int count)
         {
             string name = Pool.Prefab.name;
@@ -103,6 +97,8 @@ namespace WORLDGAMEDEVELOPMENT
 
                 _objects.Enqueue(newObject);
             }
+
+            OnAddedPool?.Invoke(GetList(), Pool.Prefab);
         }
 
         private void SetParentTransformPool()
@@ -115,7 +111,7 @@ namespace WORLDGAMEDEVELOPMENT
                         _transformPool = new GameObject(ManagerName.POOL_BULLET).transform;
                         break;
                     case ManagerName.ASTEROID:
-                        _transformPool = new GameObject(ManagerName.POOL_ASTEROID).transform;
+                        _transformPool = new GameObject($"[Pool_{Pool.Prefab.name}]").transform;
                         break;
                     default:
                         throw new System.ArgumentException("Нет такого типа", nameof(T));

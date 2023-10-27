@@ -10,5 +10,6 @@ namespace WORLDGAMEDEVELOPMENT
     {
         internal Dictionary<int, Rigidbody2D> RigidbodiesEnemies = new();
         internal Dictionary<int, Collider2D> ColliderEnemies = new();
+        internal List<EnemyView> ListEnemyViews = new();
     }
 }

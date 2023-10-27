@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class PlayerShooterController : IExecute, ICleanup
+    internal sealed class PlayerShooterController : IExecute
     {
         private IUserInputBool _userInputMouse;
         private PlayerInitialization _playerInitialization;
@@ -26,7 +26,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _barrelTransform = _playerInitialization.PlayerModel.Components.BarrelTransform;
             _refireTimer = ammunitionFactoryModel.AmmunitionStruct.RefireTimer;
-            _fireTimer = _refireTimer;
+            _fireTimer = 0.0f;
             _listBullets = new List<Bullet>();
             _rigidbodyBullets = new Dictionary<int, Rigidbody2D>();
 
@@ -89,7 +89,6 @@ namespace WORLDGAMEDEVELOPMENT
                     _fireTimer = 0;
                     var bullet = GetBullet();
                     _listBullets.Add(bullet);
-                    bullet.OnCollisionEnterDetect += Bullet_OnCollisionEnterDetect;
                 }
             }
         }
@@ -109,14 +108,6 @@ namespace WORLDGAMEDEVELOPMENT
             bullet.gameObject.SetActive(true);
             _rigidbodyBullets[bullet.GetInstanceID()] = bullet.gameObject.GetOrAddComponent<Rigidbody2D>();
             return bullet;
-        }
-
-        public void Cleanup()
-        {
-            for (int i = 0; i < _listBullets.Count; i++)
-            {
-                _listBullets[i].OnCollisionEnterDetect -= Bullet_OnCollisionEnterDetect;
-            }
         }
     }
 }

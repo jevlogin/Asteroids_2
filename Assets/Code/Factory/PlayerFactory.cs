@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 
 namespace WORLDGAMEDEVELOPMENT
@@ -24,27 +25,29 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (_playerModel == null)
             {
-                var playerStruct = _playerData.PlayerStruct;
+                var playerStruct = new PlayerStruct();
                 var playerComponents = new PlayerComponents();
                 var playerSettings = new PlayerSettings();
 
-                var spawnPlayer = CreatePlayer("Player");
-                spawnPlayer.tag = "Player";
+                playerStruct.Player = CreatePlayer("Player");
+                playerStruct.Player.tag = "Player";
+
+                playerStruct.Player.Health = new Health(_playerData.PlayerSettings.Health);
+                playerStruct.Player.Speed = new Speed(_playerData.PlayerSettings.Speed);
+                playerStruct.Player.Damage = _playerData.PlayerSettings.Damage;
+                playerStruct.Player.Force = _playerData.PlayerSettings.Force;
 
                 var barrel = new GameObject("Barrel");
                 playerComponents.BarrelTransform = barrel.transform;
-                barrel.transform.SetParent(spawnPlayer.transform);
-                
+                barrel.transform.SetParent(playerStruct.Player.transform);
                 barrel.transform.localPosition = new Vector2(_playerData.PlayerSettings.OffsetVectorBurel.x, 
                                                         _playerData.PlayerSettings.OffsetVectorBurel.y);
 
-                
-
-                var particles = Object.Instantiate(_playerData.PlayerSettings.ParticleSystem, spawnPlayer.transform);
+                var particles = Object.Instantiate(_playerData.PlayerSettings.ParticleSystem, playerStruct.Player.transform);
                 particles.name = _playerData.PlayerSettings.ParticleSystem.name;
 
-                playerComponents.PlayerTransform = spawnPlayer.transform;
-                playerComponents.PlayerView = spawnPlayer;
+                playerComponents.PlayerTransform = playerStruct.Player.transform;
+                playerComponents.PlayerView = playerStruct.Player;
                 
                 _playerModel = new PlayerModel(playerStruct, playerComponents, playerSettings);
             }
@@ -52,12 +55,12 @@ namespace WORLDGAMEDEVELOPMENT
             return _playerModel;
         }
 
-        private PlayerView CreatePlayer(string name)
+        private Player CreatePlayer(string name)
         {
             var player = new GameObject(name)
                 .AddSprite(_playerData.PlayerSettings.SpritePlayer)
                 .AddCircleCollider2D()
-                .AddComponent<PlayerView>();
+                .AddComponent<Player>();
 
             return player;
         }

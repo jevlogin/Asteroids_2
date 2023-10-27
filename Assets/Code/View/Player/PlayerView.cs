@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class PlayerView : MonoBehaviour, ICollisionDetect
+    internal class PlayerView : MonoBehaviour, ICollisionDetect
     {
         public event Action<Collider2D> OnCollisionEnterDetect = delegate(Collider2D collider2D) { };
 

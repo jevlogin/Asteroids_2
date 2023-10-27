@@ -9,6 +9,11 @@ namespace WORLDGAMEDEVELOPMENT
     {
         #region Fields
 
+        [SerializeField] private Speed _speed;
+        [SerializeField] private Health _health;
+        [SerializeField, Range(0, 1000)] private int _force;
+        [SerializeField, Range(0, 100)] private float _damage;
+
         [SerializeField, Header("Спрайт для корабля"), Space(5)] private Sprite _spritePlayer;
         [SerializeField, Header("Система частиц для корабля"), Space(20)] private GameObject _particleSystem;
         [SerializeField, Space(10), Header("Настройки для TrailRenderer"), Space(20)] private Material _materialTrailRenderer;
@@ -28,16 +33,20 @@ namespace WORLDGAMEDEVELOPMENT
 
         #region Properties
 
-        public Material MaterialTrailRenderer => _materialTrailRenderer;
-        public Sprite SpritePlayer => _spritePlayer;
-        public GameObject ParticleSystem => _particleSystem;
-        public Color StartColor => _startColor;
-        public Color EndColor => _endColor;
-        public Vector2 OffsetVectorTrailrenderer => _offsetVectorTrailrenderer;
-        public Vector2 OffsetVectorBurel => _offsetVectorBullet;
-        public float StartWidth => _startWidth;
-        public float EndWidth => _endWidth;
-        public float Time => _time;
+        internal float Damage => _damage;
+        internal int Force => _force;
+        internal Speed Speed => _speed;
+        internal Health Health => _health;
+        internal Material MaterialTrailRenderer => _materialTrailRenderer;
+        internal Sprite SpritePlayer => _spritePlayer;
+        internal GameObject ParticleSystem => _particleSystem;
+        internal Color StartColor => _startColor;
+        internal Color EndColor => _endColor;
+        internal Vector2 OffsetVectorTrailrenderer => _offsetVectorTrailrenderer;
+        internal Vector2 OffsetVectorBurel => _offsetVectorBullet;
+        internal float StartWidth => _startWidth;
+        internal float EndWidth => _endWidth;
+        internal float Time => _time;
 
         #endregion
     }

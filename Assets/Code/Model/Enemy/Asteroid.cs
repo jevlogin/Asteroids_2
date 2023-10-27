@@ -7,15 +7,43 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal sealed class Asteroid : EnemyView, IDamageable
     {
-        internal Vector2 DirectionMovement;
-        internal event Action<Asteroid, bool> IsDead;
+        #region Fields
 
-        [SerializeField] private float _damage;
-        [SerializeField] internal AsteroidType AsteroidType;
         [SerializeField] internal Speed Speed;
         [SerializeField] internal Health Health;
+        internal event Action<Asteroid, bool> IsDead;
+        internal Vector2 DirectionMovement;
+        internal AsteroidType AsteroidType;
+        [SerializeField] private float _damage;
+
+        #endregion
+
+
+        #region Properties
 
         public float Damage { get => _damage; set => _damage = value; }
+
+        #endregion
+
+        private void OnEnable()
+        {
+            OnCollisionEnterDetect += Asteroid_OnCollisionEnterDetect;
+        }
+
+        private void OnDisable()
+        {
+            OnCollisionEnterDetect -= Asteroid_OnCollisionEnterDetect;
+        }
+
+        private void Asteroid_OnCollisionEnterDetect(Collider2D collider)
+        {
+            if(collider.TryGetComponent<IDamageable>(out var damageable))
+            {
+                TakeDamage(damageable.Damage);
+            }
+        }
+
+        #region IDamageable
 
         public void TakeDamage(float damage)
         {
@@ -26,9 +54,6 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        public void DealDamage(IDamageable target, float damage)
-        {
-            Debug.Log($"Deal damage: {damage}");
-        }
+        #endregion
     }
 }

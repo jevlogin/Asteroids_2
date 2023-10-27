@@ -78,6 +78,7 @@
     <Compile Include="Assets\Code\Model\Player\PlayerModel.cs" />
     <Compile Include="Assets\Code\Model\Pool\BulletPool.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputMouse.cs" />
+    <Compile Include="Assets\Code\Model\Player\Player.cs" />
     <Compile Include="Assets\Code\Factory\PlayerFactory.cs" />
     <Compile Include="Assets\Code\Controller\GameController.cs" />
     <Compile Include="Assets\Code\View\Camera\CameraView.cs" />
