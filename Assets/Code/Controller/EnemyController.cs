@@ -6,7 +6,7 @@ namespace WORLDGAMEDEVELOPMENT
     internal class EnemyController : IController, ICleanup
     {
         private EnemyModel _model;
-        private const float _radiusSpawn = 20.0f;
+        private const float _radiusSpawn = 100.0f;
 
         public EnemyController(EnemyModel model)
         {

@@ -33,9 +33,6 @@ namespace WORLDGAMEDEVELOPMENT
                 components.ListEnemyViews.Add(enemyView);
 
                 enemyStruct.PoolsOfType[enemyGroup.Type] = enemyStruct.PoolAsteroids;
-
-                Debug.Log($"enemyView = {(enemyView as Asteroid).AsteroidType}");
-
             }
 
 
