@@ -62,7 +62,7 @@ namespace WORLDGAMEDEVELOPMENT
             _controllers = new List<IController>();
             _moveController = new MoveController(_inputInitialization.GetInput(),
                                                 _playerInitialization.PlayerModel.Components.PlayerTransform,
-                                                _playerInitialization.PlayerModel.PlayerStruct.Speed);
+                                                _playerInitialization.PlayerModel.PlayerStruct.Player.Speed);
             _rotationController = new RotationController(_playerInitialization.PlayerModel.Components.PlayerTransform, _camera);
             
             _controllers.Add(_moveController);

@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462abc130ac97324a9a815e78f9bd42e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  _playerStruct:
+  _playerSettings:
     _speed:
-      _maxSpeed: 30
-      _currentSpeed: 10
-      _acceleration: 23.7
+      _maxSpeed: 100
+      _currentSpeed: 20
+      _acceleration: 5
     _health:
       _maxHealth: 100
       _currentHealth: 100
-    _force: 400
-  _playerSettings:
+    _force: 10
+    _damage: 5
     _spritePlayer: {fileID: 21300000, guid: 38ceccf2cc1310c4ca6fb20a2bc0ee45, type: 3}
     _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
     _materialTrailRenderer: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}

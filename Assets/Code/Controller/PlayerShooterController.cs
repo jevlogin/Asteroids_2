@@ -26,7 +26,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _barrelTransform = _playerInitialization.PlayerModel.Components.BarrelTransform;
             _refireTimer = ammunitionFactoryModel.AmmunitionStruct.RefireTimer;
-            _fireTimer = _refireTimer;
+            _fireTimer = 0.0f;
             _listBullets = new List<Bullet>();
             _rigidbodyBullets = new Dictionary<int, Rigidbody2D>();
 
@@ -57,6 +57,7 @@ namespace WORLDGAMEDEVELOPMENT
                     if (_listBullets[i].LifeTime > _listBullets[i].MaxLifeTimeOutsideThePool)
                     {
                         _listBullets[i].LifeTime = 0.0f;
+                        _listBullets[i].OnCollisionEnterDetect -= Bullet_OnCollisionEnterDetect;
                         _ammunitionFactoryModel.AmmunitionStruct.PoolBulletGeneric.ReturnToPool(_listBullets[i]);
                         _listBullets.RemoveAt(i);
                     }
@@ -86,9 +87,16 @@ namespace WORLDGAMEDEVELOPMENT
                 if (_valueChange)
                 {
                     _fireTimer = 0;
-                    _listBullets.Add(GetBullet());
+                    var bullet = GetBullet();
+                    _listBullets.Add(bullet);
                 }
             }
+        }
+
+        private void Bullet_OnCollisionEnterDetect(Collider2D colliderEnemy)
+        {
+            Debug.Log($"Произошло столкновение с объектом - {colliderEnemy}");
+
         }
 
         private Bullet GetBullet()
