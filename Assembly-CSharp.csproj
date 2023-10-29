@@ -67,8 +67,10 @@
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionSettings.cs" />
     <Compile Include="Assets\Code\Model\Enemy\EnemyModel.cs" />
     <Compile Include="Assets\Code\Controller\CameraController.cs" />
+    <Compile Include="Assets\Code\Interface\IObjectType.cs" />
     <Compile Include="Assets\Code\Helper\AmmunitionType.cs" />
     <Compile Include="Assets\Code\Model\Pool\EmptyPool.cs" />
+    <Compile Include="Assets\Code\View\Player\ViewObjectType.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyComponents.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyStruct.cs" />
     <Compile Include="Assets\Code\Controller\PlayerController.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Code\Initialization\EnemyInitialization.cs" />
     <Compile Include="Assets\Code\Controller\MoveController.cs" />
     <Compile Include="Assets\Code\Model\Ammunition\Bullet.cs" />
+    <Compile Include="Assets\Code\View\Player\GroupObject.cs" />
     <Compile Include="Assets\Code\Interface\IDamageable.cs" />
     <Compile Include="Assets\Code\Initialization\InputInitialization.cs" />
     <Compile Include="Assets\Code\View\Ammunition\AmmunitionView.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Assets\Code\Data\Data.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
     <Compile Include="Assets\Code\Interface\IMove.cs" />
+    <Compile Include="Assets\Code\View\Player\ObjectType.cs" />
     <Compile Include="Assets\Code\Model\Pool\GenericObjectPool.cs" />
     <Compile Include="Assets\Code\Model\Player\Health.cs" />
     <Compile Include="Assets\Code\Interface\IRotation.cs" />
@@ -100,7 +104,9 @@
     <Compile Include="Assets\Code\Model\Pool\Pool.cs" />
     <Compile Include="Assets\Code\Model\Pool\AsteroidPool.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemySettingsGroup.cs" />
+    <Compile Include="Assets\Code\Helper\GroupObjectType.cs" />
     <Compile Include="Assets\Code\Interface\IUserInputProxy.cs" />
+    <Compile Include="Assets\Code\Interface\IGroupObject.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputHorizontal.cs" />
     <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
     <Compile Include="Assets\Code\Helper\ManagerName.cs" />

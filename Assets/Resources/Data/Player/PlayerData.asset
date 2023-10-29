@@ -22,13 +22,6 @@ MonoBehaviour:
       _currentHealth: 100
     _force: 10
     _damage: 5
-    _spritePlayer: {fileID: 21300000, guid: 38ceccf2cc1310c4ca6fb20a2bc0ee45, type: 3}
+    _playerView: {fileID: 4672627823515711344, guid: 9affa89fc6b766d4899d9cd1c9861b5b, type: 3}
     _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
-    _materialTrailRenderer: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-    _startColor: {r: 1, g: 0, b: 0, a: 1}
-    _endColor: {r: 0, g: 0, b: 1, a: 1}
-    _startWidth: 0.053
-    _endWidth: 0.155
-    _time: 0.184
-    _offsetVectorTrailrenderer: {x: 0, y: 0}
-    _offsetVectorBullet: {x: -0.125, y: 0.5}
+    _offsetVectorBullet: {x: 0, y: 1}
