@@ -20,6 +20,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         [SerializeField, Space(10), Header("Вектор смещения для ствола пушки"), Space(20)] private Vector2 _offsetVectorBullet;
 
+        internal Vector3 TransformPositionEnergyBlock;
         #endregion
 
 

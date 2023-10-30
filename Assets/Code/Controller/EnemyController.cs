@@ -3,32 +3,23 @@
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class EnemyController : IController, ICleanup
+    internal class EnemyController : IController, ICleanup, IInitialization
     {
         private EnemyModel _model;
+        private bool _isStopControl;
+        private readonly SceneController _sceneController;
         private const float _radiusSpawn = 100.0f;
 
-        public EnemyController(EnemyModel model)
+        public EnemyController(EnemyModel model, SceneController sceneController)
         {
             _model = model;
+            _sceneController = sceneController;
+            _sceneController.IsStopControl += OnChangeIsStopControl;
+        }
 
-            foreach (var poolOfType in _model.EnemyStruct.PoolsOfType.Values)
-            {
-                var count = poolOfType.PoolSize;
-
-                for (int i = 0; i < count; i++)
-                {
-                    var enemy = poolOfType.Get();
-                    enemy.transform.SetParent(null);
-                    enemy.transform.position = new Vector3(Random.Range(-_radiusSpawn, _radiusSpawn), Random.Range(-_radiusSpawn, _radiusSpawn), 0.0f);
-                    enemy.gameObject.SetActive(true);
-                    enemy.IsDead += Enemy_IsDead;
-
-                    var rb = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
-                    rb.isKinematic = true;
-                    rb.velocity = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0.0f) * enemy.Speed.CurrentSpeed;
-                }
-            }
+        private void OnChangeIsStopControl(bool value)
+        {
+            _isStopControl = value;
         }
 
         private void Enemy_IsDead(Asteroid asteroid, bool value)
@@ -53,6 +44,35 @@ namespace WORLDGAMEDEVELOPMENT
                 foreach (var asteroid in pool.GetList())
                 {
                     asteroid.IsDead -= Enemy_IsDead;
+                }
+            }
+        }
+
+        public void Initialization()
+        {
+            if (!_isStopControl)
+            {
+                GetPoolEnemyAsteroid();
+            }
+        }
+
+        private void GetPoolEnemyAsteroid()
+        {
+            foreach (var poolOfType in _model.EnemyStruct.PoolsOfType.Values)
+            {
+                var count = poolOfType.PoolSize;
+
+                for (int i = 0; i < count; i++)
+                {
+                    var enemy = poolOfType.Get();
+                    enemy.transform.SetParent(null);
+                    enemy.transform.position = new Vector3(Random.Range(-_radiusSpawn, _radiusSpawn), Random.Range(-_radiusSpawn, _radiusSpawn), 0.0f);
+                    enemy.gameObject.SetActive(true);
+                    enemy.IsDead += Enemy_IsDead;
+
+                    var rb = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
+                    rb.isKinematic = true;
+                    rb.velocity = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0.0f) * enemy.Speed.CurrentSpeed;
                 }
             }
         }

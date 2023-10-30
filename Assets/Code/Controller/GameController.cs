@@ -13,8 +13,21 @@ namespace WORLDGAMEDEVELOPMENT
             Camera camera = Camera.main;
             _controllers = new Controllers();
 
+            var sceneFactory = new SceneFactory(_data.SceneData);
+            var sceneInitialization = new SceneInitialization(sceneFactory);
+            var sceneController = new SceneController(sceneInitialization.SceneModel);
+            _controllers.Add(sceneController);
+
+
+            var canvasFactory = new CanvasFactory(_data.CanvasData);
+            var canvasInitialization = new CanvasInitialization(canvasFactory);
+            var canvasController = new CanvasController(canvasInitialization.CanvasModel);
+            sceneController.Add(canvasInitialization.CanvasModel);
+            _controllers.Add(sceneController);
+
             var playerFactory = new PlayerFactory(_data.PlayerData);
-            var playerInitialization = new PlayerInitialization(playerFactory);
+            var playerInitialization = new PlayerInitialization(playerFactory, 
+                sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);
 
             var inputInitialization = new InputInitialization();
             _controllers.Add(new InputController(inputInitialization));
@@ -25,15 +38,25 @@ namespace WORLDGAMEDEVELOPMENT
             var enemyFactory = new EnemyFactory(_data.EnemyData);
             var enemyInitialization = new EnemyInitialization(enemyFactory);
 
-            _controllers.Add(new PlayerController(inputInitialization, playerInitialization, camera));
+            var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController);
+            sceneController.Add(playerController);
 
-            _controllers.Add(new CameraController(camera.GetComponent<CameraView>(), 
-                playerInitialization.PlayerModel.Components.PlayerTransform));
+            _controllers.Add(playerController);
 
-            _controllers.Add(new PlayerShooterController(inputInitialization.GetInputMouse(), 
-                playerInitialization, ammunitionInitialization.AmmunitionFactoryModel));
+            var cameraController = new CameraController(camera.GetComponent<CameraView>(),
+                playerInitialization.PlayerModel.Components.PlayerTransform, sceneController);
+            
+            sceneController.Add(cameraController);
 
-            _controllers.Add(new EnemyController(enemyInitialization.Model));
+            _controllers.Add(cameraController);
+
+            var playerShooterController = new PlayerShooterController(inputInitialization.GetInputMouse(),
+                playerInitialization, ammunitionInitialization.AmmunitionFactoryModel, sceneController);
+
+            _controllers.Add(playerShooterController);
+
+            var enemyController = new EnemyController(enemyInitialization.Model, sceneController);
+            _controllers.Add(enemyController);
 
             _controllers.Initialization();
         }

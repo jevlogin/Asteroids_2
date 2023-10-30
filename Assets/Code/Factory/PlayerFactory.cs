@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -26,7 +27,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         #region Methods
 
-        internal PlayerModel CreatePlayerModel()
+        internal PlayerModel CreatePlayerModel(Transform startSpaceTransform)
         {
             if (_playerModel == null)
             {
@@ -35,6 +36,7 @@ namespace WORLDGAMEDEVELOPMENT
                 var playerSettings = new PlayerSettings();
 
                 playerStruct.Player = CreatePlayer(ManagerName.PLAYER);
+                playerStruct.Player.transform.localPosition = startSpaceTransform.position;
 
                 playerStruct.Player.Health = new Health(_playerData.PlayerSettings.Health);
                 playerStruct.Player.Speed = new Speed(_playerData.PlayerSettings.Speed);
@@ -53,6 +55,15 @@ namespace WORLDGAMEDEVELOPMENT
 
                 playerComponents.PlayerTransform = playerStruct.Player.transform;
                 playerComponents.PlayerView = playerStruct.Player;
+                playerComponents.Particles = particles.GetComponent<ParticleSystem>();
+                playerComponents.Particles.Stop();
+                playerComponents.Particles.gameObject.SetActive(false);
+
+                var energiyaGroupObject = playerStruct.Player.GroupObjects.FirstOrDefault(block => block.ViewObjectType == ViewObjectType.AdditionalType);
+                playerComponents.RigidbodyEnergyBlock = energiyaGroupObject.Transform.gameObject.GetOrAddComponent<Rigidbody>();
+                playerComponents.RigidbodyEnergyBlock.isKinematic = true;
+
+                playerSettings.TransformPositionEnergyBlock = new Vector3(0.0f, 0.0f, energiyaGroupObject.Transform.position.z);
 
                 _playerModel = new PlayerModel(playerStruct, playerComponents, playerSettings);
             }
