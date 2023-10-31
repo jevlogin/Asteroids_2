@@ -15,12 +15,16 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField, Range(0, 100)] private float _damage;
 
         [SerializeField, Header("Prefab player")] private Player _playerView;
-        
+
         [SerializeField, Header("Система частиц для корабля"), Space(20)] private GameObject _particleSystem;
 
         [SerializeField, Space(10), Header("Вектор смещения для ствола пушки"), Space(20)] private Vector2 _offsetVectorBullet;
 
         internal Vector3 TransformPositionEnergyBlock;
+
+        [SerializeField, Header("Настройки для системы частиц корабля")] internal ConfigParticlesShip ConfigParticlesShip;
+        [SerializeField, Header("Настройки для системы частиц корабля")] internal ConfigParticlesShip ConfigParticlesShipDefault;
+
         #endregion
 
 

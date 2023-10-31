@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -19,6 +21,7 @@ namespace WORLDGAMEDEVELOPMENT
         private EnemyData _enemyData;
         private SceneData _sceneData;
         private CanvasData _canvasData;
+        private ResourceRequest _sceneDataRequest;
 
 
         public CanvasData CanvasData
@@ -46,12 +49,15 @@ namespace WORLDGAMEDEVELOPMENT
                     _sceneData = Resources.Load<SceneData>(Path.Combine(ManagerPath.DATA, _sceneDataPath));
                     if (_sceneData == null)
                         _sceneData = Resources.Load<SceneData>(Path.Combine(_sceneDataPath));
-                    if (_enemyData == null)
+                    if (_sceneData == null)
                         AssetNotFound(nameof(_sceneData));
                 }
+
                 return _sceneData;
             }
         }
+        
+
 
         public EnemyData EnemyData
         {

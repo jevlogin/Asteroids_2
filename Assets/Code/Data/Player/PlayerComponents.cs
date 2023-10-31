@@ -11,6 +11,6 @@ namespace WORLDGAMEDEVELOPMENT
         public Transform BarrelTransform;
         public Rigidbody RigidbodyEnergyBlock;
         public PlayerView PlayerView;
-        public ParticleSystem Particles;
+        [Header("Stars System")] public ParticleSystem Particles;
     }
 }

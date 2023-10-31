@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 
 namespace WORLDGAMEDEVELOPMENT
@@ -6,6 +7,6 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal struct CanvasStruct
     {
-        internal CanvasView CanvasView;
+        [SerializeField] internal CanvasView CanvasView;
     }
 }

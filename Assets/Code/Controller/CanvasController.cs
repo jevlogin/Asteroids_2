@@ -3,21 +3,30 @@
     internal class CanvasController : IController, ICleanup
     {
         private CanvasModel _canvasModel;
+        private PanelMenuView _panelMenu;
 
         public CanvasController(CanvasModel canvasModel)
         {
             _canvasModel = canvasModel;
-            _canvasModel.CanvasStruct.CanvasView.ButtonStart.onClick.AddListener(DisableMenu);
+
+            foreach (var panel in _canvasModel.CanvasStruct.CanvasView.panelViews)
+            {
+                if (panel is PanelMenuView panelMenu)
+                {
+                    _panelMenu = panelMenu;
+                    _panelMenu.ButtonStart.onClick.AddListener(DisableMenu);
+                }
+            }
         }
 
         private void DisableMenu()
         {
-            _canvasModel.CanvasStruct.CanvasView.PanelMenuStart.gameObject.SetActive(false);
+            _panelMenu.transform.gameObject.SetActive(false);
         }
 
         public void Cleanup()
         {
-            _canvasModel.CanvasStruct.CanvasView.ButtonStart.onClick.RemoveAllListeners();
+            _panelMenu.ButtonStart.onClick.RemoveAllListeners();
         }
     }
 }

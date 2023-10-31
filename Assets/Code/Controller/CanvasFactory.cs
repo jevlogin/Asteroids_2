@@ -23,10 +23,18 @@ namespace WORLDGAMEDEVELOPMENT
         internal CanvasModel CreateCanvasModel()
         {
             var canvasStruct = _canvasData.CanvasStruct;
-            var canvasSettings = _canvasData.CanvasSettings;
+            var canvasSettings = new CanvasSettings();
 
             canvasStruct.CanvasView = Object.Instantiate(_canvasData.CanvasSettings.CanvasView);
             canvasStruct.CanvasView.name = _canvasData.CanvasSettings.CanvasView.name;
+
+            for (int i = 0; i < canvasStruct.CanvasView.transform.childCount; i++)
+            {
+                if (canvasStruct.CanvasView.transform.GetChild(i).TryGetComponent<PanelView>(out var panel))
+                {
+                    canvasStruct.CanvasView.panelViews.Add(panel);
+                }
+            }
 
             var canvasModel = new CanvasModel(canvasStruct, canvasSettings);
 

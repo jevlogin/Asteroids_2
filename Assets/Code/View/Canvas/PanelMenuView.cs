@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class CanvasView : MonoBehaviour
+    internal sealed class PanelMenuView : PanelView
     {
         [SerializeField] private Button _buttonStart;
         [SerializeField] private Transform _panelMenuStart;

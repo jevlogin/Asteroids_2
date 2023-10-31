@@ -25,3 +25,13 @@ MonoBehaviour:
     _playerView: {fileID: 4672627823515711344, guid: 9affa89fc6b766d4899d9cd1c9861b5b, type: 3}
     _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
     _offsetVectorBullet: {x: 0, y: 1}
+    ConfigParticlesShip:
+      StartLifetime: 1.1
+      StartSpeed: 0.9
+      StartColor: {r: 1, g: 0.9863319, b: 0.9009434, a: 1}
+      IsPlayOnAwake: 0
+    ConfigParticlesShipDefault:
+      StartLifetime: 0.2
+      StartSpeed: 0
+      StartColor: {r: 0.8746885, g: 0.97102, b: 0.9811321, a: 1}
+      IsPlayOnAwake: 0

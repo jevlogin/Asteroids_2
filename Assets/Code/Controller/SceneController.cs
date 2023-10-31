@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Debug = UnityEngine.Debug;
 
 
 namespace WORLDGAMEDEVELOPMENT
@@ -15,6 +14,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal Action StartParticle;
         internal Action DisableEnergyBlock;
+        private PanelMenuView _panelMenu;
 
         internal IEnumerable<IAddedModel> AddedModels => _addedModels;
 
@@ -27,9 +27,17 @@ namespace WORLDGAMEDEVELOPMENT
         internal void Add(IAddedModel addedModel)
         {
             _addedModels.Add(addedModel);
+
             if (addedModel is CanvasModel canvasModel)
             {
-                canvasModel.CanvasStruct.CanvasView.ButtonStart.onClick.AddListener(StartControl);
+                foreach (var panel in canvasModel.CanvasStruct.CanvasView.panelViews)
+                {
+                    if (panel is PanelMenuView panelMenu)
+                    {
+                        _panelMenu = panelMenu;
+                        _panelMenu.ButtonStart.onClick.AddListener(StartControl);
+                    }
+                }
             }
         }
 
@@ -58,13 +66,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Cleanup()
         {
-            foreach (var model in AddedModels)
-            {
-                if (model is CanvasModel canvasModel)
-                {
-                    canvasModel.CanvasStruct.CanvasView.ButtonStart.onClick.RemoveAllListeners();
-                }
-            }
+            _panelMenu.ButtonStart.onClick.RemoveAllListeners();
         }
     }
 }

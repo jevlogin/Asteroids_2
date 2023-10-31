@@ -34,6 +34,8 @@ namespace WORLDGAMEDEVELOPMENT
                 var playerStruct = new PlayerStruct();
                 var playerComponents = new PlayerComponents();
                 var playerSettings = new PlayerSettings();
+                playerSettings.ConfigParticlesShip = _playerData.PlayerSettings.ConfigParticlesShip;
+                playerSettings.ConfigParticlesShipDefault = _playerData.PlayerSettings.ConfigParticlesShipDefault;
 
                 playerStruct.Player = CreatePlayer(ManagerName.PLAYER);
                 playerStruct.Player.transform.localPosition = startSpaceTransform.position;

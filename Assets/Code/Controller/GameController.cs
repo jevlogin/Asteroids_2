@@ -1,3 +1,7 @@
+using System;
+using System.Collections;
+using System.IO;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 
@@ -18,7 +22,6 @@ namespace WORLDGAMEDEVELOPMENT
             var sceneController = new SceneController(sceneInitialization.SceneModel);
             _controllers.Add(sceneController);
 
-
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
             var canvasController = new CanvasController(canvasInitialization.CanvasModel);
@@ -26,7 +29,7 @@ namespace WORLDGAMEDEVELOPMENT
             _controllers.Add(sceneController);
 
             var playerFactory = new PlayerFactory(_data.PlayerData);
-            var playerInitialization = new PlayerInitialization(playerFactory, 
+            var playerInitialization = new PlayerInitialization(playerFactory,
                 sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);
 
             var inputInitialization = new InputInitialization();
@@ -40,12 +43,11 @@ namespace WORLDGAMEDEVELOPMENT
 
             var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController);
             sceneController.Add(playerController);
-
             _controllers.Add(playerController);
 
             var cameraController = new CameraController(camera.GetComponent<CameraView>(),
                 playerInitialization.PlayerModel.Components.PlayerTransform, sceneController);
-            
+
             sceneController.Add(cameraController);
 
             _controllers.Add(cameraController);
@@ -58,9 +60,11 @@ namespace WORLDGAMEDEVELOPMENT
             var enemyController = new EnemyController(enemyInitialization.Model, sceneController);
             _controllers.Add(enemyController);
 
+            var particleController = new ParticleController(playerInitialization.PlayerModel, sceneController);
+            _controllers.Add(particleController);
+
             _controllers.Initialization();
         }
-
 
         private void Update()
         {

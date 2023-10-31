@@ -20,6 +20,10 @@ namespace WORLDGAMEDEVELOPMENT
         private void OnChangeIsStopControl(bool value)
         {
             _isStopControl = value;
+            if (!_isStopControl)
+            {
+                GetPoolEnemyAsteroid();
+            }
         }
 
         private void Enemy_IsDead(Asteroid asteroid, bool value)
