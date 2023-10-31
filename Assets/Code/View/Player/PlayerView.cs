@@ -8,10 +8,13 @@ namespace WORLDGAMEDEVELOPMENT
     {
         #region ICollisionDetect
 
-        public event Action<Collider2D> OnCollisionEnterDetect = delegate (Collider2D collider2D) { };
+        public event Action<Collider2D> OnCollisionEnterDetect;
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            OnCollisionEnterDetect.Invoke(collision.collider);
+            Debug.Log($"Игрок столкнулся с {collision.gameObject.name}");
+
+            OnCollisionEnterDetect?.Invoke(collision.collider);
         }
 
         #endregion

@@ -35,7 +35,6 @@ namespace WORLDGAMEDEVELOPMENT
                 enemyStruct.PoolsOfType[enemyGroup.Type] = enemyStruct.PoolAsteroids;
             }
 
-
             _enemyModel = new EnemyModel(enemyStruct, components, settings);
             return _enemyModel;
         }

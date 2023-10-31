@@ -15,6 +15,8 @@ namespace WORLDGAMEDEVELOPMENT
         internal Action StartParticle;
         internal Action DisableEnergyBlock;
         private PanelMenuView _panelMenu;
+        private PanelHUDView _panelHUD;
+        private EnemyModel _enemyModel;
 
         internal IEnumerable<IAddedModel> AddedModels => _addedModels;
 
@@ -37,8 +39,25 @@ namespace WORLDGAMEDEVELOPMENT
                         _panelMenu = panelMenu;
                         _panelMenu.ButtonStart.onClick.AddListener(StartControl);
                     }
+                    if (panel is PanelHUDView panelHUD)
+                    {
+                        _panelHUD = panelHUD;
+                    }
                 }
             }
+            if (addedModel is PlayerModel playerModel)
+            {
+                playerModel.PlayerStruct.Player.TakeDamaged += PlayerTakeDamage;
+            }
+            if (addedModel is EnemyModel model)
+            {
+                _enemyModel = model;
+            }
+        }
+
+        private void PlayerTakeDamage(float currentHealth)
+        {
+            _panelHUD.TextLife.text = $"{ManagerName.TEXT_LIFE} {currentHealth}";
         }
 
         private void TheShipTookOff(bool value)

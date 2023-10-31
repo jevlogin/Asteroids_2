@@ -24,7 +24,7 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 50.4
-      PoolSize: 200
+      PoolSize: 100
     - Type: 2
       Sprite: {fileID: 21300000, guid: d6220a8269060814b86f9a0969bca95d, type: 3}
       DefaultDamage: 10
@@ -35,4 +35,4 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 30
-      PoolSize: 300
+      PoolSize: 200

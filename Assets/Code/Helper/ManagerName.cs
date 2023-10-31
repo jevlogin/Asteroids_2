@@ -9,5 +9,10 @@ namespace WORLDGAMEDEVELOPMENT
         public const string POOL_BULLET = "[Pool_Bullet]";
         public const string POOL = "[Pool]";
         public const string PLAYER = "Player";
+        public const string TEXT_LIFE = "Жизни:";
+        public const string TEXT_SCORE = "Скидка:";
+        public const string TEXT_SCORE_PREFIX_ONE = "рубль";
+        public const string TEXT_SCORE_PREFIX_TWO = "рубля";
+        public const string TEXT_SCORE_PREFIX_FIVE = "рублей";
     }
 }

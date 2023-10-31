@@ -16,6 +16,8 @@ namespace WORLDGAMEDEVELOPMENT
         private MoveController _moveController;
         private RotationController _rotationController;
         private List<IController> _controllers;
+        private bool _stopControl;
+        private float _timeFreezeDead;
 
         #endregion
 
@@ -65,11 +67,21 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController.StartParticle += StartParticle;
             _sceneController.DisableEnergyBlock += DisableEnergyBlock;
 
+            _playerInitialization.PlayerModel.PlayerStruct.Player.IsDeadPlayer += IsDeadPlayerAndRestartPosition;
+
             _controllers = new()
             {
                 MoveController,
                 RotationController
             };
+        }
+
+        private void IsDeadPlayerAndRestartPosition()
+        {
+            _stopControl = true;
+            _playerInitialization.PlayerModel.PlayerStruct.Player.transform.position = new Vector3(0, 0, 0);
+            _playerInitialization.PlayerModel.PlayerStruct.Player.transform.rotation = Quaternion.identity;
+            _timeFreezeDead = 0.0f;
         }
 
         private void DisableEnergyBlock()
@@ -137,11 +149,26 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Execute(float deltatime)
         {
-            foreach (var controller in _controllers)
+            if (!_stopControl)
             {
-                if (controller is IExecute execute)
+                foreach (var controller in _controllers)
                 {
-                    execute.Execute(deltatime);
+                    if (controller is IExecute execute)
+                    {
+                        execute.Execute(deltatime);
+                    }
+                } 
+            }
+            else
+            {
+                _timeFreezeDead += Time.deltaTime;
+                if (_timeFreezeDead > 3.0f )
+                {
+                    _stopControl = false;
+                }
+                else if(_timeFreezeDead > 1.0f && !_playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.activeSelf)
+                {
+                    _playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.SetActive(true);
                 }
             }
         }

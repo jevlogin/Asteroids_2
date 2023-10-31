@@ -10,5 +10,7 @@ namespace WORLDGAMEDEVELOPMENT
         internal Dictionary<AsteroidType, AsteroidPool> PoolsOfType;
         internal Pool<Asteroid> PoolAsteroid;
         internal AsteroidPool PoolAsteroids;
+
+        internal Action<bool> EnemyActivated;
     }
 }

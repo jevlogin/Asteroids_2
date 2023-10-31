@@ -15,8 +15,10 @@ namespace WORLDGAMEDEVELOPMENT
         internal int Force;
         
         [SerializeField] private List<GroupObject> _groupObjects;
+        internal event Action<float> TakeDamaged;
 
         private float _damage;
+        internal event Action IsDeadPlayer;
 
 
         #endregion
@@ -32,7 +34,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         #region UnityMethods
 
-        private void OnEnable()
+        private void Awake()
         {
             OnCollisionEnterDetect += Player_OnCollisionEnterDetect;
         
@@ -71,11 +73,13 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void TakeDamage(float damage)
         {
-            Debug.Log("Игрок столкнулся с кем-то");
             Health.CurrentHealth -= damage;
+            TakeDamaged?.Invoke(Health.CurrentHealth);
+
             if (Health.CurrentHealth <= 0)
             {
-                Debug.Log("I'm dead");
+                IsDeadPlayer?.Invoke();
+                gameObject.SetActive(false);
                 Health.CurrentHealth = Health.MaxHealth;
             }
         }

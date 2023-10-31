@@ -1,6 +1,6 @@
 ﻿namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class PlayerModel
+    internal sealed class PlayerModel : IAddedModel
     {
         public PlayerStruct PlayerStruct;
         public PlayerComponents Components;

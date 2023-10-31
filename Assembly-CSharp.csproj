@@ -91,6 +91,7 @@
     <Compile Include="Assets\Code\Model\Enemy\Asteroid.cs" />
     <Compile Include="Assets\Code\Model\Player\PlayerModel.cs" />
     <Compile Include="Assets\Code\Data\Canvas\CanvasStruct.cs" />
+    <Compile Include="Assets\Code\Controller\IEventActionGeneric.cs" />
     <Compile Include="Assets\Code\Model\Pool\BulletPool.cs" />
     <Compile Include="Assets\Code\Controller\CanvasController.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputMouse.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Code\Controller\SceneInitialization.cs" />
+    <Compile Include="Assets\Code\Controller\IEventAction1.cs" />
     <Compile Include="Assets\Code\View\Canvas\PanelView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Code\Interface\IMove.cs" />

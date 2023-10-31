@@ -22,7 +22,7 @@ MonoBehaviour:
       _currentHealth: 100
     _force: 10
     _damage: 5
-    _playerView: {fileID: 4672627823515711344, guid: 9affa89fc6b766d4899d9cd1c9861b5b, type: 3}
+    _playerView: {fileID: 4672627823515711344, guid: 9155f6f028af51644971b0315b35e60f, type: 3}
     _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
     _offsetVectorBullet: {x: 0, y: 1}
     ConfigParticlesShip:

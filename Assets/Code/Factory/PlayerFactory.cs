@@ -8,7 +8,7 @@ namespace WORLDGAMEDEVELOPMENT
     internal class PlayerFactory
     {
         #region Fields
-        
+
         private readonly PlayerData _playerData;
         private PlayerModel _playerModel;
 
@@ -47,8 +47,18 @@ namespace WORLDGAMEDEVELOPMENT
 
                 var barrel = new GameObject("Barrel");
                 barrel.transform.SetParent(playerStruct.Player.transform);
-                var barrelPositionY = playerStruct.Player.transform.GetOrAddComponent<CapsuleCollider>().height;
-                barrel.transform.localPosition = new Vector2(_playerData.PlayerSettings.OffsetVectorBurel.x, barrelPositionY);
+                float barrelPositionY = 0.0f;
+                if (playerStruct.Player.transform.TryGetComponent<CapsuleCollider>(out var collider))
+                {
+                    barrelPositionY = collider.height;
+                }
+                else if (playerStruct.Player.transform.TryGetComponent<CapsuleCollider2D>(out var collider2D))
+                {
+                    barrelPositionY = collider2D.size.y;
+                }
+
+                barrel.transform.localPosition = new Vector2(_playerData.PlayerSettings.OffsetVectorBurel.x, barrelPositionY + 0.2f);
+
                 playerComponents.BarrelTransform = barrel.transform;
 
 
@@ -80,7 +90,7 @@ namespace WORLDGAMEDEVELOPMENT
             player.tag = name;
 
             return player;
-        } 
+        }
 
         #endregion
     }

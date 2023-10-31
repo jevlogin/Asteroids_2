@@ -32,6 +32,9 @@ namespace WORLDGAMEDEVELOPMENT
             var playerInitialization = new PlayerInitialization(playerFactory,
                 sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);
 
+            sceneController.Add(playerInitialization.PlayerModel);
+
+
             var inputInitialization = new InputInitialization();
             _controllers.Add(new InputController(inputInitialization));
 
@@ -40,6 +43,8 @@ namespace WORLDGAMEDEVELOPMENT
 
             var enemyFactory = new EnemyFactory(_data.EnemyData);
             var enemyInitialization = new EnemyInitialization(enemyFactory);
+            sceneController.Add(enemyInitialization.Model);
+
 
             var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController);
             sceneController.Add(playerController);
@@ -49,7 +54,6 @@ namespace WORLDGAMEDEVELOPMENT
                 playerInitialization.PlayerModel.Components.PlayerTransform, sceneController);
 
             sceneController.Add(cameraController);
-
             _controllers.Add(cameraController);
 
             var playerShooterController = new PlayerShooterController(inputInitialization.GetInputMouse(),
@@ -59,6 +63,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             var enemyController = new EnemyController(enemyInitialization.Model, sceneController);
             _controllers.Add(enemyController);
+            canvasController.Add(enemyController);
 
             var particleController = new ParticleController(playerInitialization.PlayerModel, sceneController);
             _controllers.Add(particleController);
