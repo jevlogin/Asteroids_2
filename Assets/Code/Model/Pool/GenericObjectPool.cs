@@ -113,6 +113,9 @@ namespace WORLDGAMEDEVELOPMENT
                     case ManagerName.ASTEROID:
                         _transformPool = new GameObject($"[Pool_{PoolPrefab.Prefab.name}]").transform;
                         break;
+                    case ManagerName.AUDIOSOURCE:
+                        _transformPool = new GameObject($"[Pool_{PoolPrefab.Prefab.name}]").transform;
+                        break;
                     default:
                         throw new System.ArgumentException("Нет такого типа", nameof(T));
                 }

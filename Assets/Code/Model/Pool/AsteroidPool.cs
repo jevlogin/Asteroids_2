@@ -3,9 +3,8 @@
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class AsteroidPool : EmptyPool
+    internal class AsteroidPool : EmptyPoolAsteroid
     {
-
         public AsteroidPool(Pool<Asteroid> pool, Transform transformParent) : base(pool, transformParent)
         {
         }

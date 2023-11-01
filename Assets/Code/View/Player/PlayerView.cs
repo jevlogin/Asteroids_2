@@ -12,8 +12,6 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log($"Игрок столкнулся с {collision.gameObject.name}");
-
             OnCollisionEnterDetect?.Invoke(collision.collider);
         }
 

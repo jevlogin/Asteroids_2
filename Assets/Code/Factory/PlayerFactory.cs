@@ -70,6 +70,8 @@ namespace WORLDGAMEDEVELOPMENT
                 playerComponents.Particles = particles.GetComponent<ParticleSystem>();
                 playerComponents.Particles.Stop();
                 playerComponents.Particles.gameObject.SetActive(false);
+                playerComponents.AudioSource = playerStruct.Player.gameObject.GetOrAddComponent<AudioSource>();
+                playerComponents.AudioSource.playOnAwake = false;
 
                 var energiyaGroupObject = playerStruct.Player.GroupObjects.FirstOrDefault(block => block.ViewObjectType == ViewObjectType.AdditionalType);
                 playerComponents.RigidbodyEnergyBlock = energiyaGroupObject.Transform.gameObject.GetOrAddComponent<Rigidbody>();

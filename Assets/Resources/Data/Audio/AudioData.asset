@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae014831458b7884ebea49f34c0cb333, type: 3}
+  m_Name: AudioData
+  m_EditorClassIdentifier: 
+  _audioStruct:
+    _audioMixer: {fileID: 24100000, guid: 10892575425a76448bc8ccee608e5589, type: 2}
+    _clipByTypes:
+    - _type: 0
+      AudioClips:
+      - {fileID: 8300000, guid: 1751999ddb6bff444b51b75d7b9c2849, type: 3}
+    - _type: 1
+      AudioClips:
+      - {fileID: 8300000, guid: 13fa6084d3afad543bbfa08dbbdb740c, type: 3}
+    - _type: 2
+      AudioClips:
+      - {fileID: 8300000, guid: 3b56c40d838a82746b8bc620bd4fc081, type: 3}
+    - _type: 3
+      AudioClips:
+      - {fileID: 8300000, guid: 433874bf66a06f44eacf63ac4f94b14a, type: 3}
+      - {fileID: 8300000, guid: b8513a3459aaee6418086645666b4b5d, type: 3}
+      - {fileID: 8300000, guid: 47e1180093a1af442bfb23a5838e6ba5, type: 3}
+  _audioSettings:
+    _audioSourceByGroupTypesPrefabs:
+    - mixerGroup: 1
+      AudioSource: {fileID: 8901878456041625994, guid: bdf8a0f0b8a3bd54aa42b89b311d63a8, type: 3}
+    - mixerGroup: 2
+      AudioSource: {fileID: 5260571276570987611, guid: b574ea024ff82f74fbeb838ba7fb13f9, type: 3}
+    - mixerGroup: 3
+      AudioSource: {fileID: 4378652306992846932, guid: 5b798efba5036b24189fadb6a7ef945b, type: 3}
+    _poolSize: 5

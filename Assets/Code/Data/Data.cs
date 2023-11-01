@@ -15,13 +15,32 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private string _enemyDataPath;
         [SerializeField] private string _sceneDataPath;
         [SerializeField] private string _canvasDataPath;
+        [SerializeField] private string _audioDataPath;
 
         private PlayerData _playerData;
         private AmmunitionData _ammunitionData;
         private EnemyData _enemyData;
         private SceneData _sceneData;
         private CanvasData _canvasData;
-        private ResourceRequest _sceneDataRequest;
+        private AudioData _audioData;
+
+
+        public AudioData AudioData
+        {
+            get
+            {
+                if (_audioData == null)
+                {
+                    _audioData = Resources.Load<AudioData>(Path.Combine(ManagerPath.DATA, _audioDataPath));
+                    if (_audioData == null)
+                        _audioData = Resources.Load<AudioData>(Path.Combine(_audioDataPath));
+                    if (_audioData == null)
+                        AssetNotFound(nameof(_audioData));
+                }
+                return _audioData;
+            }
+        }
+
 
 
         public CanvasData CanvasData
@@ -56,7 +75,7 @@ namespace WORLDGAMEDEVELOPMENT
                 return _sceneData;
             }
         }
-        
+
 
 
         public EnemyData EnemyData

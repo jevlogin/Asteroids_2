@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace WORLDGAMEDEVELOPMENT
         private List<Bullet> _listBullets;
         private Dictionary<int, Rigidbody2D> _rigidbodyBullets;
         private bool _isStopControl;
+
+        public event Action<bool> IsShotInvoke;
 
         public PlayerShooterController(IUserInputBool userInputBool, PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel, SceneController sceneController)
         {
@@ -99,6 +102,8 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 if (_valueChange)
                 {
+                    IsShotInvoke?.Invoke(_valueChange);
+
                     _fireTimer = 0;
                     var bullet = GetBullet();
                     _listBullets.Add(bullet);

@@ -12,5 +12,6 @@ namespace WORLDGAMEDEVELOPMENT
         public Rigidbody RigidbodyEnergyBlock;
         public PlayerView PlayerView;
         [Header("Stars System")] public ParticleSystem Particles;
+        public AudioSource AudioSource;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,15 +10,19 @@ namespace WORLDGAMEDEVELOPMENT
     {
         private EnemyModel _model;
         private bool _isStopControl;
+        private List<Asteroid> _activeEnemyList;
         private readonly SceneController _sceneController;
         private const float _radiusSpawn = 100.0f;
+
         internal event Action<float> AddScoreByAsteroidDead;
+        internal event Action<Vector3> IsAsteroidExplosion;
 
         public EnemyController(EnemyModel model, SceneController sceneController)
         {
             _model = model;
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnChangeIsStopControl;
+            _activeEnemyList = new();
         }
 
         event Action<float> IEventActionGeneric<float>.AddScoreByAsteroidDead
@@ -26,7 +31,6 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 AddScoreByAsteroidDead += value;
             }
-
             remove
             {
                 AddScoreByAsteroidDead -= value;
@@ -48,6 +52,12 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (value)
             {
+                if (_activeEnemyList.Contains(asteroid))
+                {
+                    IsAsteroidExplosion?.Invoke(asteroid.transform.position);
+                    _activeEnemyList.Remove(asteroid);
+                }
+
                 if (_model.EnemyStruct.PoolsOfType.ContainsKey(asteroid.AsteroidType))
                 {
                     _model.EnemyStruct.PoolsOfType[asteroid.AsteroidType].ReturnToPool(asteroid);
@@ -110,6 +120,8 @@ namespace WORLDGAMEDEVELOPMENT
                     var rb = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
                     rb.isKinematic = true;
                     rb.velocity = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0.0f) * enemy.Speed.CurrentSpeed;
+
+                    _activeEnemyList.Add(enemy);
                 }
 
             }

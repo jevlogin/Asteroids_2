@@ -68,12 +68,23 @@ namespace WORLDGAMEDEVELOPMENT
             var particleController = new ParticleController(playerInitialization.PlayerModel, sceneController);
             _controllers.Add(particleController);
 
+            var audioFactory = new AudioFactory(_data.AudioData);
+            var audioInitialization = new AudioInitialization(audioFactory);
+            var audioController = new AudioController(audioInitialization.AudioModel, playerInitialization.PlayerModel,
+                playerShooterController, enemyController);
+            _controllers.Add(audioController);
+
             _controllers.Initialization();
         }
 
         private void Update()
         {
             _controllers.Execute(Time.deltaTime);
+        }
+
+        private void FixedUpdate()
+        {
+            _controllers.FixedExecute(Time.fixedDeltaTime);
         }
 
         private void LateUpdate()
