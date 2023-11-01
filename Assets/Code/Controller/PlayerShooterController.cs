@@ -1,24 +1,28 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class PlayerShooterController : IExecute
+    internal sealed class PlayerShooterController : IExecute, ICleanup
     {
         private IUserInputBool _userInputMouse;
         private PlayerInitialization _playerInitialization;
         private AmmunitionModel _ammunitionFactoryModel;
         private readonly Transform _barrelTransform;
+        private readonly SceneController _sceneController;
         private bool _valueChange;
         private float _refireTimer;
         private float _fireTimer;
         public float MoveSpeed = 10.0f;
         private List<Bullet> _listBullets;
         private Dictionary<int, Rigidbody2D> _rigidbodyBullets;
+        private bool _isStopControl;
 
+        public event Action<bool> IsShotInvoke;
 
-        public PlayerShooterController(IUserInputBool userInputBool, PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel)
+        public PlayerShooterController(IUserInputBool userInputBool, PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel, SceneController sceneController)
         {
             _userInputMouse = userInputBool;
             _playerInitialization = playerInitialization;
@@ -31,6 +35,13 @@ namespace WORLDGAMEDEVELOPMENT
             _rigidbodyBullets = new Dictionary<int, Rigidbody2D>();
 
             _userInputMouse.OnInputBoolOnChange += _OnInputOnChangeMouse;
+            _sceneController = sceneController;
+            _sceneController.IsStopControl += OnChangeIsStopControl;
+        }
+
+        private void OnChangeIsStopControl(bool value)
+        {
+            _isStopControl = value;
         }
 
         private void _OnInputOnChangeMouse(bool value)
@@ -40,6 +51,11 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Execute(float deltatime)
         {
+            if (_isStopControl)
+            {
+                return;
+            }
+
             _fireTimer += deltatime;
             BulletShoot();
             BulletControl(deltatime);
@@ -86,6 +102,8 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 if (_valueChange)
                 {
+                    IsShotInvoke?.Invoke(_valueChange);
+
                     _fireTimer = 0;
                     var bullet = GetBullet();
                     _listBullets.Add(bullet);
@@ -108,6 +126,11 @@ namespace WORLDGAMEDEVELOPMENT
             bullet.gameObject.SetActive(true);
             _rigidbodyBullets[bullet.GetInstanceID()] = bullet.gameObject.GetOrAddComponent<Rigidbody2D>();
             return bullet;
+        }
+
+        public void Cleanup()
+        {
+            _sceneController.IsStopControl -= OnChangeIsStopControl;
         }
     }
 }

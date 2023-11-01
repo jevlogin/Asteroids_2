@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ namespace WORLDGAMEDEVELOPMENT
     internal class PlayerFactory
     {
         #region Fields
-        
+
         private readonly PlayerData _playerData;
         private PlayerModel _playerModel;
 
@@ -21,16 +22,23 @@ namespace WORLDGAMEDEVELOPMENT
             _playerData = playerData;
         }
 
-        internal PlayerModel CreatePlayerModel()
+        #endregion
+
+
+        #region Methods
+
+        internal PlayerModel CreatePlayerModel(Transform startSpaceTransform)
         {
             if (_playerModel == null)
             {
                 var playerStruct = new PlayerStruct();
                 var playerComponents = new PlayerComponents();
                 var playerSettings = new PlayerSettings();
+                playerSettings.ConfigParticlesShip = _playerData.PlayerSettings.ConfigParticlesShip;
+                playerSettings.ConfigParticlesShipDefault = _playerData.PlayerSettings.ConfigParticlesShipDefault;
 
-                playerStruct.Player = CreatePlayer("Player");
-                playerStruct.Player.tag = "Player";
+                playerStruct.Player = CreatePlayer(ManagerName.PLAYER);
+                playerStruct.Player.transform.localPosition = startSpaceTransform.position;
 
                 playerStruct.Player.Health = new Health(_playerData.PlayerSettings.Health);
                 playerStruct.Player.Speed = new Speed(_playerData.PlayerSettings.Speed);
@@ -38,17 +46,39 @@ namespace WORLDGAMEDEVELOPMENT
                 playerStruct.Player.Force = _playerData.PlayerSettings.Force;
 
                 var barrel = new GameObject("Barrel");
-                playerComponents.BarrelTransform = barrel.transform;
                 barrel.transform.SetParent(playerStruct.Player.transform);
-                barrel.transform.localPosition = new Vector2(_playerData.PlayerSettings.OffsetVectorBurel.x, 
-                                                        _playerData.PlayerSettings.OffsetVectorBurel.y);
+                float barrelPositionY = 0.0f;
+                if (playerStruct.Player.transform.TryGetComponent<CapsuleCollider>(out var collider))
+                {
+                    barrelPositionY = collider.height;
+                }
+                else if (playerStruct.Player.transform.TryGetComponent<CapsuleCollider2D>(out var collider2D))
+                {
+                    barrelPositionY = collider2D.size.y;
+                }
+
+                barrel.transform.localPosition = new Vector2(_playerData.PlayerSettings.OffsetVectorBurel.x, barrelPositionY + 0.2f);
+
+                playerComponents.BarrelTransform = barrel.transform;
+
 
                 var particles = Object.Instantiate(_playerData.PlayerSettings.ParticleSystem, playerStruct.Player.transform);
                 particles.name = _playerData.PlayerSettings.ParticleSystem.name;
 
                 playerComponents.PlayerTransform = playerStruct.Player.transform;
                 playerComponents.PlayerView = playerStruct.Player;
-                
+                playerComponents.Particles = particles.GetComponent<ParticleSystem>();
+                playerComponents.Particles.Stop();
+                playerComponents.Particles.gameObject.SetActive(false);
+                playerComponents.AudioSource = playerStruct.Player.gameObject.GetOrAddComponent<AudioSource>();
+                playerComponents.AudioSource.playOnAwake = false;
+
+                var energiyaGroupObject = playerStruct.Player.GroupObjects.FirstOrDefault(block => block.ViewObjectType == ViewObjectType.AdditionalType);
+                playerComponents.RigidbodyEnergyBlock = energiyaGroupObject.Transform.gameObject.GetOrAddComponent<Rigidbody>();
+                playerComponents.RigidbodyEnergyBlock.isKinematic = true;
+
+                playerSettings.TransformPositionEnergyBlock = new Vector3(0.0f, 0.0f, energiyaGroupObject.Transform.position.z);
+
                 _playerModel = new PlayerModel(playerStruct, playerComponents, playerSettings);
             }
 
@@ -57,10 +87,9 @@ namespace WORLDGAMEDEVELOPMENT
 
         private Player CreatePlayer(string name)
         {
-            var player = new GameObject(name)
-                .AddSprite(_playerData.PlayerSettings.SpritePlayer)
-                .AddCircleCollider2D()
-                .AddComponent<Player>();
+            var player = Object.Instantiate(_playerData.PlayerSettings.PlayerPrefab);
+            player.name = name;
+            player.tag = name;
 
             return player;
         }

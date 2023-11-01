@@ -8,13 +8,36 @@ namespace WORLDGAMEDEVELOPMENT
     {
         [SerializeField] private Camera _camera;
         [SerializeField] private float _smoothTime;
+        [SerializeField] private float _introSmoothTime;
+        private float _defaultSmoothTime;
 
-        public Camera Camera => _camera;
-        public float SmoothTime => _smoothTime;
-
-        private void Awake()
+        private void OnEnable()
         {
-            _camera = GetComponent<Camera>();
+            _defaultSmoothTime = _smoothTime;
         }
+
+        public Camera Camera
+        {
+            get
+            {
+                if (_camera == null)
+                {
+                    _camera = GetComponent<Camera>();
+                }
+                return _camera;
+            }
+        }
+
+        public float SmoothTime
+        {
+            get
+            {
+                return _smoothTime;
+            }
+            set { _smoothTime = value; }
+        }
+
+        public float DefaultSmoothTime  => _defaultSmoothTime; 
+        public float IntroSmoothTime => _introSmoothTime; 
     }
 }

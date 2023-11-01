@@ -15,3 +15,6 @@ MonoBehaviour:
   _playerDataPath: Player/PlayerData
   _ammunitionDataPath: Ammunition/AmmunitionData
   _enemyDataPath: Enemy/EnemyData
+  _sceneDataPath: Scene/SceneData
+  _canvasDataPath: Canvas/CanvasData
+  _audioDataPath: Audio/AudioData

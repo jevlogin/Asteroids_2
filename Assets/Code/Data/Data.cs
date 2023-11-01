@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -11,10 +13,69 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private string _playerDataPath;
         [SerializeField] private string _ammunitionDataPath;
         [SerializeField] private string _enemyDataPath;
+        [SerializeField] private string _sceneDataPath;
+        [SerializeField] private string _canvasDataPath;
+        [SerializeField] private string _audioDataPath;
 
         private PlayerData _playerData;
         private AmmunitionData _ammunitionData;
         private EnemyData _enemyData;
+        private SceneData _sceneData;
+        private CanvasData _canvasData;
+        private AudioData _audioData;
+
+
+        public AudioData AudioData
+        {
+            get
+            {
+                if (_audioData == null)
+                {
+                    _audioData = Resources.Load<AudioData>(Path.Combine(ManagerPath.DATA, _audioDataPath));
+                    if (_audioData == null)
+                        _audioData = Resources.Load<AudioData>(Path.Combine(_audioDataPath));
+                    if (_audioData == null)
+                        AssetNotFound(nameof(_audioData));
+                }
+                return _audioData;
+            }
+        }
+
+
+
+        public CanvasData CanvasData
+        {
+            get
+            {
+                if (_canvasData == null)
+                {
+                    _canvasData = Resources.Load<CanvasData>(Path.Combine(ManagerPath.DATA, _canvasDataPath));
+                    if (_canvasData == null)
+                        _canvasData = Resources.Load<CanvasData>(Path.Combine(_canvasDataPath));
+                    if (_canvasData == null)
+                        AssetNotFound(nameof(_canvasData));
+                }
+                return _canvasData;
+            }
+        }
+
+        public SceneData SceneData
+        {
+            get
+            {
+                if (_sceneData == null)
+                {
+                    _sceneData = Resources.Load<SceneData>(Path.Combine(ManagerPath.DATA, _sceneDataPath));
+                    if (_sceneData == null)
+                        _sceneData = Resources.Load<SceneData>(Path.Combine(_sceneDataPath));
+                    if (_sceneData == null)
+                        AssetNotFound(nameof(_sceneData));
+                }
+
+                return _sceneData;
+            }
+        }
+
 
 
         public EnemyData EnemyData
@@ -25,13 +86,9 @@ namespace WORLDGAMEDEVELOPMENT
                 {
                     _enemyData = Resources.Load<EnemyData>(Path.Combine(ManagerPath.DATA, _enemyDataPath));
                     if (_enemyData == null)
-                    {
                         _enemyData = Resources.Load<EnemyData>(Path.Combine(_enemyDataPath));
-                    }
                     if (_enemyData == null)
-                    {
                         AssetNotFound(nameof(_enemyData));
-                    }
                 }
                 return _enemyData;
             }
@@ -41,17 +98,13 @@ namespace WORLDGAMEDEVELOPMENT
         {
             get
             {
-                if(_playerData == null)
+                if (_playerData == null)
                 {
                     _playerData = Resources.Load<PlayerData>(Path.Combine(ManagerPath.DATA, _playerDataPath));
-                    if(_playerData == null )
-                    {
+                    if (_playerData == null)
                         _playerData = Resources.Load<PlayerData>(Path.Combine(_playerDataPath));
-                    }
-                    if(_playerData == null )
-                    {
+                    if (_playerData == null)
                         AssetNotFound(nameof(_playerData));
-                    }
                 }
                 return _playerData;
             }
@@ -61,29 +114,25 @@ namespace WORLDGAMEDEVELOPMENT
         {
             get
             {
-                if(_ammunitionData == null)
+                if (_ammunitionData == null)
                 {
                     _ammunitionData = Resources.Load<AmmunitionData>(Path.Combine(ManagerPath.DATA, _ammunitionDataPath));
                     if (_ammunitionData == null)
-                    {
                         _ammunitionData = Resources.Load<AmmunitionData>(Path.Combine(_ammunitionDataPath));
-                    }
                     if (_ammunitionData == null)
-                    {
                         AssetNotFound(nameof(_ammunitionData));
-                    }
                 }
                 return _ammunitionData;
             }
         }
 
-        
+
         #region AssetNotFound
-        
+
         private void AssetNotFound(string name)
         {
             throw new ArgumentNullException(name, "Такого ассета не существует");
-        } 
+        }
 
         #endregion
     }

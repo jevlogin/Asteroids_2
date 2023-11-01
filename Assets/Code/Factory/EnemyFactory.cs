@@ -35,7 +35,6 @@ namespace WORLDGAMEDEVELOPMENT
                 enemyStruct.PoolsOfType[enemyGroup.Type] = enemyStruct.PoolAsteroids;
             }
 
-
             _enemyModel = new EnemyModel(enemyStruct, components, settings);
             return _enemyModel;
         }
@@ -67,7 +66,7 @@ namespace WORLDGAMEDEVELOPMENT
                     var transformParent = enemyStruct.PoolAsteroids?.TransformParent ?? new GameObject(ManagerName.POOL_ASTEROID).transform;
 
                     enemyStruct.PoolAsteroids = new AsteroidPool(enemyStruct.PoolAsteroid, transformParent);
-                    enemyStruct.PoolAsteroids.OnAddedPool += PoolAsteroids_OnAddedPool;
+                    enemyStruct.PoolAsteroids.OnUpdatePoolAfterAddedNewPoolObjects += PoolAsteroids_OnAddedPool;
                     enemyStruct.PoolAsteroids.AddObjects(asteroid);
                     
                     view = asteroid;

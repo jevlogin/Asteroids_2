@@ -7,11 +7,11 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal sealed class PlayerComponents
     {
-        public SpriteRenderer SpriteRenderer;
-        public CircleCollider2D CircleCollider2D;
         public Transform PlayerTransform;
         public Transform BarrelTransform;
-        public Rigidbody2D BulletRigidbody;
+        public Rigidbody RigidbodyEnergyBlock;
         public PlayerView PlayerView;
+        [Header("Stars System")] public ParticleSystem Particles;
+        public AudioSource AudioSource;
     }
 }

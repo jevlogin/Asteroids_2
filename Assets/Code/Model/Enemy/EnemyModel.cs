@@ -1,6 +1,8 @@
+using System;
+
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class EnemyModel
+    internal sealed class EnemyModel : IAddedModel
     {
         public EnemyStruct EnemyStruct;
         public EnemyComponents EnemyComponents;
