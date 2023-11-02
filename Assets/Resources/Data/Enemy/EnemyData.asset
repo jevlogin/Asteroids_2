@@ -24,6 +24,9 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 50.4
+      BonusPoints:
+        _bonusPointsMin: 1
+        _bonusPointsMax: 10
       PoolSize: 100
     - Type: 2
       Sprite: {fileID: 21300000, guid: d6220a8269060814b86f9a0969bca95d, type: 3}
@@ -35,4 +38,7 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 30
+      BonusPoints:
+        _bonusPointsMin: 1
+        _bonusPointsMax: 6
       PoolSize: 200

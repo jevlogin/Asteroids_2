@@ -11,10 +11,13 @@ namespace WORLDGAMEDEVELOPMENT
 
         [SerializeField] internal Speed Speed;
         [SerializeField] internal Health Health;
+        [SerializeField] private float _damage;
         internal event Action<Asteroid, bool> IsDead;
         internal Vector2 DirectionMovement;
         internal AsteroidType AsteroidType;
-        [SerializeField] private float _damage;
+
+        //TODO - убрать сериализованные поля
+        [SerializeField] internal BonusPoints BonusPoints;
 
         #endregion
 

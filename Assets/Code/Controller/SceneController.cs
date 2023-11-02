@@ -14,7 +14,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal Action StartParticle;
         internal Action DisableEnergyBlock;
-        private PanelMenuView _panelMenu;
+        private PanelGameMenuView _panelMenu;
         private PanelHUDView _panelHUD;
         private EnemyModel _enemyModel;
 
@@ -34,7 +34,7 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 foreach (var panel in canvasModel.CanvasStruct.CanvasView.panelViews)
                 {
-                    if (panel is PanelMenuView panelMenu)
+                    if (panel is PanelGameMenuView panelMenu)
                     {
                         _panelMenu = panelMenu;
                         _panelMenu.ButtonStart.onClick.AddListener(StartControl);

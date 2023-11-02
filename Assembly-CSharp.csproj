@@ -76,8 +76,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioStruct.cs" />
     <Compile Include="Assets\Code\Helper\AmmunitionType.cs" />
+    <Compile Include="Assets\Code\View\Canvas\PanelGameMenuView.cs" />
+    <Compile Include="Assets\Code\View\Canvas\PanelMainMenuView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\Code\Data\Enemy\BonusPoints.cs" />
     <Compile Include="Assets\Code\View\Player\ViewObjectType.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyComponents.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyStruct.cs" />
@@ -151,7 +154,6 @@
     <Compile Include="Assets\Code\Interface\IFixedExecute.cs" />
     <Compile Include="Assets\Code\Model\Pool\Pool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\Code\View\Canvas\PanelMenuView.cs" />
     <Compile Include="Assets\Code\Controller\SceneFactory.cs" />
     <Compile Include="Assets\Code\View\StartSceneView.cs" />
     <Compile Include="Assets\Code\Model\Pool\AsteroidPool.cs" />
@@ -160,8 +162,8 @@
     <Compile Include="Assets\Code\Helper\MixerGroupByName.cs" />
     <Compile Include="Assets\Code\Interface\IUserInputProxy.cs" />
     <Compile Include="Assets\Code\Interface\IGroupObject.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Code\Helper\AudioMixerGroupName.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputHorizontal.cs" />
     <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
     <Compile Include="Assets\Code\Helper\ManagerName.cs" />

@@ -25,8 +25,9 @@ namespace WORLDGAMEDEVELOPMENT
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
             var canvasController = new CanvasController(canvasInitialization.CanvasModel);
+            
             sceneController.Add(canvasInitialization.CanvasModel);
-            _controllers.Add(sceneController);
+            _controllers.Add(canvasController);
 
             var playerFactory = new PlayerFactory(_data.PlayerData);
             var playerInitialization = new PlayerInitialization(playerFactory,
@@ -76,6 +77,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _controllers.Initialization();
         }
+
 
         private void Update()
         {

@@ -37,7 +37,7 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-       
+
 
         private void OnChangeIsStopControl(bool value)
         {
@@ -60,18 +60,8 @@ namespace WORLDGAMEDEVELOPMENT
 
                 if (_model.EnemyStruct.PoolsOfType.ContainsKey(asteroid.AsteroidType))
                 {
+                    AddScoreByAsteroidDead?.Invoke(asteroid.BonusPoints.BonusPointsBeforeDeath);
                     _model.EnemyStruct.PoolsOfType[asteroid.AsteroidType].ReturnToPool(asteroid);
-                    
-                    //TODO - закешировать поля, сериализовать
-                    switch (asteroid.AsteroidType)
-                    {
-                        case AsteroidType.Meteorite:
-                            AddScoreByAsteroidDead?.Invoke(3.0f);
-                            break;
-                        case AsteroidType.Cometa:
-                            AddScoreByAsteroidDead?.Invoke(1.0f);
-                            break;
-                    }
                 }
                 else
                 {

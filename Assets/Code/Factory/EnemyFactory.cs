@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 
@@ -60,6 +62,8 @@ namespace WORLDGAMEDEVELOPMENT
                     asteroid.Speed = new Speed(enemyGroup.Speed);
                     asteroid.Damage = enemyGroup.DefaultDamage;
                     asteroid.AsteroidType = enemyGroup.Type;
+
+                    asteroid.BonusPoints = new BonusPoints(_enemyData.EnemySettings.Enemies.FirstOrDefault(e => e.Type == enemyGroup.Type).BonusPoints);
 
                     enemyStruct.PoolAsteroid = new Pool<Asteroid>(asteroid, enemyGroup.PoolSize);
 

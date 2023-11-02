@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class CanvasController : IController, ICleanup
+    internal class CanvasController : IController, ICleanup, IInitialization
     {
         private CanvasModel _canvasModel;
-        private readonly PanelMenuView _panelMenu;
-        private readonly PanelHUDView _panelHUD;
-        private List<IEventAction> _listEvent = new();
 
+        private readonly PanelGameMenuView _panelGameMenu;
+        private readonly PanelHUDView _panelHUD;
+        private readonly PanelMainMenuView _panelMainMenu;
+
+        private List<IEventAction> _listEvent = new();
+        private List<Button> _allButtonList = new();
 
         public CanvasController(CanvasModel canvasModel)
         {
@@ -18,26 +22,36 @@ namespace WORLDGAMEDEVELOPMENT
 
             foreach (var panel in _canvasModel.CanvasStruct.CanvasView.panelViews)
             {
-                if (panel is PanelMenuView panelMenu)
+                if (panel is PanelGameMenuView panelMenu)
                 {
-                    _panelMenu = panelMenu;
-                    _panelMenu.ButtonStart.onClick.AddListener(DisableMenu);
+                    _panelGameMenu = panelMenu;
+                    _panelGameMenu.ButtonStart.onClick.AddListener(DisableMenu);
                 }
                 if (panel is PanelHUDView panelHUD)
                 {
                     _panelHUD = panelHUD;
                 }
+                if (panel is PanelMainMenuView panelMainMenu)
+                {
+                    _panelMainMenu = panelMainMenu;
+                }
+            }
+
+            foreach (var item in _canvasModel.CanvasStruct.CanvasView.transform.GetComponentsInChildren<Button>())
+            {
+                _allButtonList.Add(item);
             }
         }
 
         private void DisableMenu()
         {
-            _panelMenu.transform.gameObject.SetActive(false);
+            _panelGameMenu.transform.gameObject.SetActive(false);
         }
 
         public void Cleanup()
         {
-            _panelMenu.ButtonStart.onClick.RemoveAllListeners();
+            _panelGameMenu.ButtonStart.onClick.RemoveAllListeners();
+
             foreach (var eventAction in _listEvent)
             {
                 if (eventAction is IEventActionGeneric<float> enemyEvent)
@@ -45,6 +59,11 @@ namespace WORLDGAMEDEVELOPMENT
                     enemyEvent.AddScoreByAsteroidDead -= EnemyController_AddScoreByAsteroidDead;
                 }
             }
+            foreach (var button in _allButtonList)
+            {
+                button.onClick.RemoveAllListeners();
+            }
+            _allButtonList.Clear();
         }
 
         internal void Add(IEventAction eventAction)
@@ -60,28 +79,33 @@ namespace WORLDGAMEDEVELOPMENT
         private void EnemyController_AddScoreByAsteroidDead(float value)
         {
             _panelHUD.Score += value;
-            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {GetRublesForm((int)_panelHUD.Score)}";
+            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
         }
 
-        public string GetRublesForm(int amount)
-        {
-            if (amount < 0)
-            {
-                throw new ArgumentException("Не бывает таких рублей.");
-            }
+       
 
-            if (amount % 10 == 1 && amount % 100 != 11)
-            {
-                return ManagerName.TEXT_SCORE_PREFIX_ONE;
-            }
-            else if ((amount % 10 >= 2 && amount % 10 <= 4) && (amount % 100 < 12 || amount % 100 > 14))
-            {
-                return ManagerName.TEXT_SCORE_PREFIX_TWO;
-            }
-            else
-            {
-                return ManagerName.TEXT_SCORE_PREFIX_FIVE;
-            }
+        public void Initialization()
+        {
+            _panelMainMenu.ButtonQuit.onClick.AddListener(ApplicationQuit);
+            _panelMainMenu.ButtonStart.onClick.AddListener(ButtonStartGame);
+        }
+
+        private void ButtonStartGame()
+        {
+            _panelMainMenu.gameObject.SetActive(false);
+            _panelGameMenu.gameObject.SetActive(true);
+        }
+
+        private void ApplicationQuit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+            Application.OpenURL("about:blank");
+#else
+            Application.Quit();
+#endif
+
         }
     }
 }
