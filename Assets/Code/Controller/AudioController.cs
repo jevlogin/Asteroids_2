@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 namespace WORLDGAMEDEVELOPMENT
 {
@@ -43,7 +43,7 @@ namespace WORLDGAMEDEVELOPMENT
             source.transform.position = vector;
             source.clip = _explosionAudioClip;
             source.gameObject.SetActive(true);
-
+            source.pitch = Random.Range(0.8f, 1.2f);
             source.Play();
 
             audioSourcesInUse.Add(new AudioSourceInfo(source, source.clip.length));

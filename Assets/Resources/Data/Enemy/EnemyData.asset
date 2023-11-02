@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   _enemySettings:
+    _radiusSpawnNewEnemy: 100
+    _explosionEffect: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
     Enemies:
     - Type: 1
       Sprite: {fileID: 21300000, guid: 264f9fc257019d74a92ea3508776b6f5, type: 3}
@@ -24,6 +26,9 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 50.4
+      BonusPoints:
+        _bonusPointsMin: 1
+        _bonusPointsMax: 10
       PoolSize: 100
     - Type: 2
       Sprite: {fileID: 21300000, guid: d6220a8269060814b86f9a0969bca95d, type: 3}
@@ -35,4 +40,7 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 30
-      PoolSize: 200
+      BonusPoints:
+        _bonusPointsMin: 1
+        _bonusPointsMax: 6
+      PoolSize: 100

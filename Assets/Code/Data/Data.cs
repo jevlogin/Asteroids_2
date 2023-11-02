@@ -16,6 +16,7 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private string _sceneDataPath;
         [SerializeField] private string _canvasDataPath;
         [SerializeField] private string _audioDataPath;
+        [SerializeField] private string _vFXDataPath;
 
         private PlayerData _playerData;
         private AmmunitionData _ammunitionData;
@@ -23,7 +24,23 @@ namespace WORLDGAMEDEVELOPMENT
         private SceneData _sceneData;
         private CanvasData _canvasData;
         private AudioData _audioData;
+        private VFXData _vFXData;
 
+        public VFXData VFXData
+        {
+            get
+            {
+                if (_vFXData == null)
+                {
+                    _vFXData = Resources.Load<VFXData>(Path.Combine(ManagerPath.DATA, _vFXDataPath));
+                    if (_vFXData == null)
+                        _vFXData = Resources.Load<VFXData>(_vFXDataPath);
+                    if (_vFXData == null)
+                        AssetNotFound(nameof(_vFXData));
+                }
+                return _vFXData;
+            }
+        }
 
         public AudioData AudioData
         {

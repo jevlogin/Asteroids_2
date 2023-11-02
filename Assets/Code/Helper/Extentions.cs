@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -32,6 +33,27 @@ namespace WORLDGAMEDEVELOPMENT
                 result = gameObject.AddComponent<T>();
             }
             return result;
+        }
+
+        public static string GetStringRub(this int amount)
+        {
+            if (amount < 0)
+            {
+                throw new ArgumentException("Не бывает таких рублей.");
+            }
+
+            if (amount % 10 == 1 && amount % 100 != 11)
+            {
+                return ManagerName.TEXT_SCORE_PREFIX_ONE;
+            }
+            else if ((amount % 10 >= 2 && amount % 10 <= 4) && (amount % 100 < 12 || amount % 100 > 14))
+            {
+                return ManagerName.TEXT_SCORE_PREFIX_TWO;
+            }
+            else
+            {
+                return ManagerName.TEXT_SCORE_PREFIX_FIVE;
+            }
         }
     }
 }

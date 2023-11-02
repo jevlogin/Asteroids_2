@@ -18,3 +18,4 @@ MonoBehaviour:
   _sceneDataPath: Scene/SceneData
   _canvasDataPath: Canvas/CanvasData
   _audioDataPath: Audio/AudioData
+  _vFXDataPath: VFX/VFXData

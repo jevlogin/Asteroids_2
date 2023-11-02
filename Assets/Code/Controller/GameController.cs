@@ -25,8 +25,9 @@ namespace WORLDGAMEDEVELOPMENT
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
             var canvasController = new CanvasController(canvasInitialization.CanvasModel);
+            
             sceneController.Add(canvasInitialization.CanvasModel);
-            _controllers.Add(sceneController);
+            _controllers.Add(canvasController);
 
             var playerFactory = new PlayerFactory(_data.PlayerData);
             var playerInitialization = new PlayerInitialization(playerFactory,
@@ -61,7 +62,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _controllers.Add(playerShooterController);
 
-            var enemyController = new EnemyController(enemyInitialization.Model, sceneController);
+            var enemyController = new EnemyController(enemyInitialization.Model, sceneController, playerInitialization.PlayerModel);
             _controllers.Add(enemyController);
             canvasController.Add(enemyController);
 
@@ -74,8 +75,14 @@ namespace WORLDGAMEDEVELOPMENT
                 playerShooterController, enemyController);
             _controllers.Add(audioController);
 
+            var VFXFactory = new VFXFactory(_data.VFXData);
+            var VFXInitialization = new VFXInitialization(VFXFactory);
+            var vfxController = new VFXController(VFXInitialization.Model, enemyController);
+            _controllers.Add(vfxController);
+
             _controllers.Initialization();
         }
+
 
         private void Update()
         {
