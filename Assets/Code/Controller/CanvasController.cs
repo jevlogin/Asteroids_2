@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class CanvasController : IController, ICleanup, IInitialization
+    internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute
     {
         private CanvasModel _canvasModel;
 
@@ -15,6 +17,8 @@ namespace WORLDGAMEDEVELOPMENT
 
         private List<IEventAction> _listEvent = new();
         private List<Button> _allButtonList = new();
+        private bool _isPaused;
+        private bool _isGameStarted;
 
         public CanvasController(CanvasModel canvasModel)
         {
@@ -22,10 +26,11 @@ namespace WORLDGAMEDEVELOPMENT
 
             foreach (var panel in _canvasModel.CanvasStruct.CanvasView.panelViews)
             {
+                panel.gameObject.SetActive(false);
+
                 if (panel is PanelGameMenuView panelMenu)
                 {
                     _panelGameMenu = panelMenu;
-                    _panelGameMenu.ButtonStart.onClick.AddListener(DisableMenu);
                 }
                 if (panel is PanelHUDView panelHUD)
                 {
@@ -45,8 +50,104 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void DisableMenu()
         {
-            _panelGameMenu.transform.gameObject.SetActive(false);
+            _panelGameMenu.gameObject.SetActive(false);
+            _panelHUD.gameObject.SetActive(true);
+
+            if (_isPaused)
+            {
+                _isPaused = false;
+                PauseOrResume(_isPaused);
+            }
         }
+
+        internal void Add(IEventAction eventAction)
+        {
+            _listEvent.Add(eventAction);
+
+            if (eventAction is EnemyController enemyController && enemyController is IEventActionGeneric<float> enemyEvent)
+            {
+                enemyEvent.AddScoreByAsteroidDead += EnemyController_AddScoreByAsteroidDead;
+            }
+        }
+
+        private void EnemyController_AddScoreByAsteroidDead(float value)
+        {
+            _panelHUD.Score += value;
+            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
+        }
+
+
+        public void Initialization()
+        {
+            if (!_panelMainMenu.gameObject.activeSelf)
+                _panelMainMenu.gameObject.SetActive(true);
+
+            _panelMainMenu.ButtonQuit.onClick.AddListener(ApplicationQuit);
+
+            _panelMainMenu.ButtonStart.onClick.AddListener(ButtonStartGame);
+            _panelGameMenu.ButtonStart.onClick.AddListener(DisableMenu);
+
+        }
+
+        private void ButtonStartGame()
+        {
+            _panelMainMenu.gameObject.SetActive(false);
+            _panelGameMenu.gameObject.SetActive(true);
+
+            _isGameStarted = true;
+
+            if (_isGameStarted)
+            {
+                //_panelMainMenu.ButtonStart.gameObject.SetActive(false);
+
+                var text = _panelMainMenu.ButtonStart.transform.GetComponentsInChildren<TextMeshProUGUI>().First();
+                if (text != null)
+                {
+                    text.text = "Продолжить";
+                    _panelMainMenu.ButtonStart.onClick.RemoveAllListeners();
+                    _panelMainMenu.ButtonStart.onClick.AddListener(ResumeGame);
+                }
+            }
+
+            if (_isPaused)
+            {
+                _isPaused = false;
+                PauseOrResume(_isPaused);
+            }
+        }
+
+        private void ResumeGame()
+        {
+            _panelMainMenu.gameObject.SetActive(!_panelMainMenu.gameObject.activeSelf);
+            PauseOrResume(_panelMainMenu.gameObject.activeSelf);
+        }
+
+        public void LateExecute(float deltatime)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && _isGameStarted)
+            {
+                _panelMainMenu.gameObject.SetActive(!_panelMainMenu.gameObject.activeSelf);
+
+                PauseOrResume(_panelMainMenu.gameObject.activeSelf);
+            }
+        }
+
+        private void PauseOrResume(bool value)
+        {
+            _isPaused = value;
+
+            if (_isPaused)
+            {
+                Time.timeScale = 0.0f;
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+            }
+        }
+
+
+        #region ICleanup
 
         public void Cleanup()
         {
@@ -66,35 +167,11 @@ namespace WORLDGAMEDEVELOPMENT
             _allButtonList.Clear();
         }
 
-        internal void Add(IEventAction eventAction)
-        {
-            _listEvent.Add(eventAction);
+        #endregion
 
-            if (eventAction is EnemyController enemyController && enemyController is IEventActionGeneric<float> enemyEvent)
-            {
-                enemyEvent.AddScoreByAsteroidDead += EnemyController_AddScoreByAsteroidDead;
-            }
-        }
 
-        private void EnemyController_AddScoreByAsteroidDead(float value)
-        {
-            _panelHUD.Score += value;
-            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
-        }
 
-       
-
-        public void Initialization()
-        {
-            _panelMainMenu.ButtonQuit.onClick.AddListener(ApplicationQuit);
-            _panelMainMenu.ButtonStart.onClick.AddListener(ButtonStartGame);
-        }
-
-        private void ButtonStartGame()
-        {
-            _panelMainMenu.gameObject.SetActive(false);
-            _panelGameMenu.gameObject.SetActive(true);
-        }
+        #region ApplicationQuit
 
         private void ApplicationQuit()
         {
@@ -107,5 +184,8 @@ namespace WORLDGAMEDEVELOPMENT
 #endif
 
         }
+
+
+        #endregion
     }
 }
