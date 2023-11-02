@@ -62,7 +62,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             _controllers.Add(playerShooterController);
 
-            var enemyController = new EnemyController(enemyInitialization.Model, sceneController);
+            var enemyController = new EnemyController(enemyInitialization.Model, sceneController, playerInitialization.PlayerModel);
             _controllers.Add(enemyController);
             canvasController.Add(enemyController);
 
@@ -74,6 +74,11 @@ namespace WORLDGAMEDEVELOPMENT
             var audioController = new AudioController(audioInitialization.AudioModel, playerInitialization.PlayerModel,
                 playerShooterController, enemyController);
             _controllers.Add(audioController);
+
+            var VFXFactory = new VFXFactory(_data.VFXData);
+            var VFXInitialization = new VFXInitialization(VFXFactory);
+            var vfxController = new VFXController(VFXInitialization.Model, enemyController);
+            _controllers.Add(vfxController);
 
             _controllers.Initialization();
         }

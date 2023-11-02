@@ -24,6 +24,7 @@ namespace WORLDGAMEDEVELOPMENT
             var settings = new EnemySettings();
 
             enemyStruct.PoolsOfType = new Dictionary<AsteroidType, AsteroidPool>();
+            enemyStruct.RadiusSpawnNewEnemy = _enemyData.EnemySettings.RadiusSpawnEnemy;
 
             foreach (var enemyGroup in _enemyData.EnemySettings.Enemies)
             {
@@ -66,13 +67,11 @@ namespace WORLDGAMEDEVELOPMENT
                     asteroid.BonusPoints = new BonusPoints(_enemyData.EnemySettings.Enemies.FirstOrDefault(e => e.Type == enemyGroup.Type).BonusPoints);
 
                     enemyStruct.PoolAsteroid = new Pool<Asteroid>(asteroid, enemyGroup.PoolSize);
-
                     var transformParent = enemyStruct.PoolAsteroids?.TransformParent ?? new GameObject(ManagerName.POOL_ASTEROID).transform;
-
                     enemyStruct.PoolAsteroids = new AsteroidPool(enemyStruct.PoolAsteroid, transformParent);
                     enemyStruct.PoolAsteroids.OnUpdatePoolAfterAddedNewPoolObjects += PoolAsteroids_OnAddedPool;
                     enemyStruct.PoolAsteroids.AddObjects(asteroid);
-                    
+
                     view = asteroid;
                     break;
                 default:

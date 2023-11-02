@@ -98,12 +98,10 @@ namespace WORLDGAMEDEVELOPMENT
 
             if (_isGameStarted)
             {
-                //_panelMainMenu.ButtonStart.gameObject.SetActive(false);
-
                 var text = _panelMainMenu.ButtonStart.transform.GetComponentsInChildren<TextMeshProUGUI>().First();
                 if (text != null)
                 {
-                    text.text = "Продолжить";
+                    text.text = ManagerName.CONTINUE;
                     _panelMainMenu.ButtonStart.onClick.RemoveAllListeners();
                     _panelMainMenu.ButtonStart.onClick.AddListener(ResumeGame);
                 }

@@ -16,5 +16,7 @@ namespace WORLDGAMEDEVELOPMENT
         public const string TEXT_SCORE_PREFIX_ONE = "рубль";
         public const string TEXT_SCORE_PREFIX_TWO = "рубля";
         public const string TEXT_SCORE_PREFIX_FIVE = "рублей";
+        public const string CONTINUE = "Продолжить";
+        public const string POOL_VFX = "[Pool_VFX]";
     }
 }

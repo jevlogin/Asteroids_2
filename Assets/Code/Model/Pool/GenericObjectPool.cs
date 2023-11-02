@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Object = UnityEngine.Object;
 
 namespace WORLDGAMEDEVELOPMENT
 {
@@ -12,7 +13,7 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private Pool<T> _poolPrefab;
         private Transform _transformParent;
         private Transform _transformPool;
-        internal event System.Action<List<T>, T> OnUpdatePoolAfterAddedNewPoolObjects;
+        internal event Action<List<T>, T> OnUpdatePoolAfterAddedNewPoolObjects;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
         internal GenericObjectPool(Pool<T> pool, Transform transformParent)
         {
             PoolPrefab = pool;
-            _transformParent = transformParent;
+            _transformParent = transformParent; 
 
             if (_transformParent == null && pool != null)
             {
@@ -117,7 +118,10 @@ namespace WORLDGAMEDEVELOPMENT
                         _transformPool = new GameObject($"[Pool_{PoolPrefab.Prefab.name}]").transform;
                         break;
                     default:
-                        throw new System.ArgumentException("Нет такого типа", nameof(T));
+                        _transformPool = new GameObject($"[Pool_{PoolPrefab.Prefab.name}]").transform;
+                        new ArgumentException("Нет такого типа", nameof(T));
+                        break;
+                        //throw new ArgumentException("Нет такого типа", nameof(T));
                 }
                 _transformPool.SetParent(_transformParent);
             }

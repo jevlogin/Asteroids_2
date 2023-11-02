@@ -59,21 +59,99 @@
     <Analyzer Include="D:\Program Files\Unity Hub\Editor\2022.3.12f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Code\Data\Scene\SceneStruct.cs" />
-    <Compile Include="Assets\Code\View\Enemy\EnemyView.cs" />
+    <Compile Include="Assets\Inguz Media Studio\Free 2D Impact FX\Script\AnimationHelper.cs" />
     <Compile Include="Assets\Code\Initialization\PlayerInitialization.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioComponents.cs" />
     <Compile Include="Assets\Code\Helper\AxisManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\Code\Controller\AudioFactory.cs" />
-    <Compile Include="Assets\Code\Controller\RotationController.cs" />
     <Compile Include="Assets\Code\View\Player\PlayerView.cs" />
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionSettings.cs" />
-    <Compile Include="Assets\Code\Controller\CanvasFactory.cs" />
     <Compile Include="Assets\Code\Model\Enemy\EnemyModel.cs" />
+    <Compile Include="Assets\Code\Data\VFX\VFXSettings.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Code\View\Canvas\PanelHUDView.cs" />
+    <Compile Include="Assets\Code\Controller\DelayGenericObject.cs" />
+    <Compile Include="Assets\Code\Factory\EnemyFactory.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\Code\Data\Canvas\CanvasStruct.cs" />
+    <Compile Include="Assets\Code\Controller\IEventActionGeneric.cs" />
+    <Compile Include="Assets\Code\Initialization\PCInputMouse.cs" />
+    <Compile Include="Assets\Code\Data\VFX\VFXData.cs" />
+    <Compile Include="Assets\Code\Controller\AudioSourcePool.cs" />
+    <Compile Include="Assets\Code\Model\Player\Player.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Code\Factory\VFXFactory.cs" />
+    <Compile Include="Assets\Code\Factory\PlayerFactory.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Code\Controller\GameController.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\Code\Controller\SceneController.cs" />
+    <Compile Include="Assets\Code\View\Canvas\CanvasView.cs" />
+    <Compile Include="Assets\Code\Controller\CanvasModel.cs" />
+    <Compile Include="Assets\Code\Initialization\EnemyInitialization.cs" />
+    <Compile Include="Assets\Code\Data\Audio\AudioDataSettings.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\Code\Model\Ammunition\Bullet.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Code\View\Player\GroupObject.cs" />
+    <Compile Include="Assets\Code\Interface\IDamageable.cs" />
+    <Compile Include="Assets\Code\Data\Audio\GroupAudioClip.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Code\Data\Audio\AudioClipType.cs" />
+    <Compile Include="Assets\Code\Data\Data.cs" />
+    <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
+    <Compile Include="Assets\Code\Controller\SceneInitialization.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\Code\Interface\IMove.cs" />
+    <Compile Include="Assets\Code\Model\Pool\GenericObjectPool.cs" />
+    <Compile Include="Assets\Code\Model\Player\Health.cs" />
+    <Compile Include="Assets\Code\Interface\IRotation.cs" />
+    <Compile Include="Assets\Code\Interface\IFixedExecute.cs" />
+    <Compile Include="Assets\Code\Model\Pool\Pool.cs" />
+    <Compile Include="Assets\Code\View\StartSceneView.cs" />
+    <Compile Include="Assets\Code\Data\VFX\VFXStruct.cs" />
+    <Compile Include="Assets\Code\Initialization\VFXInitialization.cs" />
+    <Compile Include="Assets\Code\Helper\MixerGroupByName.cs" />
+    <Compile Include="Assets\Code\Helper\AudioMixerGroupName.cs" />
+    <Compile Include="Assets\Code\Initialization\PCInputHorizontal.cs" />
+    <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
+    <Compile Include="Assets\Code\Helper\ManagerName.cs" />
+    <Compile Include="Assets\Code\Data\Player\PlayerStruct.cs" />
+    <Compile Include="Assets\Code\Data\Scene\SceneSettings.cs" />
+    <Compile Include="Assets\Code\Interface\ICollisionDetect.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Code\Data\Enemy\EnemyData.cs" />
+    <Compile Include="Assets\Code\Interface\ICleanup.cs" />
+    <Compile Include="Assets\Code\Data\Scene\SceneData.cs" />
+    <Compile Include="Assets\Code\Model\Player\Speed.cs" />
+    <Compile Include="Assets\Code\Helper\ManagerPath.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Code\Model\Player\ConfigParticlesShip.cs" />
+    <Compile Include="Assets\Code\Model\Ammunition\AmmunitionModel.cs" />
+    <Compile Include="Assets\Code\Data\Enemy\EnemySettings.cs" />
+    <Compile Include="Assets\Code\Data\Bullet\AmmunitionStruct.cs" />
+    <Compile Include="Assets\Code\Controller\AudioController.cs" />
+    <Compile Include="Assets\Code\Controller\AmmunitionInitialization.cs" />
+    <Compile Include="Assets\Code\Controller\VFXController.cs" />
+    <Compile Include="Assets\Code\Controller\AudioInitialization.cs" />
+    <Compile Include="Assets\Code\Controller\AudioSourceInfo.cs" />
+    <Compile Include="Assets\Code\Data\Bullet\AmmunitionData.cs" />
+    <Compile Include="Assets\Code\Interface\IController.cs" />
+    <Compile Include="Assets\Code\Controller\InputController.cs" />
+    <Compile Include="Assets\Code\Data\Audio\AudioData.cs" />
+    <Compile Include="Assets\Code\Factory\AmmunitionFactory.cs" />
+    <Compile Include="Assets\Inguz Media Studio\Free 2D Impact FX\Script\SelfDestruct.cs" />
+    <Compile Include="Assets\Code\Data\Scene\SceneStruct.cs" />
+    <Compile Include="Assets\Code\View\Enemy\EnemyView.cs" />
+    <Compile Include="Assets\Code\Controller\AudioFactory.cs" />
+    <Compile Include="Assets\Code\Controller\RotationController.cs" />
+    <Compile Include="Assets\Code\Controller\CanvasFactory.cs" />
     <Compile Include="Assets\Code\Controller\CameraController.cs" />
     <Compile Include="Assets\Code\Interface\IObjectType.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Code\Factory\VFXModel.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioStruct.cs" />
     <Compile Include="Assets\Code\Helper\AmmunitionType.cs" />
     <Compile Include="Assets\Code\View\Canvas\PanelGameMenuView.cs" />
@@ -84,130 +162,66 @@
     <Compile Include="Assets\Code\View\Player\ViewObjectType.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyComponents.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyStruct.cs" />
-    <Compile Include="Assets\Code\View\Canvas\PanelHUDView.cs" />
     <Compile Include="Assets\Code\Controller\PlayerController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Code\Helper\Extentions.cs" />
     <Compile Include="Assets\Code\Data\Canvas\CanvasSettings.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-    <Compile Include="Assets\Code\Factory\EnemyFactory.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Code\Model\Enemy\Asteroid.cs" />
     <Compile Include="Assets\Code\Model\Player\PlayerModel.cs" />
-    <Compile Include="Assets\Code\Data\Canvas\CanvasStruct.cs" />
-    <Compile Include="Assets\Code\Controller\IEventActionGeneric.cs" />
+    <Compile Include="Assets\Inguz Media Studio\Free 2D Impact FX\Demo Scene\DemoManager.cs" />
     <Compile Include="Assets\Code\Model\Pool\BulletPool.cs" />
     <Compile Include="Assets\Code\Controller\CanvasController.cs" />
-    <Compile Include="Assets\Code\Initialization\PCInputMouse.cs" />
     <Compile Include="Assets\Code\Controller\SceneModel.cs" />
-    <Compile Include="Assets\Code\Controller\AudioSourcePool.cs" />
-    <Compile Include="Assets\Code\Model\Player\Player.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-    <Compile Include="Assets\Code\Factory\PlayerFactory.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
-    <Compile Include="Assets\Code\Controller\GameController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\Code\Factory\VFXPool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-    <Compile Include="Assets\Code\Controller\SceneController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Code\Controller\AudioModel.cs" />
     <Compile Include="Assets\Code\View\Camera\CameraView.cs" />
-    <Compile Include="Assets\Code\View\Canvas\CanvasView.cs" />
-    <Compile Include="Assets\Code\Controller\CanvasModel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\Code\Initialization\EnemyInitialization.cs" />
     <Compile Include="Assets\Code\Controller\MoveController.cs" />
-    <Compile Include="Assets\Code\Data\Audio\AudioDataSettings.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-    <Compile Include="Assets\Code\Model\Ammunition\Bullet.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-    <Compile Include="Assets\Code\View\Player\GroupObject.cs" />
-    <Compile Include="Assets\Code\Interface\IDamageable.cs" />
+    <Compile Include="Assets\Inguz Media Studio\Free 2D Impact FX\Demo Scene\ButtonAnimation.cs" />
     <Compile Include="Assets\Code\Initialization\InputInitialization.cs" />
     <Compile Include="Assets\Code\View\Ammunition\AmmunitionView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
-    <Compile Include="Assets\Code\Data\Audio\GroupAudioClip.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Code\Controller\PlayerShooterController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Code\Model\Pool\EmptyPoolAsteroid.cs" />
-    <Compile Include="Assets\Code\Data\Audio\AudioClipType.cs" />
     <Compile Include="Assets\Code\Data\Canvas\CanvasData.cs" />
-    <Compile Include="Assets\Code\Data\Data.cs" />
-    <Compile Include="Assets\Code\Data\Player\PlayerComponents.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\Code\Controller\SceneInitialization.cs" />
     <Compile Include="Assets\Code\Controller\IEventAction1.cs" />
     <Compile Include="Assets\Code\View\Canvas\PanelView.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
-    <Compile Include="Assets\Code\Interface\IMove.cs" />
     <Compile Include="Assets\Code\View\Player\ObjectType.cs" />
-    <Compile Include="Assets\Code\Model\Pool\GenericObjectPool.cs" />
-    <Compile Include="Assets\Code\Model\Player\Health.cs" />
-    <Compile Include="Assets\Code\Interface\IRotation.cs" />
-    <Compile Include="Assets\Code\Interface\IFixedExecute.cs" />
-    <Compile Include="Assets\Code\Model\Pool\Pool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Code\Controller\SceneFactory.cs" />
-    <Compile Include="Assets\Code\View\StartSceneView.cs" />
     <Compile Include="Assets\Code\Model\Pool\AsteroidPool.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemySettingsGroup.cs" />
     <Compile Include="Assets\Code\Helper\GroupObjectType.cs" />
-    <Compile Include="Assets\Code\Helper\MixerGroupByName.cs" />
     <Compile Include="Assets\Code\Interface\IUserInputProxy.cs" />
     <Compile Include="Assets\Code\Interface\IGroupObject.cs" />
-    <Compile Include="Assets\Code\Helper\AudioMixerGroupName.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
-    <Compile Include="Assets\Code\Initialization\PCInputHorizontal.cs" />
-    <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
-    <Compile Include="Assets\Code\Helper\ManagerName.cs" />
-    <Compile Include="Assets\Code\Data\Player\PlayerStruct.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Code\Interface\IExecute.cs" />
     <Compile Include="Assets\Code\Controller\EnemyController.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerSettings.cs" />
-    <Compile Include="Assets\Code\Data\Scene\SceneSettings.cs" />
-    <Compile Include="Assets\Code\Interface\ICollisionDetect.cs" />
+    <Compile Include="Assets\Code\Controller\DelayExplosionObject.cs" />
     <Compile Include="Assets\Code\Interface\IInitialization.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Code\Data\Enemy\EnemyData.cs" />
-    <Compile Include="Assets\Code\Interface\ICleanup.cs" />
-    <Compile Include="Assets\Code\Data\Scene\SceneData.cs" />
-    <Compile Include="Assets\Code\Model\Player\Speed.cs" />
-    <Compile Include="Assets\Code\Helper\ManagerPath.cs" />
     <Compile Include="Assets\Code\Interface\ILateExecute.cs" />
-    <Compile Include="Assets\Code\Data\CoroutineHandler.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
-    <Compile Include="Assets\Code\Model\Player\ConfigParticlesShip.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputVertical.cs" />
-    <Compile Include="Assets\Code\Model\Ammunition\AmmunitionModel.cs" />
-    <Compile Include="Assets\Code\Data\Enemy\EnemySettings.cs" />
-    <Compile Include="Assets\Code\Data\Bullet\AmmunitionStruct.cs" />
     <Compile Include="Assets\Code\Controller\ParticleController.cs" />
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionComponents.cs" />
     <Compile Include="Assets\Code\Controller\IAddedModel.cs" />
     <Compile Include="Assets\Code\Controller\CanvasInitialization.cs" />
     <Compile Include="Assets\Code\Controller\Controllers.cs" />
-    <Compile Include="Assets\Code\Controller\AudioController.cs" />
-    <Compile Include="Assets\Code\Controller\AmmunitionInitialization.cs" />
     <Compile Include="Assets\Code\Helper\AudioSourceByMixerGroupType.cs" />
-    <Compile Include="Assets\Code\Controller\AudioSourceInfo.cs" />
+    <Compile Include="Assets\Code\Factory\VFXComponents.cs" />
     <Compile Include="Assets\Code\Interface\IUserInputBool.cs" />
-    <Compile Include="Assets\Code\Controller\AudioInitialization.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerData.cs" />
-    <Compile Include="Assets\Code\Data\Bullet\AmmunitionData.cs" />
-    <Compile Include="Assets\Code\Interface\IController.cs" />
-    <Compile Include="Assets\Code\Controller\InputController.cs" />
-    <Compile Include="Assets\Code\Data\Audio\AudioData.cs" />
-    <Compile Include="Assets\Code\Factory\AmmunitionFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Code\Helper\AsteroidType.cs" />
   </ItemGroup>
@@ -230,6 +244,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Inguz Media Studio\Free 2D Impact FX\Demo Scene\Righteous-Regular OFLicence.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
@@ -874,6 +889,12 @@
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
     </Reference>
@@ -898,6 +919,12 @@
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
     </Reference>
@@ -907,6 +934,9 @@
     <Reference Include="Unity.2D.Tilemap.Extras.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
     </Reference>
@@ -915,6 +945,9 @@
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
       <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
+    </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
@@ -931,8 +964,17 @@
     <Reference Include="Unity.Profiling.Core">
       <HintPath>Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
@@ -945,6 +987,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Shared.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AdaptivePerformance">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.dll</HintPath>
@@ -991,6 +1036,9 @@
     <Reference Include="Unity.2D.Common.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
@@ -1018,8 +1066,14 @@
     <Reference Include="Unity.2D.Common.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AdaptivePerformance.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Editor.dll</HintPath>
