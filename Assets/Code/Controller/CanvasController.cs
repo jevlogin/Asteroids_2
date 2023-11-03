@@ -14,7 +14,7 @@ namespace WORLDGAMEDEVELOPMENT
         private readonly PanelGameMenuView _panelGameMenu;
         private readonly PanelHUDView _panelHUD;
         private readonly PanelMainMenuView _panelMainMenu;
-
+        private readonly PanelResultsView _panelResults;
         private List<IEventAction> _listEvent = new();
         private List<Button> _allButtonList = new();
         private bool _isPaused;
@@ -41,6 +41,10 @@ namespace WORLDGAMEDEVELOPMENT
                 if (panel is PanelMainMenuView panelMainMenu)
                 {
                     _panelMainMenu = panelMainMenu;
+                }
+                if (panel is PanelResultsView panelResults)
+                {
+                    _panelResults = panelResults;
                 }
             }
 
@@ -97,6 +101,7 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _panelMainMenu.gameObject.SetActive(false);
             _panelGameMenu.gameObject.SetActive(true);
+            _panelResults.gameObject.SetActive(true);
 
             _isGameStarted = true;
 
