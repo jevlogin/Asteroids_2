@@ -10,6 +10,7 @@ namespace WORLDGAMEDEVELOPMENT
         Shot        = 1,
         Explosion   = 2,
         Flying      = 3,
-        EF          = 4,
+        Effects     = 4,
+        Music       = 5,
     }
 }

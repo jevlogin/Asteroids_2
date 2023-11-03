@@ -1,7 +1,5 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 namespace WORLDGAMEDEVELOPMENT
@@ -19,14 +17,5 @@ namespace WORLDGAMEDEVELOPMENT
         internal TextMeshProUGUI TextSpeed => _textSpeed;
         internal TextMeshProUGUI TextElapsedTime => _textElapsedTime;
         internal TextMeshProUGUI TextPeopleOfReached => _textPeopleOfReached;
-    }
-
-    [Serializable]
-    public sealed class WebPlayer
-    {
-        [SerializeField] private Button _buttonPrev;
-        [SerializeField] private Button _buttonPlay;
-        [SerializeField] private Button _buttonPause;
-        [SerializeField] private Button _buttonNext;
     }
 }

@@ -21,17 +21,27 @@ namespace WORLDGAMEDEVELOPMENT
             var components = new AudioComponents();
             var settings = new AudioDataSettings();
 
+            var rootTransfromParent = new GameObject(ManagerName.POOL_AUDIO);
+
             var audioSourceEffects = Object.Instantiate(_audioData.AudioDataSettings.AudioSourceByMixerTypesPrefabs.FirstOrDefault(source => source.mixerGroup == MixerGroupByName.Effects).AudioSource);
             var poolAudioSourceEffect = new Pool<AudioSource>(audioSourceEffects, _audioData.AudioDataSettings.PoolSize);
 
-            var poolAudioSourceTransfromParent = new GameObject(ManagerName.POOL_AUDIO);
-            var poolAudioEffectsGeneric = new AudioSourcePool(poolAudioSourceEffect, poolAudioSourceTransfromParent.transform);
+            var poolAudioEffectsGeneric = new AudioSourcePool(poolAudioSourceEffect, rootTransfromParent.transform);
             poolAudioEffectsGeneric.AddObjects(audioSourceEffects);
+
+            var audioSourceMusic = Object.Instantiate(_audioData.AudioDataSettings.AudioSourceByMixerTypesPrefabs.FirstOrDefault(source => source.mixerGroup == MixerGroupByName.Music).AudioSource);
+            var poolSourceMusic = new Pool<AudioSource>(audioSourceMusic, _audioData.AudioDataSettings.PoolSize);
+
+            var poolAudioMusicGeneric = new AudioSourcePool(poolSourceMusic, rootTransfromParent.transform);
+            poolAudioMusicGeneric.AddObjects(audioSourceMusic);
+           
 
             audioStruct.PoolsByMixerTypes = new Dictionary<MixerGroupByName, AudioSourcePool>
             {
-                [MixerGroupByName.Effects] = poolAudioEffectsGeneric
+                [MixerGroupByName.Effects] = poolAudioEffectsGeneric,
+                [MixerGroupByName.Music] = poolAudioMusicGeneric,
             };
+
 
             _audioModel = new AudioModel(audioStruct, components, settings);
             return _audioModel;

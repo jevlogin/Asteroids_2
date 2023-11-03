@@ -15,9 +15,16 @@ MonoBehaviour:
   _audioStruct:
     _audioMixer: {fileID: 24100000, guid: 10892575425a76448bc8ccee608e5589, type: 2}
     _clipByTypes:
-    - _type: 0
+    - _type: 5
       AudioClips:
       - {fileID: 8300000, guid: 1751999ddb6bff444b51b75d7b9c2849, type: 3}
+      - {fileID: 8300000, guid: c91a54a8e1a54e94fa6a2037b5efaa92, type: 3}
+      - {fileID: 8300000, guid: 5030e94742f1dee41836dc4ef7220ca8, type: 3}
+      - {fileID: 8300000, guid: d883e66934c56604b995fdef46da7749, type: 3}
+      - {fileID: 8300000, guid: 29b7964dc48037a4daaa22df68c8e1c2, type: 3}
+      - {fileID: 8300000, guid: 6998b4374c681bc4eba4fb5f8596736f, type: 3}
+      - {fileID: 8300000, guid: 7ed20aafd1f3f414ea7774202980a601, type: 3}
+      - {fileID: 8300000, guid: 479b48e1075aa5849b3776a5eadbab39, type: 3}
     - _type: 1
       AudioClips:
       - {fileID: 8300000, guid: 13fa6084d3afad543bbfa08dbbdb740c, type: 3}
@@ -43,4 +50,4 @@ MonoBehaviour:
       AudioSource: {fileID: 5260571276570987611, guid: b574ea024ff82f74fbeb838ba7fb13f9, type: 3}
     - mixerGroup: 3
       AudioSource: {fileID: 4378652306992846932, guid: 5b798efba5036b24189fadb6a7ef945b, type: 3}
-    _poolSize: 5
+    _poolSize: 2
