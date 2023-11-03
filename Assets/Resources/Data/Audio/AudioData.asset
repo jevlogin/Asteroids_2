@@ -29,6 +29,12 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 433874bf66a06f44eacf63ac4f94b14a, type: 3}
       - {fileID: 8300000, guid: b8513a3459aaee6418086645666b4b5d, type: 3}
       - {fileID: 8300000, guid: 47e1180093a1af442bfb23a5838e6ba5, type: 3}
+    - _type: 3
+      AudioClips:
+      - {fileID: 8300000, guid: e995deb766ee9be4b900311dbcfd9a2d, type: 3}
+      - {fileID: 8300000, guid: c7e1ef0aad849e449bdfadcecbf2e28f, type: 3}
+      - {fileID: 8300000, guid: f7157b43298c26945a7c7743c2ad9b4e, type: 3}
+      - {fileID: 8300000, guid: 47a1ca433f63d3e44898da1e8a817919, type: 3}
   _audioSettings:
     _audioSourceByGroupTypesPrefabs:
     - mixerGroup: 1
