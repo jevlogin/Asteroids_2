@@ -72,7 +72,7 @@ namespace WORLDGAMEDEVELOPMENT
             var audioFactory = new AudioFactory(_data.AudioData);
             var audioInitialization = new AudioInitialization(audioFactory);
             var audioController = new AudioController(audioInitialization.AudioModel, playerInitialization.PlayerModel,
-                playerShooterController, enemyController);
+                playerShooterController, enemyController, canvasController);
             _controllers.Add(audioController);
 
             var VFXFactory = new VFXFactory(_data.VFXData);
