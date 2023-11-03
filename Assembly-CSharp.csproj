@@ -182,6 +182,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Code\Controller\MoveController.cs" />
     <Compile Include="Assets\Inguz Media Studio\Free 2D Impact FX\Demo Scene\ButtonAnimation.cs" />
+    <Compile Include="Assets\Code\Controller\EventCanvas.cs" />
     <Compile Include="Assets\Code\Initialization\InputInitialization.cs" />
     <Compile Include="Assets\Code\View\Ammunition\AmmunitionView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />

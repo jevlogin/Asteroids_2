@@ -20,6 +20,8 @@ namespace WORLDGAMEDEVELOPMENT
         private bool _isPaused;
         private bool _isGameStarted;
 
+        internal event Action<EventCanvas> StartGame;
+
         public CanvasController(CanvasModel canvasModel)
         {
             _canvasModel = canvasModel;
@@ -52,6 +54,8 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _panelGameMenu.gameObject.SetActive(false);
             _panelHUD.gameObject.SetActive(true);
+
+            StartGame?.Invoke(EventCanvas.StartShip);
 
             if (_isPaused)
             {
@@ -95,6 +99,8 @@ namespace WORLDGAMEDEVELOPMENT
             _panelGameMenu.gameObject.SetActive(true);
 
             _isGameStarted = true;
+
+            StartGame?.Invoke(EventCanvas.StartGame);
 
             if (_isGameStarted)
             {
