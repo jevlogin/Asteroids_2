@@ -9,6 +9,10 @@ namespace WORLDGAMEDEVELOPMENT
     {
         #region Fields
 
+        [SerializeField, Header("Сглаживание изменения скорости")] internal float VelocityChangeSpeed;
+        [SerializeField, Header("Реальная скорость корабля")] internal float RealSpeedShipModel;
+        [SerializeField, Header("Фактор множителя скорости и всего")] internal float ScaleFactor;
+        internal float SpeedScale;
         internal Player Player;
 
         #endregion

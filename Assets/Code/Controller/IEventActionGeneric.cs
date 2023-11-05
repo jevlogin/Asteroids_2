@@ -5,6 +5,6 @@ namespace WORLDGAMEDEVELOPMENT
 {
     internal interface IEventActionGeneric<T> : IEventAction
     {
-        abstract event Action<T> AddScoreByAsteroidDead;
+        abstract event Action<T> OnChangePositionRelativeToAxisY;
     }
 }

@@ -57,7 +57,7 @@ namespace WORLDGAMEDEVELOPMENT
             _audioSource.Delay = _audioSource.Source.clip.length;
             _isPaused = false;
 
-            if(_isContinuedPlay)
+            if (_isContinuedPlay)
             {
                 PauseOrPlay();
             }
@@ -68,7 +68,11 @@ namespace WORLDGAMEDEVELOPMENT
             _isContinuedPlay = _audioSource.Source.isPlaying;
             _audioSource.Source.Stop();
             _indexClip--;
-            _indexClip %= _audioClips.Count;
+            if (_indexClip < 0)
+                _indexClip = _audioClips.Count - 1;
+            else
+                _indexClip %= _audioClips.Count;
+
             _audioSource.Source.clip = _audioClips[_indexClip];
             _audioSource.Delay = _audioSource.Source.clip.length;
             _isPaused = false;

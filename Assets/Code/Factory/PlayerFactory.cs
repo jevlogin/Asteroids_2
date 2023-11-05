@@ -31,19 +31,26 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (_playerModel == null)
             {
-                var playerStruct = new PlayerStruct();
+                var playerStruct = _playerData.PlayerStruct;
                 var playerComponents = new PlayerComponents();
                 var playerSettings = new PlayerSettings();
                 playerSettings.ConfigParticlesShip = _playerData.PlayerSettings.ConfigParticlesShip;
                 playerSettings.ConfigParticlesShipDefault = _playerData.PlayerSettings.ConfigParticlesShipDefault;
+                playerSettings.TimeForShipToTakeOff = _playerData.PlayerSettings.TimeForShipToTakeOff;
+                playerSettings.SpeedAtTakeShip = _playerData.PlayerSettings.SpeedAtTakeShip;
+
 
                 playerStruct.Player = CreatePlayer(ManagerName.PLAYER);
                 playerStruct.Player.transform.localPosition = startSpaceTransform.position;
+
+                playerComponents.RigidbodyPlayer = playerStruct.Player.gameObject.GetOrAddComponent<Rigidbody2D>();
 
                 playerStruct.Player.Health = new Health(_playerData.PlayerSettings.Health);
                 playerStruct.Player.Speed = new Speed(_playerData.PlayerSettings.Speed);
                 playerStruct.Player.Damage = _playerData.PlayerSettings.Damage;
                 playerStruct.Player.Force = _playerData.PlayerSettings.Force;
+
+                playerStruct.SpeedScale = playerStruct.RealSpeedShipModel / playerStruct.Player.Speed.CurrentSpeed;
 
                 var barrel = new GameObject("Barrel");
                 barrel.transform.SetParent(playerStruct.Player.transform);
@@ -73,6 +80,7 @@ namespace WORLDGAMEDEVELOPMENT
                 playerComponents.AudioSource = playerStruct.Player.gameObject.GetOrAddComponent<AudioSource>();
                 playerComponents.AudioSource.playOnAwake = false;
                 playerComponents.AudioSource.volume = 0.03f;
+
 
                 var energiyaGroupObject = playerStruct.Player.GroupObjects.FirstOrDefault(block => block.ViewObjectType == ViewObjectType.AdditionalType);
                 playerComponents.RigidbodyEnergyBlock = energiyaGroupObject.Transform.gameObject.GetOrAddComponent<Rigidbody>();

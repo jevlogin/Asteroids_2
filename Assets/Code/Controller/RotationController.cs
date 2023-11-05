@@ -9,12 +9,15 @@ namespace WORLDGAMEDEVELOPMENT
         private Camera _camera;
         private bool _isStopControl;
         private readonly SceneController _sceneController;
+        private readonly Rigidbody2D _rigidbodyPlayer;
 
-        public RotationController(Transform playerTransform, Camera camera, SceneController sceneController)
+        public RotationController(Transform playerTransform, Camera camera, SceneController sceneController, Rigidbody2D rigidbodyPlayer)
         {
             _playerTransform = playerTransform;
             _camera = camera;
             _sceneController = sceneController;
+            _rigidbodyPlayer = rigidbodyPlayer;
+
             _sceneController.IsStopControl += OnChangeIsStopControl;
         }
 
@@ -30,7 +33,10 @@ namespace WORLDGAMEDEVELOPMENT
             var direction = Input.mousePosition - _camera.WorldToScreenPoint(_playerTransform.position);
 
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90.0f;
-            _playerTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            //_playerTransform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            _rigidbodyPlayer.SetRotation(angle);
         }
 
 

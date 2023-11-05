@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class PlayerController : ICleanup, IExecute, IAddedModel
+    internal class PlayerController : ICleanup, IExecute, IFixedExecute, ILateExecute, IAddedModel
     {
         #region Fields
 
@@ -31,7 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
                 if (_rotationController == null)
                 {
                     _rotationController = new RotationController(_playerInitialization.PlayerModel.Components.PlayerTransform,
-                                                _camera, _sceneController);
+                                                _camera, _sceneController, _playerInitialization.PlayerModel.Components.RigidbodyPlayer);
                 }
                 return _rotationController;
             }
@@ -43,9 +43,10 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 if (_moveController == null)
                 {
-                    _moveController = new MoveController(_inputInitialization.GetInput(),
+                    _moveController = new MoveController(_inputInitialization.GetInput(), _playerInitialization.PlayerModel.Components.RigidbodyPlayer,
                                                _playerInitialization.PlayerModel.Components.PlayerTransform,
                                                _playerInitialization.PlayerModel.PlayerStruct.Player.Speed,
+                                               _playerInitialization.PlayerModel,
                                                _sceneController);
                 }
                 return _moveController;
@@ -72,7 +73,7 @@ namespace WORLDGAMEDEVELOPMENT
             _controllers = new()
             {
                 MoveController,
-                RotationController
+                //RotationController
             };
         }
 
@@ -88,7 +89,7 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.gameObject.SetActive(false);
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.transform.SetParent(_playerInitialization.PlayerModel.Components.PlayerTransform);
-            
+
             var position = _playerInitialization.PlayerModel.Components.PlayerTransform.position + _playerInitialization.PlayerModel.Settings.TransformPositionEnergyBlock;
 
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.transform.position = position;
@@ -157,18 +158,40 @@ namespace WORLDGAMEDEVELOPMENT
                     {
                         execute.Execute(deltatime);
                     }
-                } 
+                }
             }
             else
             {
                 _timeFreezeDead += Time.deltaTime;
-                if (_timeFreezeDead > 3.0f )
+                if (_timeFreezeDead > 3.0f)
                 {
                     _stopControl = false;
                 }
-                else if(_timeFreezeDead > 1.0f && !_playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.activeSelf)
+                else if (_timeFreezeDead > 1.0f && !_playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.activeSelf)
                 {
                     _playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.SetActive(true);
+                }
+            }
+        }
+
+        public void LateExecute(float deltatime)
+        {
+            foreach (var controller in _controllers)
+            {
+                if (controller is ILateExecute execute)
+                {
+                    execute.LateExecute(deltatime);
+                }
+            }
+        }
+
+        public void FixedExecute(float fixedDeltatime)
+        {
+            foreach (var controller in _controllers)
+            {
+                if (controller is IFixedExecute execute)
+                {
+                    execute.FixedExecute(fixedDeltatime);
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
             _radiusSpawn = _enemyModel.EnemyStruct.RadiusSpawnNewEnemy;
         }
 
-        event Action<float> IEventActionGeneric<float>.AddScoreByAsteroidDead
+        event Action<float> IEventActionGeneric<float>.OnChangePositionRelativeToAxisY
         {
             add
             {

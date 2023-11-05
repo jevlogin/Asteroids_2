@@ -9,6 +9,8 @@ namespace WORLDGAMEDEVELOPMENT
     {
         #region Fields
 
+        [SerializeField] private float _timeForShipToTakeOff;
+        [SerializeField] private float _speedAtTakeShip;
         [SerializeField] private Speed _speed;
         [SerializeField] private Health _health;
         [SerializeField, Range(0, 1000)] private int _force;
@@ -37,6 +39,8 @@ namespace WORLDGAMEDEVELOPMENT
         internal Health Health => _health;
         internal GameObject ParticleSystem => _particleSystem;
         internal Vector2 OffsetVectorBurel => _offsetVectorBullet;
+        public float TimeForShipToTakeOff { get => _timeForShipToTakeOff; set => _timeForShipToTakeOff = value; }
+        public float SpeedAtTakeShip { get => _speedAtTakeShip; set => _speedAtTakeShip = value; }
 
         #endregion
     }

@@ -65,6 +65,8 @@ namespace WORLDGAMEDEVELOPMENT
             sourceMusic.gameObject.SetActive(true);
             sourceMusic.Play();
 
+            sourceMusic.volume = 0.02f;
+
             _playerMusic = new PlayerMusic(new AudioSourceInfo(sourceMusic, sourceMusic.clip.length), _musicList);
 
             _panelResults.WebPlayer.ButtonPlay.onClick.AddListener(_playerMusic.PauseOrPlay);
@@ -87,28 +89,20 @@ namespace WORLDGAMEDEVELOPMENT
                 case EventCanvas.None:
                     break;
                 case EventCanvas.StartGame:
-                    Debug.Log($"Старт игры. взять из пулла источник звука. Проиграть звук. Старта");
-
                     var source = _audioModel.AudioStruct.AudioSourcePoolEffects.Get();
                     source.clip = _soundsListStartShip[1];
                     source.transform.localPosition = _playerModel.Components.PlayerTransform.localPosition;
                     source.gameObject.SetActive(true);
                     source.Play();
-
                     audioSourcesInUse.Add(new AudioSourceInfo(source, source.clip.length));
-
                     break;
                 case EventCanvas.StartShip:
-                    Debug.Log($"Взлет корабля. взять из пулла источник звука. Проиграть звук 2.");
-
                     var source2 = _audioModel.AudioStruct.AudioSourcePoolEffects.Get();
                     source2.clip = _soundsListStartShip[3];
                     source2.transform.localPosition = _playerModel.Components.PlayerTransform.localPosition;
                     source2.gameObject.SetActive(true);
                     source2.Play();
-
                     audioSourcesInUse.Add(new AudioSourceInfo(source2, source2.clip.length));
-
                     break;
             }
         }

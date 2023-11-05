@@ -50,6 +50,7 @@ namespace WORLDGAMEDEVELOPMENT
             var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController);
             sceneController.Add(playerController);
             _controllers.Add(playerController);
+            canvasController.Add(playerController.MoveController);
 
             var cameraController = new CameraController(camera.GetComponent<CameraView>(),
                 playerInitialization.PlayerModel.Components.PlayerTransform, sceneController);

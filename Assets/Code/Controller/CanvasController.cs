@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute
+    internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute, IExecute
     {
         private CanvasModel _canvasModel;
 
@@ -19,12 +19,16 @@ namespace WORLDGAMEDEVELOPMENT
         private List<Button> _allButtonList = new();
         private bool _isPaused;
         private bool _isGameStarted;
+        private Action<float> _speedAction;
 
         internal event Action<EventCanvas> StartGame;
+        private Timer _timerToLeftInGame;
 
         public CanvasController(CanvasModel canvasModel)
         {
             _canvasModel = canvasModel;
+            _timerToLeftInGame = new Timer();
+            _timerToLeftInGame.OnChangeTime += OnChangeTimeToLeftInGame;
 
             foreach (var panel in _canvasModel.CanvasStruct.CanvasView.panelViews)
             {
@@ -54,6 +58,11 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
+        private void OnChangeTimeToLeftInGame(string time)
+        {
+            _panelResults.TextElapsedTime.text = time;
+        }
+
         private void DisableMenu()
         {
             _panelGameMenu.gameObject.SetActive(false);
@@ -74,8 +83,42 @@ namespace WORLDGAMEDEVELOPMENT
 
             if (eventAction is EnemyController enemyController && enemyController is IEventActionGeneric<float> enemyEvent)
             {
-                enemyEvent.AddScoreByAsteroidDead += EnemyController_AddScoreByAsteroidDead;
+                enemyEvent.OnChangePositionRelativeToAxisY += EnemyController_AddScoreByAsteroidDead;
             }
+
+            if (eventAction is MoveController moveController && moveController is IEventActionGeneric<float> playerEvent)
+            {
+                playerEvent.OnChangePositionRelativeToAxisY += PlayerEvent_EventFloatGeneric;
+                moveController.OnChangeSpeedMovement += OnChangeSpeedMovement;
+            }
+        }
+
+        private void OnChangeSpeedMovement(float speed)
+        {
+            _panelResults.TextSpeed.text = speed.ToString("F0");
+        }
+
+        private void CanvasController_OnChangeSpeed(float speed)
+        {
+            _panelResults.TextSpeed.text = speed.ToString("F0");
+        }
+
+        public void RemoveAllSubscribers(Action<float> action)
+        {
+            Delegate[] subscribers = action.GetInvocationList();
+            foreach (Delegate subscriber in subscribers)
+            {
+                if (subscriber is Action<float> handler)
+                {
+                    action -= handler;
+                }
+            }
+        }
+
+
+        private void PlayerEvent_EventFloatGeneric(float value)
+        {
+            _panelResults.TextDistanceTraveled.text = value.ToString(format: "F2");
         }
 
         private void EnemyController_AddScoreByAsteroidDead(float value)
@@ -155,6 +198,11 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
+        public void Execute(float deltatime)
+        {
+            _timerToLeftInGame.Execute(deltatime);
+        }
+
 
         #region ICleanup
 
@@ -164,9 +212,14 @@ namespace WORLDGAMEDEVELOPMENT
 
             foreach (var eventAction in _listEvent)
             {
-                if (eventAction is IEventActionGeneric<float> enemyEvent)
+                if (eventAction is EnemyController enemyController && enemyController is IEventActionGeneric<float> enemyEvent)
                 {
-                    enemyEvent.AddScoreByAsteroidDead -= EnemyController_AddScoreByAsteroidDead;
+                    enemyEvent.OnChangePositionRelativeToAxisY -= EnemyController_AddScoreByAsteroidDead;
+                }
+
+                if (eventAction is MoveController moveController && moveController is IEventActionGeneric<float> playerEvent)
+                {
+                    playerEvent.OnChangePositionRelativeToAxisY -= PlayerEvent_EventFloatGeneric;
                 }
             }
             foreach (var button in _allButtonList)
@@ -187,13 +240,12 @@ namespace WORLDGAMEDEVELOPMENT
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBGL
-            Application.OpenURL("about:blank");
+            Application.ExternalEval("history.back()");
 #else
             Application.Quit();
 #endif
 
         }
-
 
         #endregion
     }

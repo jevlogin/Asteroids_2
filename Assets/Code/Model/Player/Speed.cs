@@ -7,8 +7,8 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal sealed class Speed
     {
-        [SerializeField, Range(1, 100), Tooltip("Максимальная скорость")] private float _maxSpeed;
-        [SerializeField, Range(0, 100), Tooltip("Текущая скорость")] private float _currentSpeed;
+        [SerializeField, Range(1, 1000), Tooltip("Максимальная скорость")] private float _maxSpeed;
+        [SerializeField, Range(0, 1000), Tooltip("Текущая скорость")] private float _currentSpeed;
         [SerializeField, Range(1, 30), Tooltip("Ускорение")] private float _acceleration;
 
         public Speed(Speed speed)

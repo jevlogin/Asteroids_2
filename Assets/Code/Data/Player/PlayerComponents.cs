@@ -10,6 +10,7 @@ namespace WORLDGAMEDEVELOPMENT
         public Transform PlayerTransform;
         public Transform BarrelTransform;
         public Rigidbody RigidbodyEnergyBlock;
+        public Rigidbody2D RigidbodyPlayer;
         public PlayerView PlayerView;
         [Header("Stars System")] public ParticleSystem Particles;
         public AudioSource AudioSource;

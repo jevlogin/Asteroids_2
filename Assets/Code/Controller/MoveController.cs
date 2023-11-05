@@ -1,16 +1,20 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class MoveController : ICleanup, IExecute
+    internal class MoveController : ICleanup, IExecute, IFixedExecute, IEventActionGeneric<float>
     {
         private readonly IUserInputProxy _inputHorizontal;
         private readonly IUserInputProxy _inputVertical;
         private readonly SceneController _sceneController;
         private Transform _playerTransform;
         private Speed _speed;
+        private readonly Rigidbody2D _rigidbodyPlayer;
+        private readonly PlayerModel _playerModel;
         private Vector3 _move;
 
         private float _vertical;
@@ -21,29 +25,35 @@ namespace WORLDGAMEDEVELOPMENT
         private bool _isMovingUp = false;
         private float _moveDuration;
         private float _moveStartTime;
-        private Vector3 _initialPosition;
+        private float _currentStatePosition;
+        private float _epsilon = 0.5f;
+        private bool _isMovingFreeControl;
 
         internal event Action<bool> TheShipTookOff;
 
-        public MoveController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) getInput, Transform playerTransform, Speed speed, SceneController sceneController)
+        internal event Action<float> OnChangeSpeedMovement;
+        public event Action<float> OnChangePositionRelativeToAxisY;
+
+
+        public MoveController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) getInput, Rigidbody2D rigidbodyPlayer, Transform playerTransform, Speed speed, PlayerModel playerModel, SceneController sceneController)
         {
             _inputHorizontal = getInput.inputHorizontal;
             _inputVertical = getInput.inputVertical;
             _playerTransform = playerTransform;
             _speed = speed;
+            _rigidbodyPlayer = rigidbodyPlayer;
+            _playerModel = playerModel;
+
             _inputHorizontal.AxisOnChange += HorizontalAxisOnChange;
             _inputVertical.AxisOnChange += VerticalAxisOnChange;
-
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnChangeIsStopControl;
             _sceneController.TakeOffOfTheShip += OnChangeTakeOffOfTheShip;
-
         }
 
         private void OnChangeTakeOffOfTheShip(bool value)
         {
-            //TODO - вынести в поля
-            MoveUpForDuration(_speed.MaxSpeed);
+            MoveUpForDuration(_playerModel.Settings.TimeForShipToTakeOff);
         }
 
         private void OnChangeIsStopControl(bool value)
@@ -76,27 +86,22 @@ namespace WORLDGAMEDEVELOPMENT
 
             if (_isMovingUp)
             {
-
                 float elapsedTime = Time.time - _moveStartTime;
 
                 if (elapsedTime < _moveDuration)
                 {
                     float t = elapsedTime / _moveDuration;
-                    float distanceToMove = _speed.CurrentSpeed * deltaTime;
+                    float distanceToMove = _playerModel.Settings.SpeedAtTakeShip * deltaTime;
+
                     Vector3 targetPosition = _playerTransform.position + new Vector3(0f, distanceToMove, 0f);
                     _playerTransform.position = Vector3.Lerp(_playerTransform.position, targetPosition, t);
                 }
                 else
                 {
                     _isMovingUp = false;
+                    _isMovingFreeControl = true;
                     TheShipTookOff?.Invoke(true);
                 }
-            }
-            else
-            {
-                var speed = _speed.CurrentSpeed * deltaTime;
-                _move.Set(_horizontal * speed, _vertical * speed, 0.0f);
-                _playerTransform.localPosition += _move;
             }
         }
 
@@ -104,9 +109,30 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (_isMovingUp) return;
 
+            _isMovingFreeControl = false;
             _isMovingUp = true;
             _moveDuration = duration;
             _moveStartTime = Time.time;
+        }
+
+        public void FixedExecute(float fixedDeltatime)
+        {
+            if (Mathf.Abs(_playerTransform.position.y - _currentStatePosition) > _epsilon)
+            {
+                _currentStatePosition = _playerTransform.position.y;
+                float realHeight = _currentStatePosition * _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime;
+                OnChangePositionRelativeToAxisY?.Invoke(realHeight);
+            }
+
+            if (_isMovingFreeControl)
+            {
+                var movement = new Vector2(_horizontal, _vertical).normalized;
+                movement *= _speed.CurrentSpeed * fixedDeltatime;
+                var newVelocity = Vector2.Lerp(_rigidbodyPlayer.velocity, movement, _playerModel.PlayerStruct.VelocityChangeSpeed * fixedDeltatime);
+                _rigidbodyPlayer.velocity = newVelocity;
+                var gameSpeed = _playerModel.PlayerStruct.SpeedScale * newVelocity.sqrMagnitude * _playerModel.PlayerStruct.ScaleFactor;
+                OnChangeSpeedMovement?.Invoke(gameSpeed);
+            }
         }
     }
 }
