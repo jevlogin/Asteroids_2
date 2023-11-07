@@ -18,6 +18,7 @@ namespace WORLDGAMEDEVELOPMENT
         private List<Bullet> _listBullets;
         private Dictionary<int, Rigidbody2D> _rigidbodyBullets;
         private bool _isStopControl;
+        private bool _isCanShoot;
 
         public event Action<bool> IsShotInvoke;
 
@@ -34,6 +35,12 @@ namespace WORLDGAMEDEVELOPMENT
 
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnChangeIsStopControl;
+            _playerInitialization.PlayerModel.PlayerStruct.Player.IsCanShoot += OnChangeCanShoot;
+        }
+
+        private void OnChangeCanShoot(bool value)
+        {
+            _isCanShoot = value;
         }
 
         private void OnChangeIsStopControl(bool value)
@@ -49,7 +56,10 @@ namespace WORLDGAMEDEVELOPMENT
             }
 
             _fireTimer += deltatime;
-            BulletShoot();
+            if (_isCanShoot)
+            {
+                BulletShoot(); 
+            }
             BulletControl(deltatime);
         }
 

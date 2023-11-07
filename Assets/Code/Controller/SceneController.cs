@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
@@ -16,6 +17,7 @@ namespace WORLDGAMEDEVELOPMENT
         private PanelGameMenuView _panelMenu;
         private PanelHUDView _panelHUD;
         private EnemyModel _enemyModel;
+        private PlayerModel _playerModel;
 
         internal IEnumerable<IAddedModel> AddedModels => _addedModels;
 
@@ -46,7 +48,8 @@ namespace WORLDGAMEDEVELOPMENT
             }
             if (addedModel is PlayerModel playerModel)
             {
-                playerModel.PlayerStruct.Player.TakeDamaged += PlayerTakeDamage;
+                _playerModel = playerModel;
+                _playerModel.PlayerStruct.Player.LifeLeftCount += PlayerTakeDamage;
             }
             if (addedModel is EnemyModel model)
             {
@@ -62,6 +65,8 @@ namespace WORLDGAMEDEVELOPMENT
         private void TheShipTookOff(bool value)
         {
             IsStopControl?.Invoke(false);
+            _sceneModel.SceneStruct.StartSceneView.gameObject.SetActive(false);
+            _playerModel.PlayerStruct.Player.IsCanShoot?.Invoke(true);
         }
 
         private void StartControl()

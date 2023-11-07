@@ -135,7 +135,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void IsShotInvoke(bool value)
         {
-            if (value)
+            if (_playerModel.PlayerStruct.Player.gameObject.activeSelf && value)
             {
                 _playerModel.Components.AudioSource.PlayOneShot(_shotAudioClip);
             }

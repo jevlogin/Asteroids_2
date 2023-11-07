@@ -27,7 +27,6 @@ namespace WORLDGAMEDEVELOPMENT
         private float _moveDuration;
         private float _moveStartTime;
         private float _currentStatePosition;
-        private float _epsilon = 0.5f;
         private bool _isMovingFreeControl;
 
         internal Action DisableEnergyBlock;
@@ -37,8 +36,6 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal event Action<bool> TheShipTookOff;
         internal event Action OnChangeBlockReset;
-
-        //_sceneController.StartParticle += DisableEnergyBlock;
 
         internal event Action<float> OnChangeSpeedMovement;
         public event Action<float> OnChangePositionRelativeToAxisY;

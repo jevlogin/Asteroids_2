@@ -13,12 +13,13 @@ namespace WORLDGAMEDEVELOPMENT
         internal Speed Speed;
         internal Health Health;
         internal int Force;
-        
+
         [SerializeField] private List<GroupObject> _groupObjects;
-        internal event Action<float> TakeDamaged;
+        internal event Action<float> LifeLeftCount;
 
         private float _damage;
         internal event Action IsDeadPlayer;
+        internal Action<bool> IsCanShoot;
 
 
         #endregion
@@ -37,7 +38,7 @@ namespace WORLDGAMEDEVELOPMENT
         private void Awake()
         {
             OnCollisionEnterDetect += Player_OnCollisionEnterDetect;
-        
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 if (GroupObjects[i].Transform == null)
@@ -57,8 +58,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         #endregion
 
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             OnCollisionEnterDetect -= Player_OnCollisionEnterDetect;
         }
@@ -74,14 +74,14 @@ namespace WORLDGAMEDEVELOPMENT
         public void TakeDamage(float damage)
         {
             Health.CurrentHealth -= damage;
-            TakeDamaged?.Invoke(Health.CurrentHealth);
-
             if (Health.CurrentHealth <= 0)
             {
+                Health.CurrentHealth = Health.MaxHealth;
                 IsDeadPlayer?.Invoke();
                 gameObject.SetActive(false);
-                Health.CurrentHealth = Health.MaxHealth;
+                IsCanShoot?.Invoke(false);
             }
+            LifeLeftCount?.Invoke(Health.CurrentHealth);
         }
     }
 }

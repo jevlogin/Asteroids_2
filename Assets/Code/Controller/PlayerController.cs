@@ -174,6 +174,7 @@ namespace WORLDGAMEDEVELOPMENT
                 }
                 else if (_timeFreezeDead > 1.0f && !_playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.activeSelf)
                 {
+                    _playerInitialization.PlayerModel.PlayerStruct.Player.IsCanShoot?.Invoke(true);
                     _playerInitialization.PlayerModel.PlayerStruct.Player.gameObject.SetActive(true);
                 }
             }
