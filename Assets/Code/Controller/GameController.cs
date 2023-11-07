@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.IO;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 
@@ -58,8 +54,7 @@ namespace WORLDGAMEDEVELOPMENT
             sceneController.Add(cameraController);
             _controllers.Add(cameraController);
 
-            var playerShooterController = new PlayerShooterController(inputInitialization.GetInputMouse(),
-                playerInitialization, ammunitionInitialization.AmmunitionFactoryModel, sceneController);
+            var playerShooterController = new PlayerShooterController(playerInitialization, ammunitionInitialization.AmmunitionFactoryModel, sceneController);
 
             _controllers.Add(playerShooterController);
 
@@ -67,7 +62,7 @@ namespace WORLDGAMEDEVELOPMENT
             _controllers.Add(enemyController);
             canvasController.Add(enemyController);
 
-            var particleController = new ParticleController(playerInitialization.PlayerModel, sceneController);
+            var particleController = new ParticleController(playerInitialization.PlayerModel, sceneController, playerController);
             _controllers.Add(particleController);
 
             var audioFactory = new AudioFactory(_data.AudioData);
@@ -81,9 +76,13 @@ namespace WORLDGAMEDEVELOPMENT
             var vfxController = new VFXController(VFXInitialization.Model, enemyController);
             _controllers.Add(vfxController);
 
+            var backgroundFactory = new BackgroundFactory(_data.BackgroundData);
+            var backgroundInitialization = new BackgroundInitialization(backgroundFactory);
+            var backgroundController = new BackgroundController(backgroundInitialization.BackgroundModel, camera, playerController, enemyController, sceneController);
+            _controllers.Add(backgroundController);
+
             _controllers.Initialization();
         }
-
 
         private void Update()
         {

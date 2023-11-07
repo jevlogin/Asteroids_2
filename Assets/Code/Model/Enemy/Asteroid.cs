@@ -15,10 +15,12 @@ namespace WORLDGAMEDEVELOPMENT
         internal event Action<Asteroid, bool> IsDead;
         internal Vector2 DirectionMovement;
         internal AsteroidType AsteroidType;
+        internal bool IsDeadSubscribe { get; set; } = false;
 
         //TODO - убрать сериализованные поля
         [SerializeField] internal BonusPoints BonusPoints;
-
+        [SerializeField] internal Rigidbody2D Rigidbody;
+        
         #endregion
 
 
@@ -54,6 +56,7 @@ namespace WORLDGAMEDEVELOPMENT
             if (Health.CurrentHealth <= 0)
             {
                 IsDead?.Invoke(this, true);
+                Health.CurrentHealth = Health.MaxHealth;
             }
         }
 

@@ -2,7 +2,6 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static Unity.VisualScripting.Member;
 using Random = UnityEngine.Random;
 
 namespace WORLDGAMEDEVELOPMENT
@@ -52,11 +51,23 @@ namespace WORLDGAMEDEVELOPMENT
 
             _canvasController.StartGame += StartGame;
             _playerShooterController.IsShotInvoke += IsShotInvoke;
-            _enemyController.IsAsteroidExplosion += ExplosionEnemy;
+
+            _enemyController.IsAsteroidExplosionByType += PlayExplosionEnemy;
 
             _panelResults = _canvasModel.CanvasStruct.CanvasView.panelViews.FirstOrDefault(p => p is PanelResultsView panelResults) as PanelResultsView;
         }
 
+        private void PlayExplosionEnemy(Vector3 vector, AsteroidType type)
+        {
+            var source = _audioModel.AudioStruct.AudioSourcePoolEffects.Get();
+            source.transform.localPosition = vector;
+            source.gameObject.SetActive(true);
+            source.pitch = Random.Range(0.8f, 1.2f);
+            source.clip = _explosionAudioClip;
+            source.Play();
+
+            audioSourcesInUse.Add(new AudioSourceInfo(source, source.clip.length));
+        }
 
         public void Initialization()
         {
@@ -80,7 +91,7 @@ namespace WORLDGAMEDEVELOPMENT
             _listButtons.Add(_panelResults.WebPlayer.ButtonNext);
         }
 
-       
+
 
         private void StartGame(EventCanvas eventType)
         {
@@ -107,22 +118,13 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        private void ExplosionEnemy(Vector3 vector)
-        {
-            var source = _audioModel.AudioStruct.AudioSourcePoolEffects.Get();
-            source.transform.position = vector;
-            source.clip = _explosionAudioClip;
-            source.gameObject.SetActive(true);
-            source.pitch = Random.Range(0.8f, 1.2f);
-            source.Play();
 
-            audioSourcesInUse.Add(new AudioSourceInfo(source, source.clip.length));
-        }
 
         public void Cleanup()
         {
             _playerShooterController.IsShotInvoke -= IsShotInvoke;
-            _enemyController.IsAsteroidExplosion -= ExplosionEnemy;
+            _enemyController.IsAsteroidExplosionByType -= PlayExplosionEnemy;
+
             _canvasController.StartGame -= StartGame;
 
             foreach (var button in _listButtons)
@@ -141,17 +143,17 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void FixedExecute(float fixedDeltatime)
         {
-            //TODO - сделать два пробега, в одном удаляем и возвращаем в пулл, во втором вычитаем время
-            for (int i = 0; i < audioSourcesInUse.Count; i++)
+            for (int i = audioSourcesInUse.Count - 1; i >= 0; i--)
             {
-                audioSourcesInUse[i].Delay -= fixedDeltatime;
-                if (audioSourcesInUse[i].Delay < 0)
+                var source = audioSourcesInUse[i];
+                source.Delay -= fixedDeltatime;
+                if (source.Delay <= 0)
                 {
-                    _audioModel.AudioStruct.AudioSourcePoolEffects.ReturnToPool(audioSourcesInUse[i].Source);
-                    audioSourcesInUse.Remove(audioSourcesInUse[i]);
-                    i--;
+                    _audioModel.AudioStruct.AudioSourcePoolEffects.ReturnToPool(source.Source);
+                    audioSourcesInUse.Remove(source);
                 }
             }
+
             _playerMusic.TimeLeft(fixedDeltatime);
         }
     }

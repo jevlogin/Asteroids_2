@@ -65,7 +65,6 @@ namespace WORLDGAMEDEVELOPMENT
             _camera = camera;
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnCnageIsStopControl;
-            _sceneController.StartParticle += StartParticle;
             _sceneController.DisableEnergyBlock += DisableEnergyBlock;
 
             _playerInitialization.PlayerModel.PlayerStruct.Player.IsDeadPlayer += IsDeadPlayerAndRestartPosition;
@@ -73,8 +72,10 @@ namespace WORLDGAMEDEVELOPMENT
             _controllers = new()
             {
                 MoveController,
-                //RotationController
             };
+
+            MoveController.OnChangeBlockReset += OnChangeBlockReset;
+            MoveController.DisableEnergyBlock += DisableEnergyBlock;
         }
 
         private void IsDeadPlayerAndRestartPosition()
@@ -87,6 +88,9 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void DisableEnergyBlock()
         {
+            ParticleSystem.MainModule mainModule = _playerInitialization.PlayerModel.Components.ParticlesStarSystem.main;
+            mainModule.gravityModifier = _playerInitialization.PlayerModel.PlayerStruct.ParticleSpeedAfterTakeOff; 
+            
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.gameObject.SetActive(false);
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.transform.SetParent(_playerInitialization.PlayerModel.Components.PlayerTransform);
 
@@ -97,7 +101,7 @@ namespace WORLDGAMEDEVELOPMENT
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.isKinematic = true;
         }
 
-        private void StartParticle()
+        private void OnChangeBlockReset()
         {
             PlayParticle();
             ActivateEnergyBlockRigidbody();
@@ -119,14 +123,14 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void PlayParticle()
         {
-            if (!_playerInitialization.PlayerModel.Components.Particles.gameObject.activeSelf)
+            if (!_playerInitialization.PlayerModel.Components.ParticlesStarSystem.gameObject.activeSelf)
             {
-                _playerInitialization.PlayerModel.Components.Particles.gameObject.SetActive(true);
+                _playerInitialization.PlayerModel.Components.ParticlesStarSystem.gameObject.SetActive(true);
             }
-            if (_playerInitialization.PlayerModel.Components.Particles.isStopped
-                    || _playerInitialization.PlayerModel.Components.Particles.isPaused)
+            if (_playerInitialization.PlayerModel.Components.ParticlesStarSystem.isStopped
+                    || _playerInitialization.PlayerModel.Components.ParticlesStarSystem.isPaused)
             {
-                _playerInitialization.PlayerModel.Components.Particles.Play();
+                _playerInitialization.PlayerModel.Components.ParticlesStarSystem.Play();
             }
         }
 
@@ -138,9 +142,10 @@ namespace WORLDGAMEDEVELOPMENT
         public void Cleanup()
         {
             _moveController.Cleanup();
-            _sceneController.StartParticle -= StartParticle;
+            MoveController.OnChangeBlockReset -= OnChangeBlockReset;
             _sceneController.IsStopControl -= OnCnageIsStopControl;
             _sceneController.DisableEnergyBlock -= DisableEnergyBlock;
+            MoveController.DisableEnergyBlock -= DisableEnergyBlock;
         }
 
         #endregion

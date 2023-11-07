@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 
 namespace WORLDGAMEDEVELOPMENT
@@ -29,7 +30,15 @@ namespace WORLDGAMEDEVELOPMENT
         private float _epsilon = 0.5f;
         private bool _isMovingFreeControl;
 
+        internal Action DisableEnergyBlock;
+        private float _timeToDisableEnergyBlock;
+        private bool _isDisableEnergyBlock;
+        private bool _isBlockReset;
+
         internal event Action<bool> TheShipTookOff;
+        internal event Action OnChangeBlockReset;
+
+        //_sceneController.StartParticle += DisableEnergyBlock;
 
         internal event Action<float> OnChangeSpeedMovement;
         public event Action<float> OnChangePositionRelativeToAxisY;
@@ -49,6 +58,8 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnChangeIsStopControl;
             _sceneController.TakeOffOfTheShip += OnChangeTakeOffOfTheShip;
+
+            _timeToDisableEnergyBlock = _playerModel.Settings.TimeForShipToTakeOff / 1.3f;
         }
 
         private void OnChangeTakeOffOfTheShip(bool value)
@@ -88,6 +99,19 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 float elapsedTime = Time.time - _moveStartTime;
 
+                if (elapsedTime > _timeToDisableEnergyBlock && !_isBlockReset)
+                {
+                    _isBlockReset = true;
+                    OnChangeBlockReset?.Invoke();
+                }
+
+                //Disable Energy Block
+                if (!_isDisableEnergyBlock && elapsedTime > _playerModel.Settings.TimeForShipToTakeOff)
+                {
+                    _isDisableEnergyBlock = true;
+                    _sceneController.DisableEnergyBlock?.Invoke();
+                }
+
                 if (elapsedTime < _moveDuration)
                 {
                     float t = elapsedTime / _moveDuration;
@@ -117,12 +141,25 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void FixedExecute(float fixedDeltatime)
         {
-            if (Mathf.Abs(_playerTransform.position.y - _currentStatePosition) > _epsilon)
+            float deltaY = _playerTransform.position.y - _currentStatePosition;
+            _currentStatePosition = _playerTransform.position.y;
+            
+            float realHeight = 0;
+            if (deltaY > 0)
             {
-                _currentStatePosition = _playerTransform.position.y;
-                float realHeight = _currentStatePosition * _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime;
-                OnChangePositionRelativeToAxisY?.Invoke(realHeight);
+                 realHeight = deltaY * _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime; 
             }
+            else
+            {
+                if (!_isStopControl)
+                {
+                    realHeight = _playerModel.PlayerStruct.RealSpeedShipModel / _playerModel.PlayerStruct.ScaleFactor * fixedDeltatime;  
+                }
+            }
+
+            OnChangePositionRelativeToAxisY?.Invoke(realHeight);
+
+
 
             if (_isMovingFreeControl)
             {

@@ -11,8 +11,6 @@ namespace WORLDGAMEDEVELOPMENT
         internal Pool<Asteroid> PoolAsteroid;
         internal AsteroidPool PoolAsteroids;
 
-        internal Action<bool> EnemyActivated;
-
         internal float RadiusSpawnNewEnemy;
     }
 }

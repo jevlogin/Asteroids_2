@@ -31,7 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
                 var enemy = new GameObject(enemyGroup.Type.ToString());
                 enemy.GetOrAddComponent<SpriteRenderer>().sprite = enemyGroup.Sprite;
                 enemy.GetOrAddComponent<CircleCollider2D>();
-
+                
                 var enemyView = AddedComponentViewOfTypeObject(ref enemyStruct, enemy, enemyGroup);
                 components.ListEnemyViews.Add(enemyView);
 
@@ -58,6 +58,8 @@ namespace WORLDGAMEDEVELOPMENT
                 case AsteroidType.Meteorite:
                 case AsteroidType.Cometa:
                     var asteroid = enemy.GetOrAddComponent<Asteroid>();
+                    
+                    asteroid.Rigidbody = enemy.GetOrAddComponent<Rigidbody2D>();
 
                     asteroid.Health = new Health(enemyGroup.Health);
                     asteroid.Speed = new Speed(enemyGroup.Speed);

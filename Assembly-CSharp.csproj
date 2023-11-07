@@ -88,6 +88,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Code\Controller\GameController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\Code\Factory\IBackgroundPool.cs" />
     <Compile Include="Assets\Code\Controller\SceneController.cs" />
     <Compile Include="Assets\Code\View\Canvas\CanvasView.cs" />
     <Compile Include="Assets\Code\Controller\CanvasModel.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Assets\Code\View\Player\GroupObject.cs" />
     <Compile Include="Assets\Code\Interface\IDamageable.cs" />
     <Compile Include="Assets\Code\Data\Audio\GroupAudioClip.cs" />
+    <Compile Include="Assets\Code\Helper\SpaceBackgroundGroupObject.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioClipType.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Assets\Code\Model\Pool\Pool.cs" />
     <Compile Include="Assets\Code\View\StartSceneView.cs" />
     <Compile Include="Assets\Code\Data\VFX\VFXStruct.cs" />
+    <Compile Include="Assets\Code\Controller\BackgroundController.cs" />
     <Compile Include="Assets\Code\Initialization\VFXInitialization.cs" />
     <Compile Include="Assets\Code\Helper\MixerGroupByName.cs" />
     <Compile Include="Assets\Code\Helper\AudioMixerGroupName.cs" />
@@ -123,6 +126,7 @@
     <Compile Include="Assets\Code\Data\Player\PlayerStruct.cs" />
     <Compile Include="Assets\Code\Data\Scene\SceneSettings.cs" />
     <Compile Include="Assets\Code\Interface\ICollisionDetect.cs" />
+    <Compile Include="Assets\Code\Factory\BackgroundFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Code\Interface\ICleanup.cs" />
@@ -131,6 +135,7 @@
     <Compile Include="Assets\Code\Helper\ManagerPath.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Code\Model\Player\ConfigParticlesShip.cs" />
+    <Compile Include="Assets\Code\Data\Background\BackgroundComponents.cs" />
     <Compile Include="Assets\Code\Model\Ammunition\AmmunitionModel.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemySettings.cs" />
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionStruct.cs" />
@@ -175,13 +180,16 @@
     <Compile Include="Assets\Code\Model\Pool\BulletPool.cs" />
     <Compile Include="Assets\Code\Controller\CanvasController.cs" />
     <Compile Include="Assets\Code\Controller\SceneModel.cs" />
+    <Compile Include="Assets\Code\Helper\SpaceLayerType.cs" />
     <Compile Include="Assets\Code\Factory\VFXPool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Code\Factory\BackgroundModel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Code\Controller\AudioModel.cs" />
     <Compile Include="Assets\Code\View\Camera\CameraView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Code\Controller\MoveController.cs" />
+    <Compile Include="Assets\Code\Data\Background\BackgroundStruct.cs" />
     <Compile Include="Assets\Inguz Media Studio\Free 2D Impact FX\Demo Scene\ButtonAnimation.cs" />
     <Compile Include="Assets\Code\Controller\EventCanvas.cs" />
     <Compile Include="Assets\Code\Initialization\InputInitialization.cs" />
@@ -193,10 +201,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Code\Model\Pool\EmptyPoolAsteroid.cs" />
     <Compile Include="Assets\Code\Data\Canvas\CanvasData.cs" />
+    <Compile Include="Assets\Code\Data\Background\BackgroundData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Code\Controller\IEventAction1.cs" />
     <Compile Include="Assets\Code\View\Canvas\PanelView.cs" />
     <Compile Include="Assets\Code\View\Player\ObjectType.cs" />
+    <Compile Include="Assets\Code\Data\Background\BackgroundSettings.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Code\Controller\SceneFactory.cs" />
     <Compile Include="Assets\Code\Model\Pool\AsteroidPool.cs" />
@@ -209,12 +219,15 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Code\Helper\Timer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Code\Factory\EmptyPool.cs" />
     <Compile Include="Assets\Code\Interface\IExecute.cs" />
     <Compile Include="Assets\Code\Controller\EnemyController.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerSettings.cs" />
     <Compile Include="Assets\Code\Controller\DelayExplosionObject.cs" />
     <Compile Include="Assets\Code\Interface\IInitialization.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Code\Controller\BackgroundInitialization.cs" />
+    <Compile Include="Assets\Code\Factory\BackgroundPool.cs" />
     <Compile Include="Assets\Code\Interface\ILateExecute.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputVertical.cs" />
     <Compile Include="Assets\Code\Controller\ParticleController.cs" />

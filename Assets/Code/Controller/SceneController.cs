@@ -12,7 +12,6 @@ namespace WORLDGAMEDEVELOPMENT
         internal event Action<bool> IsStopControl;
         internal event Action<bool> TakeOffOfTheShip;
 
-        internal Action StartParticle;
         internal Action DisableEnergyBlock;
         private PanelGameMenuView _panelMenu;
         private PanelHUDView _panelHUD;

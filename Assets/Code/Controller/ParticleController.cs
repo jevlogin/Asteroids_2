@@ -11,9 +11,9 @@ namespace WORLDGAMEDEVELOPMENT
         private readonly SceneController _sceneController;
         private readonly GroupObject _energyGroup;
         private readonly GroupObject _shipGroup;
+        private readonly PlayerController _playerController;
 
-
-        public ParticleController(PlayerModel playerModel, SceneController sceneController)
+        public ParticleController(PlayerModel playerModel, SceneController sceneController, PlayerController playerController)
         {
             _playerModel = playerModel;
             _sceneController = sceneController;
@@ -30,21 +30,21 @@ namespace WORLDGAMEDEVELOPMENT
                 }
             }
             _sceneController.TakeOffOfTheShip += OnChangeTakeOffOfTheShip;
-            _sceneController.StartParticle += DisableEnergyBlock;
+            _playerController = playerController;
+            _playerController.MoveController.OnChangeBlockReset += OnChangeBlockReset;
 
         }
 
-        private void DisableEnergyBlock()
+        private void OnChangeBlockReset()
         {
-            Debug.Log($"Сбрасываем энергетический блок");
-
             ChangeParticle(false);
         }
 
         public void Cleanup()
         {
             _sceneController.TakeOffOfTheShip -= OnChangeTakeOffOfTheShip;
-            _sceneController.StartParticle -= DisableEnergyBlock;
+            _playerController.MoveController.OnChangeBlockReset -= OnChangeBlockReset;
+
         }
 
         private void OnChangeTakeOffOfTheShip(bool value)

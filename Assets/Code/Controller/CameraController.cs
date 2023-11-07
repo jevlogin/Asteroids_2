@@ -53,14 +53,12 @@ namespace WORLDGAMEDEVELOPMENT
             else if (!_isParticleStarted && _cameraView.SmoothTime <= _cameraView.DefaultSmoothTime)
             {
                 _isParticleStarted = true;
-                _sceneController.StartParticle?.Invoke();
             }
             if (!_cameraViewNormilize)
             {
                 if (_cameraView.SmoothTime == _cameraView.DefaultSmoothTime)
                 {
                     _cameraViewNormilize = true;
-                    _sceneController.DisableEnergyBlock?.Invoke();
                 } 
             }
 

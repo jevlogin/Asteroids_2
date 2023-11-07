@@ -12,7 +12,6 @@ namespace WORLDGAMEDEVELOPMENT
         private AmmunitionModel _ammunitionFactoryModel;
         private readonly Transform _barrelTransform;
         private readonly SceneController _sceneController;
-        private bool _valueChange;
         private float _refireTimer;
         private float _fireTimer;
         public float MoveSpeed = 10.0f;
@@ -22,9 +21,8 @@ namespace WORLDGAMEDEVELOPMENT
 
         public event Action<bool> IsShotInvoke;
 
-        public PlayerShooterController(IUserInputBool userInputBool, PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel, SceneController sceneController)
+        public PlayerShooterController(PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel, SceneController sceneController)
         {
-            _userInputMouse = userInputBool;
             _playerInitialization = playerInitialization;
             _ammunitionFactoryModel = ammunitionFactoryModel;
 
@@ -34,7 +32,6 @@ namespace WORLDGAMEDEVELOPMENT
             _listBullets = new List<Bullet>();
             _rigidbodyBullets = new Dictionary<int, Rigidbody2D>();
 
-            _userInputMouse.OnInputBoolOnChange += _OnInputOnChangeMouse;
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnChangeIsStopControl;
         }
@@ -42,11 +39,6 @@ namespace WORLDGAMEDEVELOPMENT
         private void OnChangeIsStopControl(bool value)
         {
             _isStopControl = value;
-        }
-
-        private void _OnInputOnChangeMouse(bool value)
-        {
-            _valueChange = value;
         }
 
         public void Execute(float deltatime)
@@ -73,7 +65,6 @@ namespace WORLDGAMEDEVELOPMENT
                     if (_listBullets[i].LifeTime > _listBullets[i].MaxLifeTimeOutsideThePool)
                     {
                         _listBullets[i].LifeTime = 0.0f;
-                        _listBullets[i].OnCollisionEnterDetect -= Bullet_OnCollisionEnterDetect;
                         _ammunitionFactoryModel.AmmunitionStruct.PoolBulletGeneric.ReturnToPool(_listBullets[i]);
                         _listBullets.RemoveAt(i);
                     }
@@ -100,21 +91,12 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (_fireTimer >= _refireTimer)
             {
-                if (_valueChange)
-                {
-                    IsShotInvoke?.Invoke(_valueChange);
+                IsShotInvoke?.Invoke(true);
 
-                    _fireTimer = 0;
-                    var bullet = GetBullet();
-                    _listBullets.Add(bullet);
-                }
+                _fireTimer = 0;
+                var bullet = GetBullet();
+                _listBullets.Add(bullet);
             }
-        }
-
-        private void Bullet_OnCollisionEnterDetect(Collider2D colliderEnemy)
-        {
-            Debug.Log($"Произошло столкновение с объектом - {colliderEnemy}");
-
         }
 
         private Bullet GetBullet()
