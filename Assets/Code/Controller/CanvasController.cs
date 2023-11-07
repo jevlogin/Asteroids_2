@@ -19,10 +19,10 @@ namespace WORLDGAMEDEVELOPMENT
         private List<Button> _allButtonList = new();
         private bool _isPaused;
         private bool _isGameStarted;
-        private Action<float> _speedAction;
 
         internal event Action<EventCanvas> StartGame;
         private Timer _timerToLeftInGame;
+        private float _distanceTravel;
 
         public CanvasController(CanvasModel canvasModel)
         {
@@ -81,9 +81,9 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _listEvent.Add(eventAction);
 
-            if (eventAction is EnemyController enemyController && enemyController is IEventActionGeneric<float> enemyEvent)
+            if (eventAction is EnemyController enemyController)
             {
-                enemyEvent.OnChangePositionRelativeToAxisY += EnemyController_AddScoreByAsteroidDead;
+                enemyController.AddScoreByAsteroidDead += AddScoreByAsteroidDead;
             }
 
             if (eventAction is MoveController moveController && moveController is IEventActionGeneric<float> playerEvent)
@@ -93,12 +93,13 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        private void OnChangeSpeedMovement(float speed)
+        private void AddScoreByAsteroidDead(float value)
         {
-            _panelResults.TextSpeed.text = speed.ToString("F0");
+            _panelHUD.Score += value;
+            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
         }
 
-        private void CanvasController_OnChangeSpeed(float speed)
+        private void OnChangeSpeedMovement(float speed)
         {
             _panelResults.TextSpeed.text = speed.ToString("F0");
         }
@@ -118,15 +119,10 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void PlayerEvent_EventFloatGeneric(float value)
         {
-            _panelResults.TextDistanceTraveled.text = value.ToString(format: "F2");
-        }
+            _distanceTravel += value;
 
-        private void EnemyController_AddScoreByAsteroidDead(float value)
-        {
-            _panelHUD.Score += value;
-            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
+            _panelResults.TextDistanceTraveled.text = _distanceTravel.ToString(format: "F0");
         }
-
 
         public void Initialization()
         {
@@ -212,9 +208,9 @@ namespace WORLDGAMEDEVELOPMENT
 
             foreach (var eventAction in _listEvent)
             {
-                if (eventAction is EnemyController enemyController && enemyController is IEventActionGeneric<float> enemyEvent)
+                if (eventAction is EnemyController enemyController)
                 {
-                    enemyEvent.OnChangePositionRelativeToAxisY -= EnemyController_AddScoreByAsteroidDead;
+                    enemyController.AddScoreByAsteroidDead -= AddScoreByAsteroidDead;
                 }
 
                 if (eventAction is MoveController moveController && moveController is IEventActionGeneric<float> playerEvent)

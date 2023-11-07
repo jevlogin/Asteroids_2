@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class EnemyController : IController, ICleanup, IInitialization, IEventActionGeneric<float>
+    internal class EnemyController : IController, ICleanup, IEventActionGeneric<float>, IFixedExecute
     {
         private EnemyModel _enemyModel;
         private readonly PlayerModel _playerModel;
@@ -17,7 +17,8 @@ namespace WORLDGAMEDEVELOPMENT
         private float _radiusSpawn;
 
         internal event Action<float> AddScoreByAsteroidDead;
-        internal event Action<Vector3> IsAsteroidExplosion;
+
+
         internal event Action<Vector3, AsteroidType> IsAsteroidExplosionByType;
 
         public EnemyController(EnemyModel model, SceneController sceneController, PlayerModel playerModel)
@@ -58,44 +59,33 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (value)
             {
-                if (_activeEnemyList.Contains(asteroid))
-                {
-                    IsAsteroidExplosion?.Invoke(asteroid.transform.position);
-                    IsAsteroidExplosionByType?.Invoke(asteroid.transform.position, asteroid.AsteroidType);
-                    _activeEnemyList.Remove(asteroid);
-                }
+                IsAsteroidExplosionByType?.Invoke(asteroid.transform.position, asteroid.AsteroidType);
+                AddScoreByAsteroidDead?.Invoke(asteroid.BonusPoints.BonusPointsAfterDeath);
 
-                if (asteroid.AsteroidType == AsteroidType.Meteorite)
-                {
-                    GetEnemyByTypePool(_enemyModel.EnemyStruct.PoolsOfType[AsteroidType.Cometa], asteroid.transform.localPosition);
-                }
+                ReturnToPoolByType(asteroid);
 
-                if (_enemyModel.EnemyStruct.PoolsOfType.ContainsKey(asteroid.AsteroidType))
-                {
-                    AddScoreByAsteroidDead?.Invoke(asteroid.BonusPoints.BonusPointsBeforeDeath);
-                    _enemyModel.EnemyStruct.PoolsOfType[asteroid.AsteroidType].ReturnToPool(asteroid);
-                }
-                else
-                {
-                    Debug.LogWarning("пулл куда-то потерялся");
-                }
+                GetPoolEnemyAsteroid(1);
             }
         }
 
-        private void GetEnemyByTypePool(AsteroidPool asteroidPool, Vector3 position)
+        private void ReturnToPoolByType(Asteroid asteroid)
         {
-            for (int i = 0; i < 5; i++)
+            if (_enemyModel.EnemyStruct.PoolsOfType.Count > 0)
             {
-                var enemy = GetAsteroidFromPoolInToPosition(asteroidPool, position);
+                var pool = _enemyModel.EnemyStruct.PoolsOfType.ContainsKey(asteroid.AsteroidType)
+                    ? _enemyModel.EnemyStruct.PoolsOfType[asteroid.AsteroidType]
+                    : _enemyModel.EnemyStruct.PoolsOfType.FirstOrDefault().Value;
 
-                enemy.gameObject.SetActive(true);
-                enemy.IsDead += Enemy_IsDead;
+                pool.ReturnToPool(asteroid);
+            }
+            RemoveAsteroidFromActiveList(asteroid);
+        }
 
-                var rb = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
-                rb.isKinematic = true;
-                rb.velocity = new Vector3(Random.Range(-_radiusSpawn, _radiusSpawn), Random.Range(-_radiusSpawn, _radiusSpawn), 0.0f).normalized * enemy.Speed.CurrentSpeed;
-
-                _activeEnemyList.Add(enemy);
+        private void RemoveAsteroidFromActiveList(Asteroid asteroid)
+        {
+            if (_activeEnemyList.Contains(asteroid))
+            {
+                _activeEnemyList.Remove(asteroid);
             }
         }
 
@@ -110,57 +100,94 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        public void Initialization()
-        {
-            if (!_isStopControl)
-            {
-                GetPoolEnemyAsteroid();
-            }
-        }
 
-        private void GetPoolEnemyAsteroid()
+        private void GetPoolEnemyAsteroid(int countEnemy = 0)
         {
-            bool newEnemyAdded = false;
-
             foreach (var poolOfType in _enemyModel.EnemyStruct.PoolsOfType.Values)
             {
-                var count = poolOfType.PoolSize;
-                if (count <= 0)
-                    newEnemyAdded = true;
-
+                int count = countEnemy;
+                if (count == 0)
+                {
+                    count = poolOfType.PoolSize;
+                }
+                else
+                {
+                    if (poolOfType.PoolSize == 0)
+                    {
+                        break;
+                    }
+                }
                 for (int i = 0; i < count; i++)
                 {
                     GetEnemyFromPool(poolOfType);
                 }
             }
-            _enemyModel.EnemyStruct.EnemyActivated?.Invoke(newEnemyAdded);
         }
 
         private Asteroid GetAsteroidFromPoolInToPosition(AsteroidPool pool, Vector3 position)
         {
             var enemy = pool.Get();
             enemy.transform.SetParent(null);
-            enemy.transform.position = position;
+            enemy.transform.localPosition = position;
 
             return enemy;
         }
 
         private void GetEnemyFromPool(AsteroidPool pool)
         {
-            Vector3 playerPosition = _playerModel.PlayerStruct.Player.transform.position;
-            Vector3 randomOffset = new(Random.Range(-_radiusSpawn, _radiusSpawn), Random.Range(-_radiusSpawn, _radiusSpawn), 0.0f);
-            Vector3 asteroidPosition = playerPosition + randomOffset;
+            float radiusSpawn = 10.0f;
+            float radiusMovement = 6.0f;
 
-            var enemy = GetAsteroidFromPoolInToPosition(pool, asteroidPosition);
+            float minAngle = 30f;
+            float maxAngle = 150f;
+            float minRadians = Mathf.Deg2Rad * minAngle;
+            float maxRadians = Mathf.Deg2Rad * maxAngle;
+
+            float radians = Random.Range(minRadians, maxRadians);
+
+            Vector3 position = new Vector3(
+                _playerModel.PlayerStruct.Player.transform.localPosition.x + radiusSpawn * Mathf.Cos(radians),
+                _playerModel.PlayerStruct.Player.transform.localPosition.y + radiusSpawn * Mathf.Sin(radians),
+                0.0f);
+
+            var enemy = GetAsteroidFromPoolInToPosition(pool, position);
 
             enemy.gameObject.SetActive(true);
-            enemy.IsDead += Enemy_IsDead;
 
-            var rb = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
-            rb.isKinematic = true;
-            rb.velocity = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0.0f) * enemy.Speed.CurrentSpeed;
+            if (!enemy.IsDeadSubscribe)
+            {
+                enemy.IsDead += Enemy_IsDead;
+                enemy.IsDeadSubscribe = true;
+            }
+
+            enemy.Rigidbody.isKinematic = true;
+
+            float randomAngle = Random.Range(0, Mathf.PI * 2f);
+
+            Vector3 randomOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * radiusMovement;
+            Vector3 finalPosition = _playerModel.PlayerStruct.Player.transform.position + randomOffset;
+            Vector3 directionMovement = (finalPosition - enemy.transform.position).normalized;
+
+            enemy.Rigidbody.velocity = directionMovement * enemy.Speed.CurrentSpeed;
 
             _activeEnemyList.Add(enemy);
         }
+
+        public void FixedExecute(float fixedDeltaTime)
+        {
+            float _minSqrDistance = 150.0f;
+
+            for (int i = _activeEnemyList.Count - 1; i >= 0; i--)
+            {
+                var enemy = _activeEnemyList[i];
+                if ((_playerModel.Components.PlayerTransform.position - enemy.transform.position).sqrMagnitude > _minSqrDistance)
+                {
+                    _activeEnemyList.Remove(enemy);
+                    ReturnToPoolByType(enemy);
+                    GetPoolEnemyAsteroid(1);
+                }
+            }
+        }
+
     }
 }

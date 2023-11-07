@@ -14,6 +14,7 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField, Header("Фактор множителя скорости и всего")] internal float ScaleFactor;
         internal float SpeedScale;
         internal Player Player;
+        [SerializeField, Header("Скорость частиц после взлета")] internal float ParticleSpeedAfterTakeOff;
 
         #endregion
     }

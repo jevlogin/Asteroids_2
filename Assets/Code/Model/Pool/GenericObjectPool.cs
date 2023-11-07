@@ -130,9 +130,9 @@ namespace WORLDGAMEDEVELOPMENT
         public void ReturnToPool(T objectToReturn)
         {
             objectToReturn.gameObject.SetActive(false);
-            objectToReturn.transform.position = Vector3.zero;
-            objectToReturn.transform.rotation = Quaternion.identity;
             objectToReturn.transform.SetParent(_transformPool);
+            objectToReturn.transform.localPosition = Vector3.zero;
+            objectToReturn.transform.localRotation = Quaternion.identity;
             _objects.Enqueue(objectToReturn);
         }
 

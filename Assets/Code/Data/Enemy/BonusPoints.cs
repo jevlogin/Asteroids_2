@@ -19,13 +19,14 @@ namespace WORLDGAMEDEVELOPMENT
             _bonusPointsMax = bonusPoints._bonusPointsMax;
         }
         
-        internal int BonusPointsBeforeDeath
+        internal int BonusPointsAfterDeath
         {
             get
             {
                 if (!_isAssignedBonusPoints)
                 {
                     _bonus = Random.Range(_bonusPointsMin, _bonusPointsMax);
+                    _isAssignedBonusPoints = true;
                 }
                 return _bonus;
             }

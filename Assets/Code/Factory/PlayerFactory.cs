@@ -74,9 +74,9 @@ namespace WORLDGAMEDEVELOPMENT
 
                 playerComponents.PlayerTransform = playerStruct.Player.transform;
                 playerComponents.PlayerView = playerStruct.Player;
-                playerComponents.Particles = particles.GetComponent<ParticleSystem>();
-                playerComponents.Particles.Stop();
-                playerComponents.Particles.gameObject.SetActive(false);
+                playerComponents.ParticlesStarSystem = particles.GetComponent<ParticleSystem>();
+                playerComponents.ParticlesStarSystem.Stop();
+                playerComponents.ParticlesStarSystem.gameObject.SetActive(false);
                 playerComponents.AudioSource = playerStruct.Player.gameObject.GetOrAddComponent<AudioSource>();
                 playerComponents.AudioSource.playOnAwake = false;
                 playerComponents.AudioSource.volume = 0.03f;

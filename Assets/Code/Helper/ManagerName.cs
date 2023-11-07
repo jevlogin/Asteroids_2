@@ -18,5 +18,6 @@ namespace WORLDGAMEDEVELOPMENT
         public const string TEXT_SCORE_PREFIX_FIVE = "рублей";
         public const string CONTINUE = "Продолжить";
         public const string POOL_VFX = "[Pool_VFX]";
+        public const string POOL_BACKGROUND = "[Pool_Background]";
     }
 }
