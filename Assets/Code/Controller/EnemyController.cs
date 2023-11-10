@@ -19,7 +19,7 @@ namespace WORLDGAMEDEVELOPMENT
         internal event Action<float> AddScoreByAsteroidDead;
 
 
-        internal event Action<Vector3, AsteroidType> IsAsteroidExplosionByType;
+        internal event Action<Vector3, EnemyType> IsAsteroidExplosionByType;
 
         public EnemyController(EnemyModel model, SceneController sceneController, PlayerModel playerModel)
         {
@@ -157,6 +157,15 @@ namespace WORLDGAMEDEVELOPMENT
             if (!enemy.IsDeadSubscribe)
             {
                 enemy.IsDead += Enemy_IsDead;
+
+                //назначаем все свойства enemyGroup
+                enemy.Health = new Health(pool.EnemySettingsGroup.Health);
+                enemy.Speed = new Speed(pool.EnemySettingsGroup.Speed);
+                enemy.Rigidbody = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
+                enemy.BonusPoints = new BonusPoints(pool.EnemySettingsGroup.BonusPoints);
+                enemy.AsteroidType = pool.EnemySettingsGroup.Type;
+                enemy.Damage = pool.EnemySettingsGroup.DefaultDamage;
+
                 enemy.IsDeadSubscribe = true;
             }
 

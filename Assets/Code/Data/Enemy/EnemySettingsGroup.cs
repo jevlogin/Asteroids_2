@@ -6,8 +6,8 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     public class EnemySettingsGroup
     {
-        [SerializeField] internal AsteroidType Type;
-        [SerializeField] internal Sprite Sprite;
+        [SerializeField] internal EnemyType Type;
+        [SerializeField] internal EnemyView PrefabEnemy;
         [SerializeField] internal float DefaultDamage;
         [SerializeField] internal Speed Speed;
         [SerializeField] internal Health Health;

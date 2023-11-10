@@ -6,9 +6,9 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     public class DelayExplosionObject : DelayGenericObject<ParticleSystem>
     {
-        public AsteroidType Type;
+        public EnemyType Type;
 
-        public DelayExplosionObject(ParticleSystem source, float length, AsteroidType type) : base(source, length)
+        public DelayExplosionObject(ParticleSystem source, float length, EnemyType type) : base(source, length)
         {
             Type = type;
         }

@@ -38,7 +38,7 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        private void IsAsteroidExplosionByType(Vector3 vector, AsteroidType type)
+        private void IsAsteroidExplosionByType(Vector3 vector, EnemyType type)
         {
             var explosion = _model.VFXStruct.PoolsVFX[type].Get();
             explosion.gameObject.transform.position = vector;

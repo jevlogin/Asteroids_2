@@ -9,40 +9,42 @@ namespace WORLDGAMEDEVELOPMENT
     {
         #region Fields
 
-        [SerializeField] internal Speed Speed;
-        [SerializeField] internal Health Health;
-        [SerializeField] private float _damage;
         internal event Action<Asteroid, bool> IsDead;
+        internal Speed Speed;
+        internal Health Health;
+        private Rigidbody2D _rigidbody;
+        internal BonusPoints BonusPoints;
         internal Vector2 DirectionMovement;
-        internal AsteroidType AsteroidType;
+        internal EnemyType AsteroidType;
         internal bool IsDeadSubscribe { get; set; } = false;
 
-        //TODO - убрать сериализованные поля
-        [SerializeField] internal BonusPoints BonusPoints;
-        [SerializeField] internal Rigidbody2D Rigidbody;
-        
+        private float _damage;
+
         #endregion
 
 
         #region Properties
 
         public float Damage { get => _damage; set => _damage = value; }
+        internal Rigidbody2D Rigidbody { get => _rigidbody; set => _rigidbody = value; }
 
         #endregion
 
-        private void OnEnable()
+        private void Awake()
         {
+            if (_rigidbody == null)
+                _rigidbody = gameObject.GetOrAddComponent<Rigidbody2D>();
             OnCollisionEnterDetect += Asteroid_OnCollisionEnterDetect;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             OnCollisionEnterDetect -= Asteroid_OnCollisionEnterDetect;
         }
 
         private void Asteroid_OnCollisionEnterDetect(Collider2D collider)
         {
-            if(collider.TryGetComponent<IDamageable>(out var damageable))
+            if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
                 TakeDamage(damageable.Damage);
             }

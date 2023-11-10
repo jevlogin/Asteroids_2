@@ -20,7 +20,7 @@ namespace WORLDGAMEDEVELOPMENT
             var components = new VFXComponents();
             var settings = new VFXSettings();
 
-            vfxStruct.PoolsVFX = new Dictionary<AsteroidType, VFXPool>();
+            vfxStruct.PoolsVFX = new Dictionary<EnemyType, VFXPool>();
 
             foreach (var groupParticle in _data.Settings.ExplosionGroup)
             {

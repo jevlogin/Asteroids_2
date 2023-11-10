@@ -57,7 +57,7 @@ namespace WORLDGAMEDEVELOPMENT
             _panelResults = _canvasModel.CanvasStruct.CanvasView.panelViews.FirstOrDefault(p => p is PanelResultsView panelResults) as PanelResultsView;
         }
 
-        private void PlayExplosionEnemy(Vector3 vector, AsteroidType type)
+        private void PlayExplosionEnemy(Vector3 vector, EnemyType type)
         {
             var source = _audioModel.AudioStruct.AudioSourcePoolEffects.Get();
             source.transform.localPosition = vector;

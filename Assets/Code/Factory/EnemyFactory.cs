@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-
+using Object = UnityEngine.Object;
 
 namespace WORLDGAMEDEVELOPMENT
 {
@@ -23,16 +23,12 @@ namespace WORLDGAMEDEVELOPMENT
             var components = new EnemyComponents();
             var settings = new EnemySettings();
 
-            enemyStruct.PoolsOfType = new Dictionary<AsteroidType, AsteroidPool>();
+            enemyStruct.PoolsOfType = new Dictionary<EnemyType, AsteroidPool>();
             enemyStruct.RadiusSpawnNewEnemy = _enemyData.EnemySettings.RadiusSpawnEnemy;
 
             foreach (var enemyGroup in _enemyData.EnemySettings.Enemies)
             {
-                var enemy = new GameObject(enemyGroup.Type.ToString());
-                enemy.GetOrAddComponent<SpriteRenderer>().sprite = enemyGroup.Sprite;
-                enemy.GetOrAddComponent<CircleCollider2D>();
-                
-                var enemyView = AddedComponentViewOfTypeObject(ref enemyStruct, enemy, enemyGroup);
+                var enemyView = AddedComponentViewOfTypeObject(ref enemyStruct, enemyGroup);
                 components.ListEnemyViews.Add(enemyView);
 
                 enemyStruct.PoolsOfType[enemyGroup.Type] = enemyStruct.PoolAsteroids;
@@ -50,16 +46,22 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        private EnemyView AddedComponentViewOfTypeObject(ref EnemyStruct enemyStruct, GameObject enemy, EnemySettingsGroup enemyGroup)
+        private EnemyView AddedComponentViewOfTypeObject(ref EnemyStruct enemyStruct, EnemySettingsGroup enemyGroup)
         {
-            EnemyView view;
+            EnemyView view = null;
+
+            var enemy = Object.Instantiate(enemyGroup.PrefabEnemy);
+
             switch (enemyGroup.Type)
             {
-                case AsteroidType.Meteorite:
-                case AsteroidType.Cometa:
-                    var asteroid = enemy.GetOrAddComponent<Asteroid>();
-                    
-                    asteroid.Rigidbody = enemy.GetOrAddComponent<Rigidbody2D>();
+                case EnemyType.Ship:
+
+                    break;
+                case EnemyType.Meteorite:
+                case EnemyType.Cometa:
+
+                    var asteroid = enemy.gameObject.GetOrAddComponent<Asteroid>();
+                    asteroid.Rigidbody = asteroid.gameObject.GetOrAddComponent<Rigidbody2D>();
 
                     asteroid.Health = new Health(enemyGroup.Health);
                     asteroid.Speed = new Speed(enemyGroup.Speed);
@@ -70,14 +72,15 @@ namespace WORLDGAMEDEVELOPMENT
 
                     enemyStruct.PoolAsteroid = new Pool<Asteroid>(asteroid, enemyGroup.PoolSize);
                     var transformParent = enemyStruct.PoolAsteroids?.TransformParent ?? new GameObject(ManagerName.POOL_ASTEROID).transform;
-                    enemyStruct.PoolAsteroids = new AsteroidPool(enemyStruct.PoolAsteroid, transformParent);
+                    enemyStruct.PoolAsteroids = new AsteroidPool(enemyStruct.PoolAsteroid, transformParent, enemyGroup);
                     enemyStruct.PoolAsteroids.OnUpdatePoolAfterAddedNewPoolObjects += PoolAsteroids_OnAddedPool;
                     enemyStruct.PoolAsteroids.AddObjects(asteroid);
 
                     view = asteroid;
                     break;
                 default:
-                    view = enemy.GetOrAddComponent<EnemyView>();
+                    view = enemy;
+                    Debug.LogWarning($"Enemy View is not changed {nameof(view)}");
                     break;
             }
 

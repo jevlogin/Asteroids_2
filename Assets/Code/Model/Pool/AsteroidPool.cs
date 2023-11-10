@@ -5,8 +5,11 @@ namespace WORLDGAMEDEVELOPMENT
 {
     internal class AsteroidPool : EmptyPoolAsteroid
     {
-        public AsteroidPool(Pool<Asteroid> pool, Transform transformParent) : base(pool, transformParent)
+        internal EnemySettingsGroup EnemySettingsGroup;
+
+        public AsteroidPool(Pool<Asteroid> pool, Transform transformParent, EnemySettingsGroup enemySettingsGroup) : base(pool, transformParent)
         {
+            EnemySettingsGroup = enemySettingsGroup;
         }
     }
 }

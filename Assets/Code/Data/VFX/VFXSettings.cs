@@ -19,10 +19,10 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     public class GroupParticle
     {
-        [SerializeField] private AsteroidType _type;
+        [SerializeField] private EnemyType _type;
         [SerializeField] private ParticleSystem _particle;
 
         internal ParticleSystem Particle  => _particle;
-        internal AsteroidType Type  => _type; 
+        internal EnemyType Type  => _type; 
     }
 }

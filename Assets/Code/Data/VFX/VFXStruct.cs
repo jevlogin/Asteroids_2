@@ -8,9 +8,9 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     internal struct VFXStruct
     {
-        internal Dictionary<AsteroidType, ParticleSystem> ExplosionEffects;
+        internal Dictionary<EnemyType, ParticleSystem> ExplosionEffects;
 
-        internal Dictionary<AsteroidType, VFXPool> PoolsVFX;
+        internal Dictionary<EnemyType, VFXPool> PoolsVFX;
 
         public Transform TransformParent;
     }
