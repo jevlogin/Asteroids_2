@@ -158,7 +158,6 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 enemy.IsDead += Enemy_IsDead;
 
-                //назначаем все свойства enemyGroup
                 enemy.Health = new Health(pool.EnemySettingsGroup.Health);
                 enemy.Speed = new Speed(pool.EnemySettingsGroup.Speed);
                 enemy.Rigidbody = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
