@@ -7,7 +7,7 @@ using static Unity.Collections.AllocatorManager;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class MoveController : ICleanup, IExecute, IFixedExecute, IEventActionGeneric<float>
+    internal class MoveController : ICleanup, IExecute, IFixedExecute, IEventActionGeneric<float>, IInitialization
     {
         private readonly IUserInputProxy _inputHorizontal;
         private readonly IUserInputProxy _inputVertical;
@@ -16,6 +16,7 @@ namespace WORLDGAMEDEVELOPMENT
         private Speed _speed;
         private readonly Rigidbody2D _rigidbodyPlayer;
         private readonly PlayerModel _playerModel;
+        private readonly List<PanelView> _panelViews;
         private Vector3 _move;
 
         private float _vertical;
@@ -33,15 +34,22 @@ namespace WORLDGAMEDEVELOPMENT
         private float _timeToDisableEnergyBlock;
         private bool _isDisableEnergyBlock;
         private bool _isBlockReset;
+        private bool _isGyroEnabled;
+        private PanelHUDView _panelHUD;
+        private float _previousSpeed;
+
+        //private Vector2 velocity;
 
         internal event Action<bool> TheShipTookOff;
         internal event Action OnChangeBlockReset;
 
         internal event Action<float> OnChangeSpeedMovement;
-        public event Action<float> OnChangePositionRelativeToAxisY;
+        public event Action<float> OnChangePositionAxisY;
 
 
-        public MoveController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) getInput, Rigidbody2D rigidbodyPlayer, Transform playerTransform, Speed speed, PlayerModel playerModel, SceneController sceneController)
+        public MoveController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) getInput,
+            Rigidbody2D rigidbodyPlayer, Transform playerTransform, Speed speed, PlayerModel playerModel,
+            SceneController sceneController, List<PanelView> panelViews)
         {
             _inputHorizontal = getInput.inputHorizontal;
             _inputVertical = getInput.inputVertical;
@@ -49,7 +57,7 @@ namespace WORLDGAMEDEVELOPMENT
             _speed = speed;
             _rigidbodyPlayer = rigidbodyPlayer;
             _playerModel = playerModel;
-
+            _panelViews = panelViews;
             _inputHorizontal.AxisOnChange += HorizontalAxisOnChange;
             _inputVertical.AxisOnChange += VerticalAxisOnChange;
             _sceneController = sceneController;
@@ -81,6 +89,12 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Cleanup()
         {
+            if (SystemInfo.supportsGyroscope)
+            {
+                Input.gyro.enabled = false;
+                _isGyroEnabled = false;
+            }
+
             _inputHorizontal.AxisOnChange -= HorizontalAxisOnChange;
             _inputVertical.AxisOnChange -= VerticalAxisOnChange;
             _sceneController.IsStopControl -= OnChangeIsStopControl;
@@ -106,6 +120,7 @@ namespace WORLDGAMEDEVELOPMENT
                 if (!_isDisableEnergyBlock && elapsedTime > _playerModel.Settings.TimeForShipToTakeOff)
                 {
                     _isDisableEnergyBlock = true;
+                    //TODO - вынести в PlayerController
                     _sceneController.DisableEnergyBlock?.Invoke();
                 }
 
@@ -140,32 +155,68 @@ namespace WORLDGAMEDEVELOPMENT
         {
             float deltaY = _playerTransform.position.y - _currentStatePosition;
             _currentStatePosition = _playerTransform.position.y;
-            
+
             float realHeight = 0;
             if (deltaY > 0)
             {
-                 realHeight = deltaY * _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime; 
+                realHeight = deltaY * _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime;
             }
             else
             {
                 if (!_isStopControl)
                 {
-                    realHeight = _playerModel.PlayerStruct.RealSpeedShipModel / _playerModel.PlayerStruct.ScaleFactor * fixedDeltatime;  
+                    realHeight = _playerModel.PlayerStruct.RealSpeedShipModel / _playerModel.PlayerStruct.ScaleFactor * fixedDeltatime;
                 }
             }
 
-            OnChangePositionRelativeToAxisY?.Invoke(realHeight);
+            OnChangePositionAxisY?.Invoke(realHeight);
 
-
-
+            var movement = new Vector3(_horizontal, _vertical, 0.0f).normalized;
             if (_isMovingFreeControl)
             {
-                var movement = new Vector2(_horizontal, _vertical).normalized;
                 movement *= _speed.CurrentSpeed * fixedDeltatime;
-                var newVelocity = Vector2.Lerp(_rigidbodyPlayer.velocity, movement, _playerModel.PlayerStruct.VelocityChangeSpeed * fixedDeltatime);
-                _rigidbodyPlayer.velocity = newVelocity;
-                var gameSpeed = _playerModel.PlayerStruct.SpeedScale * newVelocity.sqrMagnitude * _playerModel.PlayerStruct.ScaleFactor;
-                OnChangeSpeedMovement?.Invoke(gameSpeed);
+                movement = Vector2.Lerp(_rigidbodyPlayer.velocity, movement, fixedDeltatime);
+                _rigidbodyPlayer.velocity = movement;
+            }
+
+            if (_isGyroEnabled && _isMovingFreeControl && movement.sqrMagnitude <= _playerModel.PlayerStruct.VelocityTrashHoldGyro)
+            {
+                var gyroInput = Input.gyro.rotationRateUnbiased;
+
+                if (gyroInput.sqrMagnitude < _playerModel.PlayerStruct.VelocityTrashHoldGyro)
+                {
+                    gyroInput = Vector3.zero;
+                }
+
+                movement = new Vector3(gyroInput.x, gyroInput.y, 0.0f).normalized * _playerModel.PlayerStruct.VelocitySpeedGyro;
+
+                movement = Vector3.Lerp(_playerTransform.position, _playerTransform.position + movement, _playerModel.PlayerStruct.VelocitySmooth);
+
+                _rigidbodyPlayer.MovePosition(movement);
+            }
+
+            if (_isMovingFreeControl || _isMovingUp)
+            {
+                float targetSpeed = _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime + movement.y * _playerModel.PlayerStruct.SpeedScale * _playerModel.PlayerStruct.Player.Speed.Acceleration; ;
+                float smoothSpeed = Mathf.Lerp(_previousSpeed, targetSpeed, _playerModel.PlayerStruct.VelocitySmooth);
+
+                _previousSpeed = smoothSpeed;
+                OnChangeSpeedMovement?.Invoke(_previousSpeed);
+            }
+        }
+
+        public void Initialization()
+        {
+            foreach (var panel in _panelViews)
+            {
+                if (panel is PanelHUDView panelHUD)
+                    _panelHUD = panelHUD;
+            }
+
+            if (SystemInfo.supportsGyroscope)
+            {
+                Input.gyro.enabled = true;
+                _isGyroEnabled = true;
             }
         }
     }

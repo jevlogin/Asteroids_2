@@ -12,7 +12,10 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            OnCollisionEnterDetect?.Invoke(collision.collider);
+            if (!collision.collider.TryGetComponent<Bullet>(out var bullet))
+            {
+                OnCollisionEnterDetect?.Invoke(collision.collider);
+            }
         }
 
         #endregion

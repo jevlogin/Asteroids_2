@@ -17,6 +17,7 @@ MonoBehaviour:
     _clipByTypes:
     - _type: 5
       AudioClips:
+      - {fileID: 8300000, guid: 891e824453345bb4ca39d380511c9471, type: 3}
       - {fileID: 8300000, guid: 39564c9a18b9232498c9a297aec03e4a, type: 3}
       - {fileID: 8300000, guid: e079c3df51192a64bb1713412112a651, type: 3}
       - {fileID: 8300000, guid: c99a573647602d44ea48a2e8852e8e46, type: 3}
@@ -42,6 +43,8 @@ MonoBehaviour:
       - {fileID: 8300000, guid: c7e1ef0aad849e449bdfadcecbf2e28f, type: 3}
       - {fileID: 8300000, guid: f7157b43298c26945a7c7743c2ad9b4e, type: 3}
       - {fileID: 8300000, guid: 47a1ca433f63d3e44898da1e8a817919, type: 3}
+    MinRandPitch: 0.8
+    MaxRandPitch: 1.2
   _audioSettings:
     _audioSourceByGroupTypesPrefabs:
     - mixerGroup: 1

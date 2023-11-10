@@ -59,7 +59,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void PlayerTakeDamage(float currentHealth)
         {
-            _panelHUD.TextLife.text = $"{ManagerName.TEXT_LIFE} {currentHealth}";
+            _panelHUD.TextLife.text = currentHealth.ToString();
         }
 
         private void TheShipTookOff(bool value)

@@ -14,5 +14,6 @@ namespace WORLDGAMEDEVELOPMENT
         public PlayerView PlayerView;
         [Header("Stars System")] public ParticleSystem ParticlesStarSystem;
         public AudioSource AudioSource;
+        public ShieldView ShieldView;
     }
 }

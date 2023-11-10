@@ -88,7 +88,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             if (eventAction is MoveController moveController && moveController is IEventActionGeneric<float> playerEvent)
             {
-                playerEvent.OnChangePositionRelativeToAxisY += PlayerEvent_EventFloatGeneric;
+                playerEvent.OnChangePositionAxisY += PlayerEvent_EventFloatGeneric;
                 moveController.OnChangeSpeedMovement += OnChangeSpeedMovement;
             }
         }
@@ -96,7 +96,7 @@ namespace WORLDGAMEDEVELOPMENT
         private void AddScoreByAsteroidDead(float value)
         {
             _panelHUD.Score += value;
-            _panelHUD.TextScore.text = $"{ManagerName.TEXT_SCORE} {_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
+            _panelHUD.TextScore.text = $"{_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
         }
 
         private void OnChangeSpeedMovement(float speed)
@@ -215,7 +215,7 @@ namespace WORLDGAMEDEVELOPMENT
 
                 if (eventAction is MoveController moveController && moveController is IEventActionGeneric<float> playerEvent)
                 {
-                    playerEvent.OnChangePositionRelativeToAxisY -= PlayerEvent_EventFloatGeneric;
+                    playerEvent.OnChangePositionAxisY -= PlayerEvent_EventFloatGeneric;
                 }
             }
             foreach (var button in _allButtonList)

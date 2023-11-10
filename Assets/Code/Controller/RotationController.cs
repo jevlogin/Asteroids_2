@@ -3,22 +3,42 @@
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class RotationController : IExecute, ICleanup
+    internal class RotationController : ICleanup, IFixedExecute
     {
         private Transform _playerTransform;
         private Camera _camera;
         private bool _isStopControl;
+        private float _horizontal;
+        private float _vertical;
         private readonly SceneController _sceneController;
         private readonly Rigidbody2D _rigidbodyPlayer;
 
-        public RotationController(Transform playerTransform, Camera camera, SceneController sceneController, Rigidbody2D rigidbodyPlayer)
+        private float _tiltSpeedForward = 20.0f;
+        private float _tiltSpeedBackward = 20.0f;
+        private float _tiltSpeedSideways = 10.0f;
+        private float _trashHoldRotation = 0.1f;
+
+        public RotationController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) input, Transform playerTransform, Camera camera, SceneController sceneController, Rigidbody2D rigidbodyPlayer)
         {
             _playerTransform = playerTransform;
             _camera = camera;
             _sceneController = sceneController;
             _rigidbodyPlayer = rigidbodyPlayer;
 
+            input.inputHorizontal.AxisOnChange += OnChangeInputHorizontal;
+            input.inputVertical.AxisOnChange += OnChangeInputVertical;
+
             _sceneController.IsStopControl += OnChangeIsStopControl;
+        }
+
+        private void OnChangeInputVertical(float value)
+        {
+            _vertical = value;
+        }
+
+        private void OnChangeInputHorizontal(float value)
+        {
+            _horizontal = value;
         }
 
         private void OnChangeIsStopControl(bool value)
@@ -26,17 +46,31 @@ namespace WORLDGAMEDEVELOPMENT
             _isStopControl = value;
         }
 
-        public void Execute(float deltatime)
+
+        public void FixedExecute(float fixedDeltatime)
         {
             if (_isStopControl) { return; }
 
-            var direction = Input.mousePosition - _camera.WorldToScreenPoint(_playerTransform.position);
+            float tiltAngleX = _vertical * (_vertical > 0 ? _tiltSpeedForward : _tiltSpeedBackward);
+            float tiltAngleZ = -_horizontal * _tiltSpeedSideways;
 
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90.0f;
+            var movement = new Vector3(tiltAngleX, tiltAngleZ, tiltAngleZ);
 
-            //_playerTransform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            if (Mathf.Abs(tiltAngleX) <= _trashHoldRotation && Mathf.Abs(tiltAngleZ) <= _trashHoldRotation)
+            {
+                var gyroInput = Input.gyro.rotationRateUnbiased;
+                tiltAngleX = -gyroInput.x * (gyroInput.x > 0 ? _tiltSpeedForward : _tiltSpeedBackward);
+                tiltAngleZ = gyroInput.y * _tiltSpeedSideways * 1.5f;
 
-            _rigidbodyPlayer.SetRotation(angle);
+                if (Mathf.Abs(tiltAngleX) >= _trashHoldRotation && Mathf.Abs(tiltAngleZ) >= _trashHoldRotation)
+                {
+                    movement = new Vector3(tiltAngleZ, tiltAngleX, tiltAngleX);
+                }
+            }
+
+            Quaternion targetRotation = Quaternion.Euler(movement);
+
+            _playerTransform.rotation = targetRotation;
         }
 
 
@@ -46,6 +80,8 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _sceneController.IsStopControl -= OnChangeIsStopControl;
         }
+
+        
 
         #endregion
     }

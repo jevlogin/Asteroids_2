@@ -74,12 +74,20 @@ namespace WORLDGAMEDEVELOPMENT
 
                 playerComponents.PlayerTransform = playerStruct.Player.transform;
                 playerComponents.PlayerView = playerStruct.Player;
+
                 playerComponents.ParticlesStarSystem = particles.GetComponent<ParticleSystem>();
                 playerComponents.ParticlesStarSystem.Stop();
                 playerComponents.ParticlesStarSystem.gameObject.SetActive(false);
+
+                playerComponents.ShieldView = Object.Instantiate(_playerData.PlayerSettings.ParticleSystemShield, playerStruct.Player.transform);
+                playerComponents.ShieldView.StopAllParticles();
+                playerComponents.ShieldView.transform.localPosition = _playerData.PlayerSettings.ShieldStartPosition;
+                var main = playerComponents.ShieldView.ShieldParticle.main;
+                main.startSize = _playerData.PlayerSettings.ShieldStartSize;
+
                 playerComponents.AudioSource = playerStruct.Player.gameObject.GetOrAddComponent<AudioSource>();
+                playerComponents.AudioSource.volume = _playerData.PlayerSettings.AudioSourceVolume;
                 playerComponents.AudioSource.playOnAwake = false;
-                playerComponents.AudioSource.volume = 0.03f;
 
 
                 var energiyaGroupObject = playerStruct.Player.GroupObjects.FirstOrDefault(block => block.ViewObjectType == ViewObjectType.AdditionalType);

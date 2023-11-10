@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class PlayerController : ICleanup, IExecute, IFixedExecute, ILateExecute, IAddedModel
+    internal class PlayerController : ICleanup, IExecute, IFixedExecute, ILateExecute, IAddedModel, IInitialization
     {
         #region Fields
 
@@ -13,6 +13,7 @@ namespace WORLDGAMEDEVELOPMENT
         private readonly PlayerInitialization _playerInitialization;
         private readonly Camera _camera;
         private readonly SceneController _sceneController;
+        private readonly CanvasView _canvasView;
         private MoveController _moveController;
         private RotationController _rotationController;
         private List<IController> _controllers;
@@ -30,7 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 if (_rotationController == null)
                 {
-                    _rotationController = new RotationController(_playerInitialization.PlayerModel.Components.PlayerTransform,
+                    _rotationController = new RotationController(_inputInitialization.GetInput(), _playerInitialization.PlayerModel.Components.PlayerTransform,
                                                 _camera, _sceneController, _playerInitialization.PlayerModel.Components.RigidbodyPlayer);
                 }
                 return _rotationController;
@@ -47,7 +48,7 @@ namespace WORLDGAMEDEVELOPMENT
                                                _playerInitialization.PlayerModel.Components.PlayerTransform,
                                                _playerInitialization.PlayerModel.PlayerStruct.Player.Speed,
                                                _playerInitialization.PlayerModel,
-                                               _sceneController);
+                                               _sceneController, _canvasView.panelViews);
                 }
                 return _moveController;
             }
@@ -58,7 +59,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         #region ClassLifeCycles
 
-        public PlayerController(InputInitialization inputInitialization, PlayerInitialization playerInitialization, Camera camera, SceneController sceneController)
+        public PlayerController(InputInitialization inputInitialization, PlayerInitialization playerInitialization, Camera camera, SceneController sceneController, CanvasView canvasView)
         {
             _inputInitialization = inputInitialization;
             _playerInitialization = playerInitialization;
@@ -66,16 +67,25 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController = sceneController;
             _sceneController.IsStopControl += OnCnageIsStopControl;
             _sceneController.DisableEnergyBlock += DisableEnergyBlock;
+            _playerInitialization.PlayerModel.PlayerStruct.Player.EnableShield += EnableShield;
+
+            _canvasView = canvasView;
 
             _playerInitialization.PlayerModel.PlayerStruct.Player.IsDeadPlayer += IsDeadPlayerAndRestartPosition;
 
             _controllers = new()
             {
                 MoveController,
+                RotationController,
             };
 
             MoveController.OnChangeBlockReset += OnChangeBlockReset;
             MoveController.DisableEnergyBlock += DisableEnergyBlock;
+        }
+
+        private void EnableShield()
+        {
+            _playerInitialization.PlayerModel.Components.ShieldView.PlayShield();
         }
 
         private void IsDeadPlayerAndRestartPosition()
@@ -142,6 +152,7 @@ namespace WORLDGAMEDEVELOPMENT
         public void Cleanup()
         {
             _moveController.Cleanup();
+            _playerInitialization.PlayerModel.PlayerStruct.Player.EnableShield -= EnableShield;
             MoveController.OnChangeBlockReset -= OnChangeBlockReset;
             _sceneController.IsStopControl -= OnCnageIsStopControl;
             _sceneController.DisableEnergyBlock -= DisableEnergyBlock;
@@ -198,6 +209,17 @@ namespace WORLDGAMEDEVELOPMENT
                 if (controller is IFixedExecute execute)
                 {
                     execute.FixedExecute(fixedDeltatime);
+                }
+            }
+        }
+
+        public void Initialization()
+        {
+            foreach (var controller in _controllers)
+            {
+                if (controller is IInitialization init)
+                {
+                    init.Initialization();
                 }
             }
         }

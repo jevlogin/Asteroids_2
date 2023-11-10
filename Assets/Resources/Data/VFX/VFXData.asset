@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00857f72ab54ebb4ba9da0fce314b226, type: 3}
   m_Name: VFXData
   m_EditorClassIdentifier: 
+  _struct:
+    TransformParent: {fileID: 0}
   _settings:
     _explosionGroup:
     - _type: 1

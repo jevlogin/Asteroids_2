@@ -290,7 +290,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groupObjects:
   - _transform: {fileID: 60210558537808299}
-    _particleSystems: []
+    _particleSystems:
+    - {fileID: 0}
     _type:
       _groupOfType: 1
       _viewOfType: 1

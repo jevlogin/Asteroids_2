@@ -16,6 +16,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         [SerializeField] private List<GroupObject> _groupObjects;
         internal event Action<float> LifeLeftCount;
+        internal event Action EnableShield;
 
         private float _damage;
         internal event Action IsDeadPlayer;
@@ -82,6 +83,7 @@ namespace WORLDGAMEDEVELOPMENT
                 IsCanShoot?.Invoke(false);
             }
             LifeLeftCount?.Invoke(Health.CurrentHealth);
+            EnableShield?.Invoke();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace WORLDGAMEDEVELOPMENT
             _radiusSpawn = _enemyModel.EnemyStruct.RadiusSpawnNewEnemy;
         }
 
-        event Action<float> IEventActionGeneric<float>.OnChangePositionRelativeToAxisY
+        event Action<float> IEventActionGeneric<float>.OnChangePositionAxisY
         {
             add
             {
@@ -135,11 +135,11 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void GetEnemyFromPool(AsteroidPool pool)
         {
-            float radiusSpawn = 10.0f;
-            float radiusMovement = 6.0f;
+            float radiusSpawn = 20.0f;
+            float radiusMovement = 10.0f;
 
-            float minAngle = 30f;
-            float maxAngle = 150f;
+            float minAngle = 10f;
+            float maxAngle = 170f;
             float minRadians = Mathf.Deg2Rad * minAngle;
             float maxRadians = Mathf.Deg2Rad * maxAngle;
 
@@ -175,12 +175,12 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void FixedExecute(float fixedDeltaTime)
         {
-            float _minSqrDistance = 150.0f;
+            float _minSqrDistance = 50.0f;
 
             for (int i = _activeEnemyList.Count - 1; i >= 0; i--)
             {
                 var enemy = _activeEnemyList[i];
-                if ((_playerModel.Components.PlayerTransform.position - enemy.transform.position).sqrMagnitude > _minSqrDistance)
+                if (Vector3.Distance(_playerModel.Components.PlayerTransform.position, enemy.transform.position) > _minSqrDistance)
                 {
                     _activeEnemyList.Remove(enemy);
                     ReturnToPoolByType(enemy);

@@ -8,6 +8,11 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private Data _data;
         private Controllers _controllers;
 
+        private void Awake()
+        {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        }
+
         private void Start()
         {
             Camera camera = Camera.main;
@@ -21,7 +26,7 @@ namespace WORLDGAMEDEVELOPMENT
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
             var canvasController = new CanvasController(canvasInitialization.CanvasModel);
-            
+
             sceneController.Add(canvasInitialization.CanvasModel);
             _controllers.Add(canvasController);
 
@@ -43,7 +48,7 @@ namespace WORLDGAMEDEVELOPMENT
             sceneController.Add(enemyInitialization.Model);
 
 
-            var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController);
+            var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController, canvasInitialization.CanvasModel.CanvasStruct.CanvasView);
             sceneController.Add(playerController);
             _controllers.Add(playerController);
             canvasController.Add(playerController.MoveController);

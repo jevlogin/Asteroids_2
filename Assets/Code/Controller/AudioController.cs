@@ -62,7 +62,7 @@ namespace WORLDGAMEDEVELOPMENT
             var source = _audioModel.AudioStruct.AudioSourcePoolEffects.Get();
             source.transform.localPosition = vector;
             source.gameObject.SetActive(true);
-            source.pitch = Random.Range(0.8f, 1.2f);
+            source.pitch = Random.Range(_audioModel.AudioStruct.MinRandPitch, _audioModel.AudioStruct.MaxRandPitch);
             source.clip = _explosionAudioClip;
             source.Play();
 
@@ -72,11 +72,11 @@ namespace WORLDGAMEDEVELOPMENT
         public void Initialization()
         {
             var sourceMusic = _audioModel.AudioStruct.PoolsByMixerTypes[MixerGroupByName.Music].Get();
-            sourceMusic.clip = _musicList.FirstOrDefault();
+            sourceMusic.clip = _musicList[0];
             sourceMusic.gameObject.SetActive(true);
             sourceMusic.Play();
 
-            sourceMusic.volume = 0.02f;
+            //TODO - сериализовать - вынести в настройки
 
             _playerMusic = new PlayerMusic(new AudioSourceInfo(sourceMusic, sourceMusic.clip.length), _musicList);
 

@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerStruct:
     VelocityChangeSpeed: 5
+    VelocityTrashHoldInput: 0.0001
+    VelocitySpeedGyro: 25
+    VelocityTrashHoldGyro: 0.0001
+    VelocitySmooth: 0.01
     RealSpeedShipModel: 17000
     ScaleFactor: 10
     ParticleSpeedAfterTakeOff: 0.4
@@ -23,14 +27,18 @@ MonoBehaviour:
     _speed:
       _maxSpeed: 1000
       _currentSpeed: 200
-      _acceleration: 2.4
+      _acceleration: 1.5
     _health:
       _maxHealth: 100
       _currentHealth: 100
     _force: 10
     _damage: 5
+    _audioSourceVolume: 0.01
     _playerView: {fileID: 4672627823515711344, guid: 9155f6f028af51644971b0315b35e60f, type: 3}
     _particleSystem: {fileID: 3360194231654041200, guid: 080abb3320e400e4387ac43192e76441, type: 3}
+    _particleSystemShield: {fileID: 7426413602303266462, guid: ddd74abb1b168e146aa6180972e3b424, type: 3}
+    _shieldStartSize: 2
+    _shieldStartPosition: {x: 0, y: 1, z: 0}
     _offsetVectorBullet: {x: 0, y: 1}
     ConfigParticlesShip:
       StartLifetime: 1.1

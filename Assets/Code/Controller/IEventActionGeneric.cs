@@ -5,6 +5,6 @@ namespace WORLDGAMEDEVELOPMENT
 {
     internal interface IEventActionGeneric<T> : IEventAction
     {
-        abstract event Action<T> OnChangePositionRelativeToAxisY;
+        abstract event Action<T> OnChangePositionAxisY;
     }
 }

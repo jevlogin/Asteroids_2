@@ -14,13 +14,15 @@ namespace WORLDGAMEDEVELOPMENT
         private bool _stopControl;
         private bool _cameraViewNormilize;
         private bool _isParticleStarted;
+        private Vector3 _offsetPosition;
+
 
         public CameraController(CameraView cameraView, Transform playerTransform, SceneController sceneController)
         {
             _cameraView = cameraView;
             _camera = _cameraView.Camera;
             _playerTransform = playerTransform;
-
+            _offsetPosition = new Vector3(_camera.transform.position.x, _camera.orthographicSize * 1.6f, _camera.transform.position.z);
             _sceneController = sceneController;
             _sceneController.IsStopControl += SceneControllerOnStopControl;
             _sceneController.TakeOffOfTheShip += OnChangeTakeOffOfTheShip;
@@ -63,7 +65,7 @@ namespace WORLDGAMEDEVELOPMENT
             }
 
 
-            Vector3 targetPosition = new(_playerTransform.position.x, _playerTransform.position.y, _camera.transform.position.z);
+            Vector3 targetPosition = _playerTransform.position + _offsetPosition;
             _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, targetPosition, ref velocity, _cameraView.SmoothTime);
         }
 
