@@ -35,7 +35,7 @@ MonoBehaviour:
     _damage: 5
     _audioSourceVolume: 0.01
     _playerView: {fileID: 4672627823515711344, guid: 9155f6f028af51644971b0315b35e60f, type: 3}
-    _particleSystem: {fileID: 3360194231654041200, guid: 080abb3320e400e4387ac43192e76441, type: 3}
+    _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
     _particleSystemShield: {fileID: 7426413602303266462, guid: ddd74abb1b168e146aa6180972e3b424, type: 3}
     _shieldStartSize: 2
     _shieldStartPosition: {x: 0, y: 1, z: 0}

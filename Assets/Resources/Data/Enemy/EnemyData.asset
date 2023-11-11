@@ -28,7 +28,7 @@ MonoBehaviour:
       BonusPoints:
         _bonusPointsMin: 1
         _bonusPointsMax: 10
-      PoolSize: 5
+      PoolSize: 10
     - Type: 2
       PrefabEnemy: {fileID: 4142458732214144647, guid: ab716b53ecf6a284fb1af3d1ee37ea6c, type: 3}
       DefaultDamage: 10
