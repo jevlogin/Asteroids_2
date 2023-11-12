@@ -15,7 +15,9 @@ namespace WORLDGAMEDEVELOPMENT
         
         public InputInitialization()
         {
-            _inputHorizontal = new PCInputHorizontal();
+            var playerInputActions = new PlayerInputActions();
+
+            _inputHorizontal = new PCInputHorizontal(playerInputActions.Player.MoveLeftAndRight);
             _inputVertical = new PCInputVertical();
             _inputMouse = new PCInputMouse();
         } 
