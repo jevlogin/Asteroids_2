@@ -37,6 +37,7 @@ namespace WORLDGAMEDEVELOPMENT
         private bool _isBlockReset;
         private PanelHUDView _panelHUD;
         private float _previousSpeed;
+        private float _cameraWidth;
 
         internal event Action<bool> TheShipTookOff;
         internal event Action OnChangeBlockReset;
@@ -64,6 +65,7 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController.TakeOffOfTheShip += OnChangeTakeOffOfTheShip;
 
             _timeToDisableEnergyBlock = _playerModel.Settings.TimeForShipToTakeOff / 1.3f;
+            _cameraWidth = _camera.orthographicSize * 2 * _camera.aspect;
         }
 
         private void OnChangeTakeOffOfTheShip(bool value)
@@ -169,13 +171,11 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 movement *= _speed.CurrentSpeed * fixedDeltatime;
 
-                float cameraWidth = _camera.orthographicSize * 2 * _camera.aspect;
-
-                var playerCollider = _rigidbodyPlayer.gameObject.GetComponent<CapsuleCollider2D>();
+                var playerCollider = _playerModel.Components.Collider2D;
                 float halfPlayerWidth = playerCollider.size.x / 2.0f;
 
-                float minX = -cameraWidth / 2 + halfPlayerWidth;
-                float maxX = cameraWidth / 2 - halfPlayerWidth;
+                float minX = -_cameraWidth / 2.0f + halfPlayerWidth;
+                float maxX = _cameraWidth / 2.0f - halfPlayerWidth;
 
                 Vector3 playerPosition = _rigidbodyPlayer.position;
 

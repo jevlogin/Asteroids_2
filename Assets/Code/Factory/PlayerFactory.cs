@@ -62,6 +62,7 @@ namespace WORLDGAMEDEVELOPMENT
                 else if (playerStruct.Player.transform.TryGetComponent<CapsuleCollider2D>(out var collider2D))
                 {
                     barrelPositionY = collider2D.size.y;
+                    playerComponents.Collider2D = collider2D;
                 }
 
                 barrel.transform.localPosition = new Vector2(_playerData.PlayerSettings.OffsetVectorBurel.x, barrelPositionY + 0.2f);
