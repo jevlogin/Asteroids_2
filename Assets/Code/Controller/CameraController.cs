@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 
@@ -12,10 +13,8 @@ namespace WORLDGAMEDEVELOPMENT
         private CameraView _cameraView;
         private Vector3 velocity = Vector3.zero;
         private bool _stopControl;
-        private bool _cameraViewNormilize;
-        private bool _isParticleStarted;
         private Vector3 _offsetPosition;
-
+        private bool _cameraAligned;
 
         public CameraController(CameraView cameraView, Transform playerTransform, SceneController sceneController)
         {
@@ -26,8 +25,6 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController = sceneController;
             _sceneController.IsStopControl += SceneControllerOnStopControl;
             _sceneController.TakeOffOfTheShip += OnChangeTakeOffOfTheShip;
-
-            _cameraViewNormilize = false;
         }
 
         private void OnChangeTakeOffOfTheShip(bool value)
@@ -52,21 +49,22 @@ namespace WORLDGAMEDEVELOPMENT
                 var time = _cameraView.DefaultSmoothTime / _cameraView.SmoothTime;
                 _cameraView.SmoothTime -= time * deltatime;
             }
-            else if (!_isParticleStarted && _cameraView.SmoothTime <= _cameraView.DefaultSmoothTime)
+
+            if (Vector3.Distance(_camera.transform.position, _playerTransform.position + _offsetPosition) > 0.1f)
             {
-                _isParticleStarted = true;
+                _cameraAligned = false;
             }
-            if (!_cameraViewNormilize)
+
+            if (!_cameraAligned)
             {
-                if (_cameraView.SmoothTime == _cameraView.DefaultSmoothTime)
+                Vector3 targetPosition = _playerTransform.position + _offsetPosition;
+                _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, targetPosition, ref velocity, _cameraView.SmoothTime);
+
+                if (Vector3.Distance(_camera.transform.position, targetPosition) < 0.01f)
                 {
-                    _cameraViewNormilize = true;
-                } 
+                    _cameraAligned = true;
+                }
             }
-
-
-            Vector3 targetPosition = _playerTransform.position + _offsetPosition;
-            _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, targetPosition, ref velocity, _cameraView.SmoothTime);
         }
 
 

@@ -11,19 +11,18 @@ namespace WORLDGAMEDEVELOPMENT
         private float _horizontal;
         private float _vertical;
         private readonly SceneController _sceneController;
-        private readonly Rigidbody2D _rigidbodyPlayer;
 
+        //TODO - serialization to scriptableObject
         private float _tiltSpeedForward = 20.0f;
         private float _tiltSpeedBackward = 20.0f;
         private float _tiltSpeedSideways = 10.0f;
-        private float _trashHoldRotation = 0.1f;
 
-        public RotationController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) input, Transform playerTransform, Camera camera, SceneController sceneController, Rigidbody2D rigidbodyPlayer)
+        public RotationController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) input, 
+            Transform playerTransform, Camera camera, SceneController sceneController)
         {
             _playerTransform = playerTransform;
             _camera = camera;
             _sceneController = sceneController;
-            _rigidbodyPlayer = rigidbodyPlayer;
 
             input.inputHorizontal.AxisOnChange += OnChangeInputHorizontal;
             input.inputVertical.AxisOnChange += OnChangeInputVertical;
@@ -55,18 +54,6 @@ namespace WORLDGAMEDEVELOPMENT
             float tiltAngleZ = -_horizontal * _tiltSpeedSideways;
 
             var movement = new Vector3(tiltAngleX, tiltAngleZ, tiltAngleZ);
-
-            if (Mathf.Abs(tiltAngleX) <= _trashHoldRotation && Mathf.Abs(tiltAngleZ) <= _trashHoldRotation)
-            {
-                var gyroInput = Input.gyro.rotationRateUnbiased;
-                tiltAngleX = -gyroInput.x * (gyroInput.x > 0 ? _tiltSpeedForward : _tiltSpeedBackward);
-                tiltAngleZ = gyroInput.y * _tiltSpeedSideways * 1.5f;
-
-                if (Mathf.Abs(tiltAngleX) >= _trashHoldRotation && Mathf.Abs(tiltAngleZ) >= _trashHoldRotation)
-                {
-                    movement = new Vector3(tiltAngleZ, tiltAngleX, tiltAngleX);
-                }
-            }
 
             Quaternion targetRotation = Quaternion.Euler(movement);
 

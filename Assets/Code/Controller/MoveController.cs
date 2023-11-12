@@ -14,6 +14,7 @@ namespace WORLDGAMEDEVELOPMENT
         private readonly SceneController _sceneController;
         private Transform _playerTransform;
         private Speed _speed;
+        private readonly Camera _camera;
         private readonly Rigidbody2D _rigidbodyPlayer;
         private readonly PlayerModel _playerModel;
         private readonly List<PanelView> _panelViews;
@@ -34,11 +35,8 @@ namespace WORLDGAMEDEVELOPMENT
         private float _timeToDisableEnergyBlock;
         private bool _isDisableEnergyBlock;
         private bool _isBlockReset;
-        private bool _isGyroEnabled;
         private PanelHUDView _panelHUD;
         private float _previousSpeed;
-
-        //private Vector2 velocity;
 
         internal event Action<bool> TheShipTookOff;
         internal event Action OnChangeBlockReset;
@@ -49,12 +47,13 @@ namespace WORLDGAMEDEVELOPMENT
 
         public MoveController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) getInput,
             Rigidbody2D rigidbodyPlayer, Transform playerTransform, Speed speed, PlayerModel playerModel,
-            SceneController sceneController, List<PanelView> panelViews)
+            Camera camera, SceneController sceneController, List<PanelView> panelViews)
         {
             _inputHorizontal = getInput.inputHorizontal;
             _inputVertical = getInput.inputVertical;
             _playerTransform = playerTransform;
             _speed = speed;
+            _camera = camera;
             _rigidbodyPlayer = rigidbodyPlayer;
             _playerModel = playerModel;
             _panelViews = panelViews;
@@ -89,12 +88,6 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Cleanup()
         {
-            if (SystemInfo.supportsGyroscope)
-            {
-                Input.gyro.enabled = false;
-                _isGyroEnabled = false;
-            }
-
             _inputHorizontal.AxisOnChange -= HorizontalAxisOnChange;
             _inputVertical.AxisOnChange -= VerticalAxisOnChange;
             _sceneController.IsStopControl -= OnChangeIsStopControl;
@@ -175,24 +168,22 @@ namespace WORLDGAMEDEVELOPMENT
             if (_isMovingFreeControl)
             {
                 movement *= _speed.CurrentSpeed * fixedDeltatime;
-                movement = Vector2.Lerp(_rigidbodyPlayer.velocity, movement, fixedDeltatime);
-                _rigidbodyPlayer.velocity = movement;
-            }
 
-            if (_isGyroEnabled && _isMovingFreeControl && movement.sqrMagnitude <= _playerModel.PlayerStruct.VelocityTrashHoldGyro)
-            {
-                var gyroInput = Input.gyro.rotationRateUnbiased;
+                float cameraWidth = _camera.orthographicSize * 2 * _camera.aspect;
 
-                if (gyroInput.sqrMagnitude < _playerModel.PlayerStruct.VelocityTrashHoldGyro)
-                {
-                    gyroInput = Vector3.zero;
-                }
+                var playerCollider = _rigidbodyPlayer.gameObject.GetComponent<CapsuleCollider2D>();
+                float halfPlayerWidth = playerCollider.size.x / 2.0f;
 
-                movement = new Vector3(gyroInput.x, gyroInput.y, 0.0f).normalized * _playerModel.PlayerStruct.VelocitySpeedGyro;
+                float minX = -cameraWidth / 2 + halfPlayerWidth;
+                float maxX = cameraWidth / 2 - halfPlayerWidth;
 
-                movement = Vector3.Lerp(_playerTransform.position, _playerTransform.position + movement, _playerModel.PlayerStruct.VelocitySmooth);
+                Vector3 playerPosition = _rigidbodyPlayer.position;
 
-                _rigidbodyPlayer.MovePosition(movement);
+                playerPosition.x = Mathf.Clamp(playerPosition.x + movement.x, minX, maxX);
+
+                playerPosition = Vector3.Lerp(_playerTransform.position, playerPosition, fixedDeltatime);
+
+                _rigidbodyPlayer.MovePosition(playerPosition);
             }
 
             if (_isMovingFreeControl || _isMovingUp)
@@ -211,12 +202,6 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 if (panel is PanelHUDView panelHUD)
                     _panelHUD = panelHUD;
-            }
-
-            if (SystemInfo.supportsGyroscope)
-            {
-                Input.gyro.enabled = true;
-                _isGyroEnabled = true;
             }
         }
     }

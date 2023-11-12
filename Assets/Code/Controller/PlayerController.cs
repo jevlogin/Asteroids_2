@@ -32,7 +32,7 @@ namespace WORLDGAMEDEVELOPMENT
                 if (_rotationController == null)
                 {
                     _rotationController = new RotationController(_inputInitialization.GetInput(), _playerInitialization.PlayerModel.Components.PlayerTransform,
-                                                _camera, _sceneController, _playerInitialization.PlayerModel.Components.RigidbodyPlayer);
+                                                _camera, _sceneController);
                 }
                 return _rotationController;
             }
@@ -47,7 +47,7 @@ namespace WORLDGAMEDEVELOPMENT
                     _moveController = new MoveController(_inputInitialization.GetInput(), _playerInitialization.PlayerModel.Components.RigidbodyPlayer,
                                                _playerInitialization.PlayerModel.Components.PlayerTransform,
                                                _playerInitialization.PlayerModel.PlayerStruct.Player.Speed,
-                                               _playerInitialization.PlayerModel,
+                                               _playerInitialization.PlayerModel, _camera,
                                                _sceneController, _canvasView.panelViews);
                 }
                 return _moveController;
