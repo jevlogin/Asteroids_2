@@ -6,23 +6,25 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal sealed class Ship : EnemyView
+    internal sealed class Ship : EnemyView, IDamageable
     {
         #region Fields
-        internal bool IsDeadSubscribe { get; set; } = false;
+
 
         [SerializeField] internal EnemyType Type;
         [SerializeField] internal EnemyShipType EnemyShipType;
 
         [SerializeField] internal Speed Speed;
         [SerializeField] internal Health Health;
-        [SerializeField] private float _damage;
         internal event Action<Ship, bool> IsDead;
         private Rigidbody2D _rigidbody;
 
         //TODO - убрать сериализованные поля
         [SerializeField] internal BonusPoints BonusPoints;
-        internal Rigidbody2D Rigidbody => _rigidbody;
+        [SerializeField] internal Rigidbody2D Rigidbody => _rigidbody;
+
+        public float Damage { get; set; }
+        internal bool IsDeadSubscribe { get; set; } = false;
 
         [SerializeField] internal List<Transform> _barrelPivot;
 

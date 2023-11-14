@@ -11,7 +11,6 @@ namespace WORLDGAMEDEVELOPMENT
     {
         private CanvasModel _canvasModel;
 
-        private readonly PanelGameMenuView _panelGameMenu;
         private readonly PanelHUDView _panelHUD;
         private readonly PanelMainMenuView _panelMainMenu;
         private readonly PanelResultsView _panelResults;
@@ -22,21 +21,25 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal event Action<EventCanvas> StartGame;
         private Timer _timerToLeftInGame;
+        private Timer _timerLevelLeft;
         private float _distanceTravel;
+        private readonly SceneControllerUIView _sceneControllerUIView;
 
         public CanvasController(CanvasModel canvasModel)
         {
             _canvasModel = canvasModel;
             _timerToLeftInGame = new Timer();
             _timerToLeftInGame.OnChangeTime += OnChangeTimeToLeftInGame;
+            
+            _timerLevelLeft = new Timer();
 
             foreach (var panel in _canvasModel.CanvasStruct.CanvasView.panelViews)
             {
                 panel.gameObject.SetActive(false);
 
-                if (panel is PanelGameMenuView panelMenu)
+                if (panel is SceneControllerUIView sceneControllerUIView)
                 {
-                    _panelGameMenu = panelMenu;
+                    _sceneControllerUIView = sceneControllerUIView;
                 }
                 if (panel is PanelHUDView panelHUD)
                 {
@@ -65,16 +68,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void DisableMenu()
         {
-            _panelGameMenu.gameObject.SetActive(false);
-            _panelHUD.gameObject.SetActive(true);
-
-            StartGame?.Invoke(EventCanvas.StartShip);
-
-            if (_isPaused)
-            {
-                _isPaused = false;
-                PauseOrResume(_isPaused);
-            }
+            
         }
 
         internal void Add(IEventAction eventAction)
@@ -104,19 +98,6 @@ namespace WORLDGAMEDEVELOPMENT
             _panelResults.TextSpeed.text = speed.ToString("F0");
         }
 
-        public void RemoveAllSubscribers(Action<float> action)
-        {
-            Delegate[] subscribers = action.GetInvocationList();
-            foreach (Delegate subscriber in subscribers)
-            {
-                if (subscriber is Action<float> handler)
-                {
-                    action -= handler;
-                }
-            }
-        }
-
-
         private void PlayerEvent_EventFloatGeneric(float value)
         {
             _distanceTravel += value;
@@ -132,18 +113,20 @@ namespace WORLDGAMEDEVELOPMENT
             _panelMainMenu.ButtonQuit.onClick.AddListener(ApplicationQuit);
 
             _panelMainMenu.ButtonStart.onClick.AddListener(ButtonStartGame);
-            _panelGameMenu.ButtonStart.onClick.AddListener(DisableMenu);
-
         }
 
         private void ButtonStartGame()
         {
             _panelMainMenu.gameObject.SetActive(false);
-            _panelGameMenu.gameObject.SetActive(true);
             _panelResults.gameObject.SetActive(true);
+
+            _sceneControllerUIView.gameObject.SetActive(true);
+            _sceneControllerUIView._textCurrentScene.text = "Волна: 1"; //TODO - serialization scenecontroller данные брать отсюда
+            //тут надо бы таймер запустить на 2 минуты..
 
             _isGameStarted = true;
 
+            //Воспроизводит звук ракеты...
             StartGame?.Invoke(EventCanvas.StartGame);
 
             if (_isGameStarted)
@@ -162,6 +145,11 @@ namespace WORLDGAMEDEVELOPMENT
                 _isPaused = false;
                 PauseOrResume(_isPaused);
             }
+
+            _panelHUD.gameObject.SetActive(true);
+
+            StartGame?.Invoke(EventCanvas.StartShip);
+           
         }
 
         private void ResumeGame()
@@ -204,8 +192,6 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Cleanup()
         {
-            _panelGameMenu.ButtonStart.onClick.RemoveAllListeners();
-
             foreach (var eventAction in _listEvent)
             {
                 if (eventAction is EnemyController enemyController)

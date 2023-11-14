@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   _enemySettings:
-    _radiusSpawnNewEnemy: 100
+    _radiusSpawnNewEnemy: 20
     Enemies:
     - Type: 1
       PrefabEnemy: {fileID: 1964343844078846754, guid: 22a61f523c171334f921b3d5590c90c6, type: 3}
@@ -43,3 +43,31 @@ MonoBehaviour:
         _bonusPointsMin: 1
         _bonusPointsMax: 6
       PoolSize: 10
+    - Type: 3
+      PrefabEnemy: {fileID: -1727449416899089669, guid: 835e92d5b35bba941abfbda3eaf7e079, type: 3}
+      DefaultDamage: 10
+      Speed:
+        _maxSpeed: 10
+        _currentSpeed: 2.5
+        _acceleration: 2
+      Health:
+        _maxHealth: 30
+        _currentHealth: 30
+      BonusPoints:
+        _bonusPointsMin: 1
+        _bonusPointsMax: 5
+      PoolSize: 3
+    - Type: 3
+      PrefabEnemy: {fileID: 1238976078004154753, guid: aed82ec93402a8246b239e3d7af73c89, type: 3}
+      DefaultDamage: 8
+      Speed:
+        _maxSpeed: 10
+        _currentSpeed: 3
+        _acceleration: 2
+      Health:
+        _maxHealth: 20
+        _currentHealth: 20
+      BonusPoints:
+        _bonusPointsMin: 1
+        _bonusPointsMax: 5
+      PoolSize: 3

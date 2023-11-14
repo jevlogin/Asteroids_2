@@ -10,8 +10,10 @@ namespace WORLDGAMEDEVELOPMENT
     {
         [SerializeField] private List<GroupParticle> _explosionGroup;
         [SerializeField] private int _poolSize;
+        [SerializeField] private ParticleSystem _particleCollision;
 
         public int PoolSize { get => _poolSize; set => _poolSize = value; }
+        public ParticleSystem ParticleCollision => _particleCollision; 
 
         internal IEnumerable<GroupParticle> ExplosionGroup => _explosionGroup;
     }

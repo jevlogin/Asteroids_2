@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -23,7 +20,7 @@ namespace WORLDGAMEDEVELOPMENT
             var components = new EnemyComponents();
             var settings = new EnemySettings();
 
-            enemyStruct.PoolsOfType = new Dictionary<EnemyType, AsteroidPool>();
+            enemyStruct.PoolsOfType = new Dictionary<EnemyType, EnemyPool>();
             enemyStruct.RadiusSpawnNewEnemy = _enemyData.EnemySettings.RadiusSpawnEnemy;
 
             foreach (var enemyGroup in _enemyData.EnemySettings.Enemies)
@@ -31,7 +28,7 @@ namespace WORLDGAMEDEVELOPMENT
                 var enemyView = AddedComponentViewOfTypeObject(ref enemyStruct, enemyGroup);
                 components.ListEnemyViews.Add(enemyView);
 
-                enemyStruct.PoolsOfType[enemyGroup.Type] = enemyStruct.PoolAsteroids;
+                enemyStruct.PoolsOfType[enemyGroup.Type] = enemyStruct.PoolEnemy;
             }
 
             _enemyModel = new EnemyModel(enemyStruct, components, settings);
@@ -42,20 +39,36 @@ namespace WORLDGAMEDEVELOPMENT
         {
             foreach (var item in list)
             {
-                item.AsteroidType = asteroid.AsteroidType;
+                item.Type = asteroid.Type;
             }
         }
 
         private EnemyView AddedComponentViewOfTypeObject(ref EnemyStruct enemyStruct, EnemySettingsGroup enemyGroup)
         {
             EnemyView view = null;
+            Transform transformParent = enemyStruct.PoolEnemy?.TransformParent;
 
             var enemy = Object.Instantiate(enemyGroup.PrefabEnemy);
 
+            enemy.name = enemyGroup.PrefabEnemy.name;
             switch (enemyGroup.Type)
             {
                 case EnemyType.Ship:
+                    var ship = enemy.gameObject.GetOrAddComponent<Ship>();
+                    ship.Health = new Health(enemyGroup.Health);
+                    ship.Speed = new Speed(enemyGroup.Speed);
+                    ship.Damage = enemyGroup.DefaultDamage;
+                    ship.Type = enemyGroup.Type;
+                    ship.BonusPoints = new BonusPoints(enemyGroup.BonusPoints);
 
+                    var poolShip = new Pool<EnemyView>(ship, enemyGroup.PoolSize);
+                    transformParent ??= new GameObject(ManagerName.POOL_ENEMY).transform;
+                    
+                    enemyStruct.PoolEnemy = new EnemyPool(poolShip, transformParent, enemyGroup);
+
+                    enemyStruct.PoolEnemy.AddObjects(ship);
+
+                    view = ship;
                     break;
                 case EnemyType.Meteorite:
                 case EnemyType.Cometa:
@@ -66,15 +79,13 @@ namespace WORLDGAMEDEVELOPMENT
                     asteroid.Health = new Health(enemyGroup.Health);
                     asteroid.Speed = new Speed(enemyGroup.Speed);
                     asteroid.Damage = enemyGroup.DefaultDamage;
-                    asteroid.AsteroidType = enemyGroup.Type;
+                    asteroid.Type = enemyGroup.Type;
+                    asteroid.BonusPoints = new BonusPoints(enemyGroup.BonusPoints);
 
-                    asteroid.BonusPoints = new BonusPoints(_enemyData.EnemySettings.Enemies.FirstOrDefault(e => e.Type == enemyGroup.Type).BonusPoints);
-
-                    enemyStruct.PoolAsteroid = new Pool<Asteroid>(asteroid, enemyGroup.PoolSize);
-                    var transformParent = enemyStruct.PoolAsteroids?.TransformParent ?? new GameObject(ManagerName.POOL_ASTEROID).transform;
-                    enemyStruct.PoolAsteroids = new AsteroidPool(enemyStruct.PoolAsteroid, transformParent, enemyGroup);
-                    enemyStruct.PoolAsteroids.OnUpdatePoolAfterAddedNewPoolObjects += PoolAsteroids_OnAddedPool;
-                    enemyStruct.PoolAsteroids.AddObjects(asteroid);
+                    transformParent ??= new GameObject(ManagerName.POOL_ASTEROID).transform;
+                    var pool = new Pool<EnemyView>(asteroid, enemyGroup.PoolSize);
+                    enemyStruct.PoolEnemy = new EnemyPool(pool, transformParent, enemyGroup);
+                    enemyStruct.PoolEnemy.AddObjects(asteroid);
 
                     view = asteroid;
                     break;

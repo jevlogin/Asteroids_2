@@ -20,4 +20,9 @@ MonoBehaviour:
       _particle: {fileID: 8038344524183138615, guid: 0b38e6e153e80224fb777663e6fe2c83, type: 3}
     - _type: 2
       _particle: {fileID: 6192724089161036655, guid: 0aae6305cd206694f9e65d798cf5b413, type: 3}
+    - _type: 3
+      _particle: {fileID: 4794043405585894027, guid: a94875224e9c4544898cff2ba2c59ff5, type: 3}
+    - _type: 0
+      _particle: {fileID: 1996468736127807670, guid: a8f96915d4af1614ba30ce7bc37125ce, type: 3}
     _poolSize: 5
+    _particleCollision: {fileID: 1996468736127807670, guid: a8f96915d4af1614ba30ce7bc37125ce, type: 3}

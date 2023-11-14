@@ -15,7 +15,7 @@ namespace WORLDGAMEDEVELOPMENT
         private Rigidbody2D _rigidbody;
         internal BonusPoints BonusPoints;
         internal Vector2 DirectionMovement;
-        internal EnemyType AsteroidType;
+        internal EnemyType Type;
         internal bool IsDeadSubscribe { get; set; } = false;
 
         private float _damage;

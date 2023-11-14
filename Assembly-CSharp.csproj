@@ -95,6 +95,7 @@
     <Compile Include="Assets\Code\View\Canvas\CanvasView.cs" />
     <Compile Include="Assets\Code\Controller\CanvasModel.cs" />
     <Compile Include="Assets\Code\Initialization\EnemyInitialization.cs" />
+    <Compile Include="Assets\Code\Factory\EnemyPool.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioDataSettings.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Code\Model\Ammunition\Bullet.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
     <Compile Include="Assets\Code\Helper\ManagerName.cs" />
     <Compile Include="Assets\Code\Data\Player\PlayerStruct.cs" />
+    <Compile Include="Assets\SceneControllerUIView.cs" />
     <Compile Include="Assets\Code\Data\Scene\SceneSettings.cs" />
     <Compile Include="Assets\Code\Interface\ICollisionDetect.cs" />
     <Compile Include="Assets\Code\Helper\EnemyShipType.cs" />

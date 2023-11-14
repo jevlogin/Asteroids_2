@@ -7,6 +7,7 @@ namespace WORLDGAMEDEVELOPMENT
         public const string AUDIOSOURCE = "AudioSource";
         public const string BULLET = "Bullet";
         public const string POOL_ASTEROID = "[Pool_Asteroid]";
+        public const string POOL_ENEMY = "[Pool_Enemy]";
         public const string POOL_BULLET = "[Pool_Bullet]";
         public const string POOL = "[Pool]";
         public const string POOL_AUDIO = "[Pool_Audio]";

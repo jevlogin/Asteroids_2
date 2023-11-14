@@ -72,6 +72,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4283507000590496612}
   - component: {fileID: 4934720366144954622}
+  - component: {fileID: -3772653308931408421}
+  - component: {fileID: -1727449416899089669}
   m_Layer: 0
   m_Name: RD1
   m_TagString: Untagged
@@ -150,6 +152,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &-3772653308931408421
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634326250949155898}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.99
+--- !u!114 &-1727449416899089669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634326250949155898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d987b939aa32864186ee407e98f9c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 3
+  EnemyShipType: 1
+  Speed:
+    _maxSpeed: 0
+    _currentSpeed: 0
+    _acceleration: 0
+  Health:
+    _maxHealth: 0
+    _currentHealth: 0
+  BonusPoints:
+    _bonusPointsMin: 0
+    _bonusPointsMax: 0
+  _barrelPivot: []
 --- !u!1 &3655291627958825534
 GameObject:
   m_ObjectHideFlags: 0

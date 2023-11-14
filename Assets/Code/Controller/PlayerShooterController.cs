@@ -20,6 +20,8 @@ namespace WORLDGAMEDEVELOPMENT
         private bool _isStopControl;
         private bool _isCanShoot;
 
+        public event Action<Vector3> IsCollisionBullet;
+
         public event Action<bool> IsShotInvoke;
 
         public PlayerShooterController(PlayerInitialization playerInitialization, AmmunitionModel ammunitionFactoryModel, SceneController sceneController)
@@ -58,21 +60,21 @@ namespace WORLDGAMEDEVELOPMENT
             _fireTimer += deltatime;
             if (_isCanShoot)
             {
-                BulletShoot(); 
+                BulletShoot();
             }
             BulletControl(deltatime);
         }
 
         private void BulletControl(float deltatime)
         {
-            for (int i = 0; i < _listBullets.Count; i++)
+            for (int i = _listBullets.Count - 1; i >= 0; i--)
             {
                 if (_listBullets[i].isActiveAndEnabled)
                 {
                     MoveConcreteBullet(deltatime, _listBullets[i]);
 
                     _listBullets[i].LifeTime += deltatime;
-                    if (_listBullets[i].LifeTime > _listBullets[i].MaxLifeTimeOutsideThePool)
+                    if (_listBullets[i].LifeTime >= _listBullets[i].MaxLifeTimeOutsideThePool)
                     {
                         _listBullets[i].LifeTime = 0.0f;
                         _ammunitionFactoryModel.AmmunitionStruct.PoolBulletGeneric.ReturnToPool(_listBullets[i]);
@@ -105,8 +107,14 @@ namespace WORLDGAMEDEVELOPMENT
 
                 _fireTimer = 0;
                 var bullet = GetBullet();
+                bullet.OnCollisionEnterDetect += Bullet_OnCollisionEnterDetect;
                 _listBullets.Add(bullet);
             }
+        }
+
+        private void Bullet_OnCollisionEnterDetect(Collider2D collider)
+        {
+            IsCollisionBullet?.Invoke(collider.transform.position);
         }
 
         private Bullet GetBullet()

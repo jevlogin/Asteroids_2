@@ -12,6 +12,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal Dictionary<EnemyType, VFXPool> PoolsVFX;
 
+        internal ParticleSystem ParticleCollision;
         public Transform TransformParent;
     }
 }

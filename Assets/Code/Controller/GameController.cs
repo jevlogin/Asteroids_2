@@ -45,8 +45,6 @@ namespace WORLDGAMEDEVELOPMENT
 
             var enemyFactory = new EnemyFactory(_data.EnemyData);
             var enemyInitialization = new EnemyInitialization(enemyFactory);
-            sceneController.Add(enemyInitialization.Model);
-
 
             var playerController = new PlayerController(inputInitialization, playerInitialization, camera, sceneController, canvasInitialization.CanvasModel.CanvasStruct.CanvasView);
             sceneController.Add(playerController);
@@ -78,7 +76,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             var VFXFactory = new VFXFactory(_data.VFXData);
             var VFXInitialization = new VFXInitialization(VFXFactory);
-            var vfxController = new VFXController(VFXInitialization.Model, enemyController);
+            var vfxController = new VFXController(VFXInitialization.Model, enemyController, playerShooterController);
             _controllers.Add(vfxController);
 
             var backgroundFactory = new BackgroundFactory(_data.BackgroundData);

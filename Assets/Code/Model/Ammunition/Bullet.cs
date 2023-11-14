@@ -31,13 +31,13 @@ namespace WORLDGAMEDEVELOPMENT
 
         public float Damage { get => _damage; set => _damage = value; }
 
-        private void OnEnable()
+        private void Awake()
         {
             OnCollisionEnterDetect += Bullet_OnCollisionEnterDetect;
             _isDead = false;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             OnCollisionEnterDetect -= Bullet_OnCollisionEnterDetect;
         }

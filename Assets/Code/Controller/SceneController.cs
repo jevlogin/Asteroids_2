@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+
 
 namespace WORLDGAMEDEVELOPMENT
 {
@@ -16,8 +16,8 @@ namespace WORLDGAMEDEVELOPMENT
         internal Action DisableEnergyBlock;
         private PanelGameMenuView _panelMenu;
         private PanelHUDView _panelHUD;
-        private EnemyModel _enemyModel;
         private PlayerModel _playerModel;
+        private PanelMainMenuView _panelMainMenu;
 
         internal IEnumerable<IAddedModel> AddedModels => _addedModels;
 
@@ -35,14 +35,14 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 foreach (var panel in canvasModel.CanvasStruct.CanvasView.panelViews)
                 {
-                    if (panel is PanelGameMenuView panelMenu)
-                    {
-                        _panelMenu = panelMenu;
-                        _panelMenu.ButtonStart.onClick.AddListener(StartControl);
-                    }
                     if (panel is PanelHUDView panelHUD)
                     {
                         _panelHUD = panelHUD;
+                    }
+                    if (panel is PanelMainMenuView panelMainMenu)
+                    {
+                        _panelMainMenu = panelMainMenu;
+                        _panelMainMenu.ButtonStart.onClick.AddListener(StartControl);
                     }
                 }
             }
@@ -50,10 +50,6 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 _playerModel = playerModel;
                 _playerModel.PlayerStruct.Player.LifeLeftCount += PlayerTakeDamage;
-            }
-            if (addedModel is EnemyModel model)
-            {
-                _enemyModel = model;
             }
         }
 

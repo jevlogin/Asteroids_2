@@ -199,7 +199,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -267,11 +267,9 @@ MonoBehaviour:
   Health:
     _maxHealth: 0
     _currentHealth: 0
-  _damage: 2
   BonusPoints:
     _bonusPointsMin: 0
     _bonusPointsMax: 0
-  Rigidbody: {fileID: 2219680863854108583}
   _barrelPivot:
   - {fileID: 2617340904375035276}
   - {fileID: 497034285392749721}
