@@ -31,6 +31,7 @@ namespace WORLDGAMEDEVELOPMENT
             _canvasModel = canvasModel;
             _playerModel = playerModel;
             _playerModel.PlayerStruct.Player.Health.OnChangeHealth += OnChangeHealth;
+            _playerModel.PlayerStruct.Player.Shield.OnChangeShield += OnChangeShield;
 
             _timerToLeftInGame = new Timer();
             _timerToLeftInGame.OnChangeTime += OnChangeTimeToLeftInGame;
@@ -63,6 +64,11 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 _allButtonList.Add(item);
             }
+        }
+
+        private void OnChangeShield(Shield shield)
+        {
+            _panelHUD.Shield.Update(shield.MaxValue, shield.CurrentValue);
         }
 
         private void OnChangeHealth(Health health)
@@ -118,6 +124,14 @@ namespace WORLDGAMEDEVELOPMENT
             _panelMainMenu.ButtonQuit.onClick.AddListener(ApplicationQuit);
 
             _panelMainMenu.ButtonStart.onClick.AddListener(ButtonStartGame);
+
+            UpdateHUDPlayer();
+        }
+
+        private void UpdateHUDPlayer()
+        {
+            OnChangeShield(_playerModel.PlayerStruct.Player.Shield);
+            OnChangeHealth(_playerModel.PlayerStruct.Player.Health);
         }
 
         private void ButtonStartGame()
