@@ -85,6 +85,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Code\Factory\VFXFactory.cs" />
     <Compile Include="Assets\Code\Factory\PlayerFactory.cs" />
+    <Compile Include="Assets\Code\View\Canvas\GroupFieldUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Code\Controller\SceneFactory.cs" />
     <Compile Include="Assets\Code\Model\Pool\AsteroidPool.cs" />
+    <Compile Include="Assets\Code\Model\Player\Shield.cs" />
     <Compile Include="Assets\Code\Data\Enemy\EnemySettingsGroup.cs" />
     <Compile Include="Assets\Code\Helper\GroupObjectType.cs" />
     <Compile Include="Assets\Code\View\Canvas\WebPlayer.cs" />

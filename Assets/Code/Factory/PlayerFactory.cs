@@ -47,6 +47,8 @@ namespace WORLDGAMEDEVELOPMENT
 
                 playerStruct.Player.Health = new Health(_playerData.PlayerSettings.Health);
                 playerStruct.Player.Speed = new Speed(_playerData.PlayerSettings.Speed);
+                playerStruct.Player.Shield = new Shield(_playerData.PlayerSettings.Shield);
+
                 playerStruct.Player.Damage = _playerData.PlayerSettings.Damage;
                 playerStruct.Player.Force = _playerData.PlayerSettings.Force;
 

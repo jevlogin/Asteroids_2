@@ -5,12 +5,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace WORLDGAMEDEVELOPMENT
 {
     internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute, IExecute
     {
         private CanvasModel _canvasModel;
-
+        private readonly PlayerModel _playerModel;
         private readonly PanelHUDView _panelHUD;
         private readonly PanelMainMenuView _panelMainMenu;
         private readonly PanelResultsView _panelResults;
@@ -25,9 +26,12 @@ namespace WORLDGAMEDEVELOPMENT
         private float _distanceTravel;
         private readonly SceneControllerUIView _sceneControllerUIView;
 
-        public CanvasController(CanvasModel canvasModel)
+        public CanvasController(CanvasModel canvasModel, PlayerModel playerModel)
         {
             _canvasModel = canvasModel;
+            _playerModel = playerModel;
+            _playerModel.PlayerStruct.Player.Health.OnChangeHealth += OnChangeHealth;
+
             _timerToLeftInGame = new Timer();
             _timerToLeftInGame.OnChangeTime += OnChangeTimeToLeftInGame;
             
@@ -61,14 +65,15 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
+        private void OnChangeHealth(Health health)
+        {
+            _panelHUD.Health.Update(health.MaxHealth, health.CurrentHealth);
+        }
+
+        
         private void OnChangeTimeToLeftInGame(string time)
         {
             _panelResults.TextElapsedTime.text = time;
-        }
-
-        private void DisableMenu()
-        {
-            
         }
 
         internal void Add(IEventAction eventAction)
@@ -90,7 +95,7 @@ namespace WORLDGAMEDEVELOPMENT
         private void AddScoreByAsteroidDead(float value)
         {
             _panelHUD.Score += value;
-            _panelHUD.TextScore.text = $"{_panelHUD.Score} {((int)_panelHUD.Score).GetStringRub()}";
+            _panelHUD.TextScore.text = _panelHUD.Score.ToString();
         }
 
         private void OnChangeSpeedMovement(float speed)
@@ -192,6 +197,8 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Cleanup()
         {
+            _playerModel.PlayerStruct.Player.Health.OnChangeHealth -= OnChangeHealth;
+
             foreach (var eventAction in _listEvent)
             {
                 if (eventAction is EnemyController enemyController)

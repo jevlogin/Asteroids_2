@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 
-
 namespace WORLDGAMEDEVELOPMENT
 {
     internal sealed class PanelHUDView : PanelView
@@ -10,8 +9,11 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private TextMeshProUGUI _textScore;
         [SerializeField] private TextMeshProUGUI _textLife;
 
+        public GroupFieldUI Health;
+        public GroupFieldUI Shield;
 
         internal float Score = 0.0f;
+
 
         internal Transform PanelHUD => _panelHUD;
         internal TextMeshProUGUI TextScore => _textScore;

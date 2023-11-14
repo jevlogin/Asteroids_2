@@ -12,6 +12,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal Speed Speed;
         internal Health Health;
+        internal Shield Shield;
         internal int Force;
 
         [SerializeField] private List<GroupObject> _groupObjects;

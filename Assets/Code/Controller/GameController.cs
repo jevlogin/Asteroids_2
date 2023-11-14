@@ -23,16 +23,19 @@ namespace WORLDGAMEDEVELOPMENT
             var sceneController = new SceneController(sceneInitialization.SceneModel);
             _controllers.Add(sceneController);
 
+            
+            var playerFactory = new PlayerFactory(_data.PlayerData);
+            var playerInitialization = new PlayerInitialization(playerFactory,
+                sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);
+
+
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
-            var canvasController = new CanvasController(canvasInitialization.CanvasModel);
+            var canvasController = new CanvasController(canvasInitialization.CanvasModel, playerInitialization.PlayerModel);
 
             sceneController.Add(canvasInitialization.CanvasModel);
             _controllers.Add(canvasController);
 
-            var playerFactory = new PlayerFactory(_data.PlayerData);
-            var playerInitialization = new PlayerInitialization(playerFactory,
-                sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);
 
             sceneController.Add(playerInitialization.PlayerModel);
 

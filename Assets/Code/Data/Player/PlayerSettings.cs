@@ -13,6 +13,7 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private float _speedAtTakeShip;
         [SerializeField] private Speed _speed;
         [SerializeField] private Health _health;
+        [SerializeField] private Shield _shield;
         [SerializeField, Range(0, 1000)] private int _force;
         [SerializeField, Range(0, 100)] private float _damage;
         [SerializeField, Range(0, 1), Header("Громкость источника звука")] private float _audioSourceVolume;
@@ -48,7 +49,9 @@ namespace WORLDGAMEDEVELOPMENT
         public float SpeedAtTakeShip { get => _speedAtTakeShip; set => _speedAtTakeShip = value; }
         public float AudioSourceVolume => _audioSourceVolume;
         public float ShieldStartSize  => _shieldStartSize; 
-        public Vector3 ShieldStartPosition => _shieldStartPosition; 
+        public Vector3 ShieldStartPosition => _shieldStartPosition;
+
+        public Shield Shield => _shield; 
 
         #endregion
     }
