@@ -20,6 +20,7 @@ namespace WORLDGAMEDEVELOPMENT
         private Rigidbody2D _rigidbody;
 
         //TODO - убрать сериализованные поля
+        internal int ExpirienceAfterDead;
         [SerializeField] internal BonusPoints BonusPoints;
         [SerializeField] internal Rigidbody2D Rigidbody => _rigidbody;
 

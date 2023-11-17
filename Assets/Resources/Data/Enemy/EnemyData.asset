@@ -19,55 +19,59 @@ MonoBehaviour:
       PrefabEnemy: {fileID: 1964343844078846754, guid: 22a61f523c171334f921b3d5590c90c6, type: 3}
       DefaultDamage: 15
       Speed:
-        _maxSpeed: 20
+        _maxSpeed: 14
         _currentSpeed: 1.3
         _acceleration: 0
       Health:
-        _maxHealth: 100
-        _currentHealth: 50.4
+        _maxHealth: 80
+        _currentHealth: 40
       BonusPoints:
-        _bonusPointsMin: 1
-        _bonusPointsMax: 10
-      PoolSize: 10
+        _bonusPointsMin: 3
+        _bonusPointsMax: 9
+      Expirience: 2
+      PoolSize: 5
     - Type: 2
       PrefabEnemy: {fileID: 4142458732214144647, guid: ab716b53ecf6a284fb1af3d1ee37ea6c, type: 3}
       DefaultDamage: 10
       Speed:
-        _maxSpeed: 30
-        _currentSpeed: 2.1
+        _maxSpeed: 15
+        _currentSpeed: 1.6
         _acceleration: 0
       Health:
-        _maxHealth: 100
+        _maxHealth: 60
         _currentHealth: 30
       BonusPoints:
-        _bonusPointsMin: 1
+        _bonusPointsMin: 3
         _bonusPointsMax: 6
+      Expirience: 2
       PoolSize: 10
     - Type: 3
       PrefabEnemy: {fileID: -1727449416899089669, guid: 835e92d5b35bba941abfbda3eaf7e079, type: 3}
-      DefaultDamage: 10
+      DefaultDamage: 5
       Speed:
         _maxSpeed: 10
         _currentSpeed: 2.5
         _acceleration: 2
       Health:
-        _maxHealth: 30
-        _currentHealth: 30
+        _maxHealth: 80
+        _currentHealth: 40
       BonusPoints:
-        _bonusPointsMin: 1
-        _bonusPointsMax: 5
+        _bonusPointsMin: 5
+        _bonusPointsMax: 10
+      Expirience: 3
       PoolSize: 3
     - Type: 3
       PrefabEnemy: {fileID: 1238976078004154753, guid: aed82ec93402a8246b239e3d7af73c89, type: 3}
       DefaultDamage: 8
       Speed:
-        _maxSpeed: 10
+        _maxSpeed: 18
         _currentSpeed: 3
         _acceleration: 2
       Health:
-        _maxHealth: 20
-        _currentHealth: 20
+        _maxHealth: 100
+        _currentHealth: 60
       BonusPoints:
-        _bonusPointsMin: 1
-        _bonusPointsMax: 5
+        _bonusPointsMin: 8
+        _bonusPointsMax: 12
+      Expirience: 4
       PoolSize: 3

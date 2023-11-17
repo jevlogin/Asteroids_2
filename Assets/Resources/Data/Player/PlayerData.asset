@@ -31,9 +31,14 @@ MonoBehaviour:
     _health:
       _maxHealth: 100
       _currentHealth: 100
+      _percent: 0.1
     _shield:
-      _currentValue: 10
+      _currentValue: 1.5
       _maxValue: 100
+      DamageAbsorptionCoefficient: 0.7
+    _playeLevel: 1
+    _baseValueExpirience: 2
+    _multiplierExpirience: 1.5
     _force: 10
     _damage: 5
     _audioSourceVolume: 0.01

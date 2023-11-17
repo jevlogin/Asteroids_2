@@ -14,6 +14,10 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] private Speed _speed;
         [SerializeField] private Health _health;
         [SerializeField] private Shield _shield;
+        [SerializeField, Header("Начальный уровень игрока")] private int _playeLevel;
+        [SerializeField, Header("Начальное кол-во опыта на 1 уровне")] private float _baseValueExpirience;
+        [SerializeField, Header("Множитель опыта игрока по уровням")] private float _multiplierExpirience;
+
         [SerializeField, Range(0, 1000)] private int _force;
         [SerializeField, Range(0, 100)] private float _damage;
         [SerializeField, Range(0, 1), Header("Громкость источника звука")] private float _audioSourceVolume;
@@ -48,10 +52,14 @@ namespace WORLDGAMEDEVELOPMENT
         public float TimeForShipToTakeOff { get => _timeForShipToTakeOff; set => _timeForShipToTakeOff = value; }
         public float SpeedAtTakeShip { get => _speedAtTakeShip; set => _speedAtTakeShip = value; }
         public float AudioSourceVolume => _audioSourceVolume;
-        public float ShieldStartSize  => _shieldStartSize; 
+        public float ShieldStartSize => _shieldStartSize;
         public Vector3 ShieldStartPosition => _shieldStartPosition;
 
-        public Shield Shield => _shield; 
+        public Shield Shield => _shield;
+
+        internal int PlayeLevel => _playeLevel;
+        internal float BaseValueExpirience => _baseValueExpirience;
+        internal float MultiplierExpirience  => _multiplierExpirience;
 
         #endregion
     }

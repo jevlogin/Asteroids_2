@@ -37,6 +37,17 @@ namespace WORLDGAMEDEVELOPMENT
                         case SpaceLayerType.Background:
                             break;
                         case SpaceLayerType.Planets:
+                            var planetsSprite = obj.GetOrAddComponent<BackgroundView>();
+                            var poolPlanet = new Pool<BackgroundView>(planetsSprite, 1);
+                            var poolPlanets = new PoolBackground(poolPlanet, components.TransformPoolParent);
+
+                            poolPlanets.AddObjects(planetsSprite);
+                            if (!poolsType.ContainsKey(background.SpaceLayerType))
+                            {
+                                poolsType[background.SpaceLayerType] = new List<IBackgroundPool>();
+                            }
+                            poolsType[background.SpaceLayerType].Add(poolPlanets);
+
                             break;
                         case SpaceLayerType.SpaceStations:
                             break;

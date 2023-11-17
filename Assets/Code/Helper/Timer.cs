@@ -14,7 +14,8 @@ namespace WORLDGAMEDEVELOPMENT
         private int _secondsPrev;
         private float elapsedTime = 0f;
 
-        public event Action<string> OnChangeTime;
+        public event Action<string> OnChangeFullTime;
+        public event Action<string> OnChangeTimeMinutes;
 
         public void Execute(float deltatime)
         {
@@ -27,8 +28,10 @@ namespace WORLDGAMEDEVELOPMENT
             if (MathF.Abs(_seconds - _secondsPrev) >= 1)
             {
                 _secondsPrev = _seconds;
-                var time = string.Format("{0} часов {1} минут {2:00} секунд", _hours, _minutes, _seconds);
-                OnChangeTime?.Invoke(time);
+                var fullTime = string.Format("{0} часов {1} минут {2:00} секунд", _hours, _minutes, _seconds);
+                var minutes = string.Format("{0} минут {1:00} секунд", _minutes, _seconds);
+                OnChangeFullTime?.Invoke(fullTime);
+                OnChangeTimeMinutes?.Invoke(minutes);
             }
         }
     }

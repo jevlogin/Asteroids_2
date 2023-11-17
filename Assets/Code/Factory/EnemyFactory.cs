@@ -60,6 +60,7 @@ namespace WORLDGAMEDEVELOPMENT
                     ship.Damage = enemyGroup.DefaultDamage;
                     ship.Type = enemyGroup.Type;
                     ship.BonusPoints = new BonusPoints(enemyGroup.BonusPoints);
+                    ship.ExpirienceAfterDead = enemyGroup.Expirience;
 
                     var poolShip = new Pool<EnemyView>(ship, enemyGroup.PoolSize);
                     transformParent ??= new GameObject(ManagerName.POOL_ENEMY).transform;
@@ -81,6 +82,7 @@ namespace WORLDGAMEDEVELOPMENT
                     asteroid.Damage = enemyGroup.DefaultDamage;
                     asteroid.Type = enemyGroup.Type;
                     asteroid.BonusPoints = new BonusPoints(enemyGroup.BonusPoints);
+                    asteroid.ExpirienceAfterDead = enemyGroup.Expirience;
 
                     transformParent ??= new GameObject(ManagerName.POOL_ASTEROID).transform;
                     var pool = new Pool<EnemyView>(asteroid, enemyGroup.PoolSize);

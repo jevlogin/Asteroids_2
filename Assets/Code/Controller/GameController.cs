@@ -22,12 +22,10 @@ namespace WORLDGAMEDEVELOPMENT
             var sceneInitialization = new SceneInitialization(sceneFactory);
             var sceneController = new SceneController(sceneInitialization.SceneModel);
             _controllers.Add(sceneController);
-
             
             var playerFactory = new PlayerFactory(_data.PlayerData);
             var playerInitialization = new PlayerInitialization(playerFactory,
                 sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);
-
 
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
@@ -36,9 +34,7 @@ namespace WORLDGAMEDEVELOPMENT
             sceneController.Add(canvasInitialization.CanvasModel);
             _controllers.Add(canvasController);
 
-
             sceneController.Add(playerInitialization.PlayerModel);
-
 
             var inputInitialization = new InputInitialization();
             _controllers.Add(new InputController(inputInitialization));
@@ -84,8 +80,11 @@ namespace WORLDGAMEDEVELOPMENT
 
             var backgroundFactory = new BackgroundFactory(_data.BackgroundData);
             var backgroundInitialization = new BackgroundInitialization(backgroundFactory);
-            var backgroundController = new BackgroundController(backgroundInitialization.BackgroundModel, camera, playerController, enemyController, sceneController);
+            var backgroundController = new BackgroundController(backgroundInitialization.BackgroundModel, camera, sceneController);
             _controllers.Add(backgroundController);
+
+            var updateCharachterController = new UpdateCharachterController(playerInitialization, canvasInitialization);
+            _controllers.Add(updateCharachterController);
 
             _controllers.Initialization();
         }

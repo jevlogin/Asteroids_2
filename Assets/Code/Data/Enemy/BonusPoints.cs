@@ -8,8 +8,8 @@ namespace WORLDGAMEDEVELOPMENT
     [Serializable]
     public sealed class BonusPoints
     {
-        [SerializeField, Range(0.0f, 3.0f)] private int _bonusPointsMin;
-        [SerializeField, Range(5.0f, 10.0f)] private int _bonusPointsMax;
+        [SerializeField] private int _bonusPointsMin;
+        [SerializeField] private int _bonusPointsMax;
         private int _bonus;
         private bool _isAssignedBonusPoints;
 

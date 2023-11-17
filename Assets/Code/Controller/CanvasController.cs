@@ -25,6 +25,7 @@ namespace WORLDGAMEDEVELOPMENT
         private Timer _timerLevelLeft;
         private float _distanceTravel;
         private readonly SceneControllerUIView _sceneControllerUIView;
+        private readonly panelDieView _panelDie;
 
         public CanvasController(CanvasModel canvasModel, PlayerModel playerModel)
         {
@@ -32,11 +33,13 @@ namespace WORLDGAMEDEVELOPMENT
             _playerModel = playerModel;
             _playerModel.PlayerStruct.Player.Health.OnChangeHealth += OnChangeHealth;
             _playerModel.PlayerStruct.Player.Shield.OnChangeShield += OnChangeShield;
+            _playerModel.PlayerStruct.Player.Expirience.OnChangeExpirience += OnChangeExpirience;
+            _playerModel.PlayerStruct.Player.IsDeadPlayer += IsDeadPlayer;
+
 
             _timerToLeftInGame = new Timer();
-            _timerToLeftInGame.OnChangeTime += OnChangeTimeToLeftInGame;
-            
-            _timerLevelLeft = new Timer();
+            _timerToLeftInGame.OnChangeFullTime += OnChangeTimeToLeftInGame;
+
 
             foreach (var panel in _canvasModel.CanvasStruct.CanvasView.panelViews)
             {
@@ -45,6 +48,11 @@ namespace WORLDGAMEDEVELOPMENT
                 if (panel is SceneControllerUIView sceneControllerUIView)
                 {
                     _sceneControllerUIView = sceneControllerUIView;
+                }
+                if (panel is panelDieView panelDie)
+                {
+                    _panelDie = panelDie;
+                    _panelDie.ButtonContinue.onClick.AddListener(ContinueAfterDead);
                 }
                 if (panel is PanelHUDView panelHUD)
                 {
@@ -66,6 +74,25 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
+        private void ContinueAfterDead()
+        {
+            PauseOrResume(false);
+            _panelDie.gameObject.SetActive(!_panelDie.gameObject.activeSelf);
+        }
+
+        private void IsDeadPlayer()
+        {
+            _panelDie.gameObject.SetActive(true);
+            PauseOrResume(true);
+            OpenLinks.OpenURL(@"https://goldpromo.com/");
+        }
+
+        private void OnChangeExpirience(Expirience exp)
+        {
+            _panelHUD.Expirience.Update(exp.MaxValue, exp.CurrentValue);
+            _panelHUD.TextPlayerLevel.text = _playerModel.PlayerStruct.Player.Expirience.CurrentLevel.ToString();
+        }
+
         private void OnChangeShield(Shield shield)
         {
             _panelHUD.Shield.Update(shield.MaxValue, shield.CurrentValue);
@@ -76,7 +103,7 @@ namespace WORLDGAMEDEVELOPMENT
             _panelHUD.Health.Update(health.MaxHealth, health.CurrentHealth);
         }
 
-        
+
         private void OnChangeTimeToLeftInGame(string time)
         {
             _panelResults.TextElapsedTime.text = time;
@@ -112,7 +139,6 @@ namespace WORLDGAMEDEVELOPMENT
         private void PlayerEvent_EventFloatGeneric(float value)
         {
             _distanceTravel += value;
-
             _panelResults.TextDistanceTraveled.text = _distanceTravel.ToString(format: "F0");
         }
 
@@ -132,6 +158,7 @@ namespace WORLDGAMEDEVELOPMENT
         {
             OnChangeShield(_playerModel.PlayerStruct.Player.Shield);
             OnChangeHealth(_playerModel.PlayerStruct.Player.Health);
+            OnChangeExpirience(_playerModel.PlayerStruct.Player.Expirience);
         }
 
         private void ButtonStartGame()
@@ -140,7 +167,7 @@ namespace WORLDGAMEDEVELOPMENT
             _panelResults.gameObject.SetActive(true);
 
             _sceneControllerUIView.gameObject.SetActive(true);
-            _sceneControllerUIView._textCurrentScene.text = "Волна: 1"; //TODO - serialization scenecontroller данные брать отсюда
+
             //тут надо бы таймер запустить на 2 минуты..
 
             _isGameStarted = true;
@@ -168,7 +195,7 @@ namespace WORLDGAMEDEVELOPMENT
             _panelHUD.gameObject.SetActive(true);
 
             StartGame?.Invoke(EventCanvas.StartShip);
-           
+
         }
 
         private void ResumeGame()
@@ -212,6 +239,10 @@ namespace WORLDGAMEDEVELOPMENT
         public void Cleanup()
         {
             _playerModel.PlayerStruct.Player.Health.OnChangeHealth -= OnChangeHealth;
+            _playerModel.PlayerStruct.Player.Shield.OnChangeShield -= OnChangeShield;
+            _playerModel.PlayerStruct.Player.Expirience.OnChangeExpirience -= OnChangeExpirience;
+            _playerModel.PlayerStruct.Player.IsDeadPlayer -= IsDeadPlayer;
+            _panelDie.ButtonContinue.onClick.RemoveAllListeners();
 
             foreach (var eventAction in _listEvent)
             {
@@ -243,7 +274,7 @@ namespace WORLDGAMEDEVELOPMENT
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBGL
-            Application.ExternalEval("history.back()");
+            OpenLinks.GoBackPage();
 #else
             Application.Quit();
 #endif

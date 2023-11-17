@@ -49,6 +49,8 @@ namespace WORLDGAMEDEVELOPMENT
                 playerStruct.Player.Speed = new Speed(_playerData.PlayerSettings.Speed);
                 playerStruct.Player.Shield = new Shield(_playerData.PlayerSettings.Shield);
 
+                playerStruct.Player.Expirience  = new Expirience(_playerData.PlayerSettings.PlayeLevel, _playerData.PlayerSettings.MultiplierExpirience, _playerData.PlayerSettings.BaseValueExpirience);
+
                 playerStruct.Player.Damage = _playerData.PlayerSettings.Damage;
                 playerStruct.Player.Force = _playerData.PlayerSettings.Force;
 

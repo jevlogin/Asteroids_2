@@ -64,6 +64,8 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 IsAsteroidExplosionByType?.Invoke(asteroid.transform.position, asteroid.Type);
                 AddScoreByAsteroidDead?.Invoke(asteroid.BonusPoints.BonusPointsAfterDeath);
+                
+                _playerModel.PlayerStruct.Player.Expirience.CurrentValue += asteroid.ExpirienceAfterDead;
 
                 ReturnToPoolByType(asteroid, asteroid.Type);
 
@@ -92,28 +94,7 @@ namespace WORLDGAMEDEVELOPMENT
                     break;
             }
         }
-
-        private void ReturnToPoolByType(Asteroid asteroid)
-        {
-            if (_enemyModel.EnemyStruct.PoolsOfType.Count > 0)
-            {
-                var pool = _enemyModel.EnemyStruct.PoolsOfType.ContainsKey(asteroid.Type)
-                    ? _enemyModel.EnemyStruct.PoolsOfType[asteroid.Type]
-                    : _enemyModel.EnemyStruct.PoolsOfType.FirstOrDefault().Value;
-
-                pool.ReturnToPool(asteroid);
-            }
-            RemoveAsteroidFromActiveList(asteroid);
-        }
-
-        private void RemoveAsteroidFromActiveList(Asteroid asteroid)
-        {
-            if (_activeAsteroidsList.Contains(asteroid))
-            {
-                _activeAsteroidsList.Remove(asteroid);
-            }
-        }
-
+       
         public void Cleanup()
         {
             foreach (var pool in _enemyModel.EnemyStruct.PoolsOfType.Values)
@@ -127,7 +108,6 @@ namespace WORLDGAMEDEVELOPMENT
                 }
             }
         }
-
 
         private void GetPoolEnemyAsteroid(int countEnemy = 0, EnemyType enemyType = EnemyType.None)
         {
@@ -207,6 +187,7 @@ namespace WORLDGAMEDEVELOPMENT
                         enemy.Speed = new Speed(pool.EnemyGroup.Speed);
                         enemy.Rigidbody = enemy.gameObject.GetOrAddComponent<Rigidbody2D>();
                         enemy.BonusPoints = new BonusPoints(pool.EnemyGroup.BonusPoints);
+                        enemy.ExpirienceAfterDead = pool.EnemyGroup.Expirience;
                         enemy.Type = pool.EnemyGroup.Type;
                         enemy.Damage = pool.EnemyGroup.DefaultDamage;
                         enemy.IsDeadSubscribe = true;
@@ -243,6 +224,7 @@ namespace WORLDGAMEDEVELOPMENT
                         enemyShip.Health = new Health(pool.EnemyGroup.Health);
                         enemyShip.Speed = new Speed(pool.EnemyGroup.Speed);
                         enemyShip.BonusPoints = new BonusPoints(pool.EnemyGroup.BonusPoints);
+                        enemyShip.ExpirienceAfterDead = pool.EnemyGroup.Expirience;
                         enemyShip.Type = pool.EnemyGroup.Type;
                         enemyShip.Damage = pool.EnemyGroup.DefaultDamage;
 
@@ -271,6 +253,8 @@ namespace WORLDGAMEDEVELOPMENT
         {
             IsAsteroidExplosionByType?.Invoke(ship.transform.position, ship.Type);
             AddScoreByAsteroidDead?.Invoke(ship.BonusPoints.BonusPointsAfterDeath);
+
+            _playerModel.PlayerStruct.Player.Expirience.CurrentValue += ship.ExpirienceAfterDead;
 
             ReturnToPoolByType(ship, ship.Type);
 

@@ -68,6 +68,7 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController.IsStopControl += OnCnageIsStopControl;
             _sceneController.DisableEnergyBlock += DisableEnergyBlock;
             _playerInitialization.PlayerModel.PlayerStruct.Player.EnableShield += EnableShield;
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.OnChangeShield += Shield_OnChangeShield;
 
             _canvasView = canvasView;
 
@@ -83,9 +84,46 @@ namespace WORLDGAMEDEVELOPMENT
             MoveController.DisableEnergyBlock += DisableEnergyBlock;
         }
 
+        private void Shield_OnChangeShield(Shield shield)
+        {
+            var particle = _playerInitialization.PlayerModel.Components.ShieldView.ShieldParticle.main;
+            if (shield.CurrentValue <= 30)
+            {
+                particle.startColor = Color.red;
+            }
+            else
+            {
+                particle.startColor = Color.blue;
+            }
+        }
+
         private void EnableShield()
         {
             _playerInitialization.PlayerModel.Components.ShieldView.PlayShield();
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.ResetLastDamage();
+        }
+
+        public void UpdateShield(float deltatime)
+        {
+            if (!_playerInitialization.PlayerModel.PlayerStruct.Player.Shield.IsRemaining)
+                return;
+
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.TimeSinceLastDamage += deltatime;
+
+            if (_playerInitialization.PlayerModel.PlayerStruct.Player.Shield.TimeSinceLastDamage >= _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.ShieldRecoveryTime)
+            {
+                float recoveryRate = 0.3f;
+
+                float recoveryAmount = _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.MaxValue * recoveryRate * deltatime;
+
+                var value = Mathf.Min(_playerInitialization.PlayerModel.PlayerStruct.Player.Shield.MaxValue,
+                        _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.CurrentValue + recoveryAmount);
+
+                if (!(value <= _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.CurrentValue))
+                {
+                    _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.CurrentValue = value;
+                }
+            }
         }
 
         private void IsDeadPlayerAndRestartPosition()
@@ -99,8 +137,8 @@ namespace WORLDGAMEDEVELOPMENT
         private void DisableEnergyBlock()
         {
             ParticleSystem.MainModule mainModule = _playerInitialization.PlayerModel.Components.ParticlesStarSystem.main;
-            mainModule.gravityModifier = _playerInitialization.PlayerModel.PlayerStruct.ParticleSpeedAfterTakeOff; 
-            
+            mainModule.gravityModifier = _playerInitialization.PlayerModel.PlayerStruct.ParticleSpeedAfterTakeOff;
+
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.gameObject.SetActive(false);
             _playerInitialization.PlayerModel.Components.RigidbodyEnergyBlock.transform.SetParent(_playerInitialization.PlayerModel.Components.PlayerTransform);
 
@@ -178,7 +216,7 @@ namespace WORLDGAMEDEVELOPMENT
             }
             else
             {
-                _timeFreezeDead += Time.deltaTime;
+                _timeFreezeDead += deltatime;
                 if (_timeFreezeDead > 3.0f)
                 {
                     _stopControl = false;
@@ -211,6 +249,8 @@ namespace WORLDGAMEDEVELOPMENT
                     execute.FixedExecute(fixedDeltatime);
                 }
             }
+
+            UpdateShield(fixedDeltatime);
         }
 
         public void Initialization()
@@ -222,6 +262,8 @@ namespace WORLDGAMEDEVELOPMENT
                     init.Initialization();
                 }
             }
+
+            EnableShield();
         }
 
         #endregion

@@ -12,6 +12,7 @@ namespace WORLDGAMEDEVELOPMENT
         [SerializeField] internal Speed Speed;
         [SerializeField] internal Health Health;
         [SerializeField] internal BonusPoints BonusPoints;
+        [SerializeField] internal int Expirience;
         [SerializeField] internal int PoolSize;
     }
 }

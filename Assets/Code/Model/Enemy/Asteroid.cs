@@ -14,6 +14,7 @@ namespace WORLDGAMEDEVELOPMENT
         internal Health Health;
         private Rigidbody2D _rigidbody;
         internal BonusPoints BonusPoints;
+        internal int ExpirienceAfterDead;
         internal Vector2 DirectionMovement;
         internal EnemyType Type;
         internal bool IsDeadSubscribe { get; set; } = false;

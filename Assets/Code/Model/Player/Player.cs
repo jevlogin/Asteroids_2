@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace WORLDGAMEDEVELOPMENT
 {
+
     [Serializable]
     internal sealed class Player : PlayerView, IDamageable
     {
@@ -13,6 +14,8 @@ namespace WORLDGAMEDEVELOPMENT
         internal Speed Speed;
         internal Health Health;
         internal Shield Shield;
+        internal Expirience Expirience;
+
         internal int Force;
 
         [SerializeField] private List<GroupObject> _groupObjects;
@@ -75,7 +78,12 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void TakeDamage(float damage)
         {
-            Health.CurrentHealth -= damage;
+            float shieldDamage = Mathf.Min(damage * Shield.DamageAbsorptionCoefficient, Shield.CurrentValue);
+            float healthDamage = damage - shieldDamage;
+
+            Shield.CurrentValue -= shieldDamage;
+            Health.CurrentHealth -= healthDamage;
+
             if (Health.CurrentHealth <= 0)
             {
                 Health.CurrentHealth = Health.MaxHealth;
