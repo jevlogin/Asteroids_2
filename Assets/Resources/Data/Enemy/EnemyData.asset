@@ -25,10 +25,11 @@ MonoBehaviour:
       Health:
         _maxHealth: 80
         _currentHealth: 40
+        _percent: 0.1
       BonusPoints:
-        _bonusPointsMin: 3
-        _bonusPointsMax: 9
-      Expirience: 2
+        _bonusPointsMin: 5
+        _bonusPointsMax: 11
+      Expirience: 3
       PoolSize: 5
     - Type: 2
       PrefabEnemy: {fileID: 4142458732214144647, guid: ab716b53ecf6a284fb1af3d1ee37ea6c, type: 3}
@@ -40,9 +41,10 @@ MonoBehaviour:
       Health:
         _maxHealth: 60
         _currentHealth: 30
+        _percent: 0.1
       BonusPoints:
-        _bonusPointsMin: 3
-        _bonusPointsMax: 6
+        _bonusPointsMin: 5
+        _bonusPointsMax: 8
       Expirience: 2
       PoolSize: 10
     - Type: 3
@@ -55,10 +57,11 @@ MonoBehaviour:
       Health:
         _maxHealth: 80
         _currentHealth: 40
+        _percent: 0.1
       BonusPoints:
-        _bonusPointsMin: 5
-        _bonusPointsMax: 10
-      Expirience: 3
+        _bonusPointsMin: 7
+        _bonusPointsMax: 12
+      Expirience: 4
       PoolSize: 3
     - Type: 3
       PrefabEnemy: {fileID: 1238976078004154753, guid: aed82ec93402a8246b239e3d7af73c89, type: 3}
@@ -70,8 +73,9 @@ MonoBehaviour:
       Health:
         _maxHealth: 100
         _currentHealth: 60
+        _percent: 0.1
       BonusPoints:
-        _bonusPointsMin: 8
-        _bonusPointsMax: 12
-      Expirience: 4
-      PoolSize: 3
+        _bonusPointsMin: 10
+        _bonusPointsMax: 14
+      Expirience: 5
+      PoolSize: 5

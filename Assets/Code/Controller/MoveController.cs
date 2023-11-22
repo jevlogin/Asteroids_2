@@ -151,6 +151,7 @@ namespace WORLDGAMEDEVELOPMENT
             float deltaY = _playerTransform.position.y - _currentStatePosition;
             _currentStatePosition = _playerTransform.position.y;
 
+            //TODO - переделать рассчет высоты с учетом скорости корабля...
             float realHeight = 0;
             if (deltaY > 0)
             {
@@ -188,10 +189,13 @@ namespace WORLDGAMEDEVELOPMENT
 
             if (_isMovingFreeControl || _isMovingUp)
             {
-                float targetSpeed = _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime + movement.y * _playerModel.PlayerStruct.SpeedScale * _playerModel.PlayerStruct.Player.Speed.Acceleration; ;
+                float targetSpeed = _playerModel.PlayerStruct.RealSpeedShipModel * fixedDeltatime 
+                    + _playerModel.PlayerStruct.SpeedScale * _playerModel.PlayerStruct.Player.Speed.CurrentSpeed;
                 float smoothSpeed = Mathf.Lerp(_previousSpeed, targetSpeed, _playerModel.PlayerStruct.VelocitySmooth);
 
+
                 _previousSpeed = smoothSpeed;
+
                 OnChangeSpeedMovement?.Invoke(_previousSpeed);
             }
         }

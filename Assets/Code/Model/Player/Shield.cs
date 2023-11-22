@@ -43,11 +43,11 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        public Shield(Shield health)
+        public Shield(Shield shield)
         {
-            MaxValue = health.MaxValue;
-            CurrentValue = health.CurrentValue;
-            DamageAbsorptionCoefficient = health.DamageAbsorptionCoefficient;
+            MaxValue = shield.MaxValue;
+            CurrentValue = shield.CurrentValue;
+            DamageAbsorptionCoefficient = shield.DamageAbsorptionCoefficient;
         }
 
         internal void ResetLastDamage()

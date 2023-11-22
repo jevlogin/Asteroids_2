@@ -50,9 +50,37 @@ namespace WORLDGAMEDEVELOPMENT
             };
 
             _updateCharView.HealthPoints.ButtonConfirm.onClick.AddListener(UpdateHealth);
+            _updateCharView.Damage.ButtonConfirm.onClick.AddListener(UpdateDamage);
+            _updateCharView.Speed.ButtonConfirm.onClick.AddListener(UpdateSpeed);
+            _updateCharView.Shield.ButtonConfirm.onClick.AddListener(UpdateShield);
+
 
             _playerInitialization.PlayerModel.PlayerStruct.Player.Expirience.OnLevelUp += OnLevelUp;
             _playerInitialization.PlayerModel.PlayerStruct.Player.Expirience.OnChangeFreePoints += OnChangeFreePoints;
+        }
+
+        private void UpdateShield()
+        {
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.MaxValue += 10;
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Shield.ResetLastDamage();
+
+            RemoveFreePoints();
+        }
+
+        private void UpdateSpeed()
+        {
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Speed.UpdateSpeed(5.0f);
+
+            UpdateView();
+            RemoveFreePoints();
+        }
+
+        private void UpdateDamage()
+        {
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Damage = _playerInitialization.PlayerModel.PlayerStruct.Player.IncreaseDamage();
+
+            UpdateView();
+            RemoveFreePoints();
         }
 
         #endregion
@@ -62,11 +90,24 @@ namespace WORLDGAMEDEVELOPMENT
             if (_playerInitialization.PlayerModel.PlayerStruct.Player.Expirience.FreePoints > 0)
             {
                 _playerInitialization.PlayerModel.PlayerStruct.Player.Health.MaxHealth += _playerInitialization.PlayerModel.PlayerStruct.Player.Health.ValuePercentUpdate;
-                _playerInitialization.PlayerModel.PlayerStruct.Player.Expirience.FreePoints -= 1;
 
-                //TODO - вынести в отдельный метод обновления вьюшки
-                _updateCharView.HealthPoints.TextUpdateValue.text = _playerInitialization.PlayerModel.PlayerStruct.Player.Health.ValuePercentUpdate.ToString();
+                UpdateView();
+                RemoveFreePoints();
             }
+        }
+
+        private void RemoveFreePoints()
+        {
+            _playerInitialization.PlayerModel.PlayerStruct.Player.Expirience.FreePoints--;
+        }
+
+        private void UpdateView()
+        {
+            
+
+            _updateCharView.HealthPoints.TextUpdateValue.text = _playerInitialization.PlayerModel.PlayerStruct.Player.Health.ValuePercentUpdate.ToString();
+            _updateCharView.Damage.TextUpdateValue.text = _playerInitialization.PlayerModel.PlayerStruct.Player.IncreaseDamage().ToString();
+            _updateCharView.Speed.TextUpdateValue.text = "5 км/ч";
         }
 
         private void OnChangeFreePoints(int freePoints)
@@ -83,10 +124,10 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (!_updateCharView.gameObject.activeSelf)
             {
-                _updateCharView.gameObject.SetActive(true); 
+                _updateCharView.gameObject.SetActive(true);
             }
 
-            _updateCharView.HealthPoints.TextUpdateValue.text = _playerInitialization.PlayerModel.PlayerStruct.Player.Health.ValuePercentUpdate.ToString();
+            UpdateView();
         }
 
 

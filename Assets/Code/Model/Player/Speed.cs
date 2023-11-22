@@ -21,5 +21,10 @@ namespace WORLDGAMEDEVELOPMENT
         public float Acceleration { get => _acceleration; }
         public float CurrentSpeed { get => _currentSpeed; }
         public float MaxSpeed { get => _maxSpeed;}
+
+        internal void UpdateSpeed(float speed)
+        {
+            _currentSpeed += speed;
+        }
     }
 }

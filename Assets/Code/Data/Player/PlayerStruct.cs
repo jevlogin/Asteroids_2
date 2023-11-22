@@ -18,10 +18,11 @@ namespace WORLDGAMEDEVELOPMENT
 
         [SerializeField, Header("Реальная скорость корабля")] internal float RealSpeedShipModel;
         [SerializeField, Header("Фактор множителя скорости и всего")] internal float ScaleFactor;
-        internal float SpeedScale;
-        internal Player Player;
         [SerializeField, Header("Скорость частиц после взлета")] internal float ParticleSpeedAfterTakeOff;
 
+        internal float SpeedScale;
+        internal Player Player;
+        [SerializeField, Header("Расстояние до марса")] internal float DistanceToMars;
         #endregion
     }
 }

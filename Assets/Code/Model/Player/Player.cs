@@ -23,6 +23,8 @@ namespace WORLDGAMEDEVELOPMENT
         internal event Action EnableShield;
 
         private float _damage;
+        private float _percentDamage = 0.02f;
+
         internal event Action IsDeadPlayer;
         internal Action<bool> IsCanShoot;
 
@@ -33,7 +35,20 @@ namespace WORLDGAMEDEVELOPMENT
         #region Properties
 
         public List<GroupObject> GroupObjects { get => _groupObjects; set => _groupObjects = value; }
-        public float Damage { get => _damage; set => _damage = value; }
+        public float Damage
+        {
+            get => _damage;
+            set
+            {
+                _damage = value;
+            }
+        }
+
+        public float IncreaseDamage()
+        {
+            var damage = Mathf.CeilToInt(Damage + (Damage * Expirience.CurrentLevel * _percentDamage));
+            return damage;
+        }
 
         #endregion
 

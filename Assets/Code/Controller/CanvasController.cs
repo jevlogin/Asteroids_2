@@ -140,6 +140,8 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _distanceTravel += value;
             _panelResults.TextDistanceTraveled.text = _distanceTravel.ToString(format: "F0");
+
+            _panelResults._sliderTravel.value = _distanceTravel / _playerModel.PlayerStruct.DistanceToMars;
         }
 
         public void Initialization()

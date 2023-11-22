@@ -107,6 +107,8 @@ namespace WORLDGAMEDEVELOPMENT
 
                 _fireTimer = 0;
                 var bullet = GetBullet();
+                bullet.Damage = _playerInitialization.PlayerModel.PlayerStruct.Player.Damage;
+
                 bullet.OnCollisionEnterDetect += Bullet_OnCollisionEnterDetect;
                 _listBullets.Add(bullet);
             }

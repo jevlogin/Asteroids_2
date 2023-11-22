@@ -21,6 +21,7 @@ MonoBehaviour:
     RealSpeedShipModel: 17000
     ScaleFactor: 10
     ParticleSpeedAfterTakeOff: 0.4
+    DistanceToMars: 377759300
   _playerSettings:
     _timeForShipToTakeOff: 10
     _speedAtTakeShip: 15
@@ -37,11 +38,11 @@ MonoBehaviour:
       _maxValue: 100
       DamageAbsorptionCoefficient: 0.7
     _playeLevel: 1
-    _baseValueExpirience: 2
+    _baseValueExpirience: 10
     _multiplierExpirience: 1.5
     _force: 10
-    _damage: 5
-    _audioSourceVolume: 0.01
+    _damage: 10
+    _audioSourceVolume: 0.002
     _playerView: {fileID: 4672627823515711344, guid: 9155f6f028af51644971b0315b35e60f, type: 3}
     _particleSystem: {fileID: 183190, guid: 76002c16626607648b56a9238274f4d9, type: 3}
     _particleSystemShield: {fileID: 7426413602303266462, guid: ddd74abb1b168e146aa6180972e3b424, type: 3}

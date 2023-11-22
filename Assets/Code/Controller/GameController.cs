@@ -22,7 +22,7 @@ namespace WORLDGAMEDEVELOPMENT
             var sceneInitialization = new SceneInitialization(sceneFactory);
             var sceneController = new SceneController(sceneInitialization.SceneModel);
             _controllers.Add(sceneController);
-            
+
             var playerFactory = new PlayerFactory(_data.PlayerData);
             var playerInitialization = new PlayerInitialization(playerFactory,
                 sceneInitialization.SceneModel.SceneStruct.StartSceneView.StartSpaceTransform);

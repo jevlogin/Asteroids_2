@@ -9,7 +9,7 @@ namespace WORLDGAMEDEVELOPMENT
     {
         [SerializeField] private float _currentValue;
         [SerializeField] private int _maxValue;
-        private int _currentLevel = 0;
+        private int _currentLevelPlayer = 0;
         private int _freePoints = 0;
 
         internal event Action<Expirience> OnChangeExpirience;
@@ -38,7 +38,7 @@ namespace WORLDGAMEDEVELOPMENT
                 {
                     _currentValue = 0;
                     CurrentLevel++;
-                    MaxValue = CalculateMaxExperience(_currentLevel);
+                    MaxValue = CalculateMaxExperience(_currentLevelPlayer);
                 }
                 OnChangeExpirience?.Invoke(this);
             }
@@ -46,10 +46,10 @@ namespace WORLDGAMEDEVELOPMENT
 
         public int CurrentLevel
         {
-            get => _currentLevel; 
+            get => _currentLevelPlayer; 
             set
             {
-                _currentLevel = value;
+                _currentLevelPlayer = value;
                 FreePoints++;
                 OnChangeExpirience?.Invoke(this);
                 OnLevelUp?.Invoke(this);
@@ -68,7 +68,7 @@ namespace WORLDGAMEDEVELOPMENT
       
         public Expirience(int currentLevel, float multiplierExpirience, float baseValueExpirience)
         {
-            _currentLevel = currentLevel;
+            _currentLevelPlayer = currentLevel;
             _baseValueExpirience = baseValueExpirience;
             _multiplierExpirience = multiplierExpirience;
 
