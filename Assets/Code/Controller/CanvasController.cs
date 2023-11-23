@@ -11,6 +11,7 @@ namespace WORLDGAMEDEVELOPMENT
     internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute, IExecute
     {
         private CanvasModel _canvasModel;
+        private readonly SceneModel _sceneModel;
         private readonly PlayerModel _playerModel;
         private readonly PanelHUDView _panelHUD;
         private readonly PanelMainMenuView _panelMainMenu;
@@ -27,9 +28,12 @@ namespace WORLDGAMEDEVELOPMENT
         private readonly SceneControllerUIView _sceneControllerUIView;
         private readonly panelDieView _panelDie;
 
-        public CanvasController(CanvasModel canvasModel, PlayerModel playerModel)
+        public CanvasController(CanvasModel canvasModel, PlayerModel playerModel, SceneModel sceneModel)
         {
             _canvasModel = canvasModel;
+            _sceneModel = sceneModel;
+            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame += BroadcastEventManager_OnStartGame;
+
             _playerModel = playerModel;
             _playerModel.PlayerStruct.Player.Health.OnChangeHealth += OnChangeHealth;
             _playerModel.PlayerStruct.Player.Shield.OnChangeShield += OnChangeShield;
@@ -71,6 +75,18 @@ namespace WORLDGAMEDEVELOPMENT
             foreach (var item in _canvasModel.CanvasStruct.CanvasView.transform.GetComponentsInChildren<Button>())
             {
                 _allButtonList.Add(item);
+            }
+        }
+
+        private void BroadcastEventManager_OnStartGame()
+        {
+            if (!_isGameStarted)
+            {
+                ButtonStartGame(); 
+            }
+            else
+            {
+                ResumeGame();
             }
         }
 
@@ -170,8 +186,6 @@ namespace WORLDGAMEDEVELOPMENT
 
             _sceneControllerUIView.gameObject.SetActive(true);
 
-            //тут надо бы таймер запустить на 2 минуты..
-
             _isGameStarted = true;
 
             //Воспроизводит звук ракеты...
@@ -246,6 +260,8 @@ namespace WORLDGAMEDEVELOPMENT
             _playerModel.PlayerStruct.Player.IsDeadPlayer -= IsDeadPlayer;
             _panelDie.ButtonContinue.onClick.RemoveAllListeners();
 
+            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame -= BroadcastEventManager_OnStartGame;
+
             foreach (var eventAction in _listEvent)
             {
                 if (eventAction is EnemyController enemyController)
@@ -280,7 +296,6 @@ namespace WORLDGAMEDEVELOPMENT
 #else
             Application.Quit();
 #endif
-
         }
 
         #endregion

@@ -21,6 +21,7 @@ namespace WORLDGAMEDEVELOPMENT
         private Timer _timerLevelLeft;
         private SceneControllerUIView _sceneControllerUIView;
         private int _currentWave;
+        private bool _isTakeOffShip;
 
         internal int CurrentWave => _currentWave;
 
@@ -31,6 +32,17 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneModel = sceneModel;
             _addedModels = new();
             _currentWave = 1;
+
+            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame += OnStartGame;
+        }
+
+        private void OnStartGame()
+        {
+            if (!_isTakeOffShip)
+            {
+                StartControl(); 
+                //или отписаться...
+            }
         }
 
         internal void Add(IAddedModel addedModel)
@@ -78,6 +90,7 @@ namespace WORLDGAMEDEVELOPMENT
         private void StartControl()
         {
             TakeOffOfTheShip?.Invoke(true);
+            _isTakeOffShip = true;
         }
 
         public void Initialization()
@@ -107,6 +120,7 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _panelMenu.ButtonStart.onClick.RemoveAllListeners();
             _timerLevelLeft.OnChangeTimeMinutes -= OnChangeTimeMinutes;
+            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame -= OnStartGame;
 
         }
 

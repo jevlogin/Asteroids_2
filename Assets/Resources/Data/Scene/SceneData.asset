@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneSettings:
     _startSceneView: {fileID: 2260443993053927046, guid: f97c6a98f08e38c4e94217d4874934c0, type: 3}
+    _broadcastEventManager: {fileID: 5423473611520942514, guid: f663b3754eb8ba04290f0f254c08c520, type: 3}

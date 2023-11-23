@@ -29,7 +29,7 @@ namespace WORLDGAMEDEVELOPMENT
 
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
-            var canvasController = new CanvasController(canvasInitialization.CanvasModel, playerInitialization.PlayerModel);
+            var canvasController = new CanvasController(canvasInitialization.CanvasModel, playerInitialization.PlayerModel, sceneInitialization.SceneModel);
 
             sceneController.Add(canvasInitialization.CanvasModel);
             _controllers.Add(canvasController);

@@ -60,6 +60,7 @@
     <Analyzer Include="F:\Program Files\Unity Hub\Editor\2022.3.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\UnityMessageManager.cs" />
     <Compile Include="Assets\Code\Initialization\PlayerInitialization.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioComponents.cs" />
     <Compile Include="Assets\Code\Helper\AxisManager.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Assets\Code\Helper\EnemyType.cs" />
     <Compile Include="Assets\Code\Data\VFX\VFXSettings.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Code\Data\Scene\BroadcastEventManager.cs" />
     <Compile Include="Assets\Code\View\Canvas\PanelHUDView.cs" />
     <Compile Include="Assets\Code\Controller\DelayGenericObject.cs" />
     <Compile Include="Assets\Code\Factory\EnemyFactory.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Assets\Code\Controller\BackgroundController.cs" />
     <Compile Include="Assets\Code\Initialization\VFXInitialization.cs" />
     <Compile Include="Assets\Code\Helper\MixerGroupByName.cs" />
+    <Compile Include="Assets\GameStarter.cs" />
     <Compile Include="Assets\Code\Helper\AudioMixerGroupName.cs" />
     <Compile Include="Assets\Code\Initialization\PCInputHorizontal.cs" />
     <Compile Include="Assets\Code\Interface\IAmmunition.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="Assets\Code\Data\Bullet\AmmunitionData.cs" />
     <Compile Include="Assets\Code\Interface\IController.cs" />
     <Compile Include="Assets\Code\Controller\InputController.cs" />
+    <Compile Include="Assets\MessageHandler.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioData.cs" />
     <Compile Include="Assets\Code\Factory\AmmunitionFactory.cs" />
     <Compile Include="Assets\Code\Data\Scene\SceneStruct.cs" />

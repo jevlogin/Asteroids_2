@@ -21,6 +21,10 @@ namespace WORLDGAMEDEVELOPMENT
                 var sceneSettings = _sceneData.SceneSettings;
 
                 sceneStruct.StartSceneView = Object.Instantiate(sceneSettings.StartSceneView);
+                sceneStruct.StartSceneView.name = sceneSettings.StartSceneView.name;
+
+                sceneStruct.BroadcastEventManager = Object.Instantiate(sceneSettings.BroadcastEventManager);
+                sceneStruct.BroadcastEventManager.name = sceneSettings.BroadcastEventManager.name;
 
                 _sceneModel = new SceneModel(sceneStruct, sceneSettings);
             }

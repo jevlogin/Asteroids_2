@@ -8,13 +8,9 @@ namespace WORLDGAMEDEVELOPMENT
     internal class SceneSettings
     {
         [SerializeField] private StartSceneView _startSceneView;
+        [SerializeField] private BroadcastEventManager _broadcastEventManager;
 
-        internal StartSceneView StartSceneView
-        {
-            get
-            {
-                return _startSceneView;
-            }
-        }
+        internal BroadcastEventManager BroadcastEventManager => _broadcastEventManager;
+        internal StartSceneView StartSceneView => _startSceneView;
     }
 }

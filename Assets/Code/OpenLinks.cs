@@ -9,6 +9,9 @@ namespace WORLDGAMEDEVELOPMENT
         private static extern void OpenTab(string url);
         [DllImport("__Internal")]
         private static extern void GoBack();
+        
+        [DllImport("__Internal")]
+        private static extern void ExitGame();
 
         public static void OpenURL(string url)
         {
@@ -20,7 +23,7 @@ namespace WORLDGAMEDEVELOPMENT
         public static void GoBackPage()
         {
 #if !UNITY_EDITOR && UNITY_WEBGL
-            GoBack();
+            ExitGame();
 #endif
         }
     }
