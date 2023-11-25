@@ -11,6 +11,7 @@ namespace WORLDGAMEDEVELOPMENT
         private List<IAddedModel> _addedModels;
 
         internal event Action<bool> IsStopControl;
+        internal event Action<bool> IsCanPlayBackgroundMusic;
         internal event Action<bool> TakeOffOfTheShip;
 
         internal Action DisableEnergyBlock;
@@ -22,6 +23,7 @@ namespace WORLDGAMEDEVELOPMENT
         private SceneControllerUIView _sceneControllerUIView;
         private int _currentWave;
         private bool _isTakeOffShip;
+        private IEventPaused _eventPaused;
 
         internal int CurrentWave => _currentWave;
 
@@ -40,9 +42,21 @@ namespace WORLDGAMEDEVELOPMENT
         {
             if (!_isTakeOffShip)
             {
-                StartControl(); 
-                //или отписаться...
+                StartControl();
+                IsCanPlayBackgroundMusic?.Invoke(true);
             }
+        }
+
+        internal void Add(IEventPaused eventPaused)
+        {
+            _eventPaused = eventPaused;
+            _eventPaused.OnPause += OnPause;
+        }
+
+        private void OnPause(bool value)
+        {
+            IsStopControl?.Invoke(value);
+            IsCanPlayBackgroundMusic?.Invoke(value);
         }
 
         internal void Add(IAddedModel addedModel)
@@ -60,9 +74,8 @@ namespace WORLDGAMEDEVELOPMENT
                     if (panel is PanelMainMenuView panelMainMenu)
                     {
                         _panelMainMenu = panelMainMenu;
-                        _panelMainMenu.ButtonStart.onClick.AddListener(StartControl);
                     }
-                    if(panel is SceneControllerUIView sceneControllerUIView)
+                    if (panel is SceneControllerUIView sceneControllerUIView)
                     {
                         _sceneControllerUIView = sceneControllerUIView;
                     }
@@ -121,7 +134,7 @@ namespace WORLDGAMEDEVELOPMENT
             _panelMenu.ButtonStart.onClick.RemoveAllListeners();
             _timerLevelLeft.OnChangeTimeMinutes -= OnChangeTimeMinutes;
             _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame -= OnStartGame;
-
+            _eventPaused.OnPause -= OnPause;
         }
 
         public void Execute(float deltatime)

@@ -24,21 +24,3 @@ MonoBehaviour:
       SpaceObject: {fileID: 5635544845933784638, guid: 5bb26f5386e0a5446b710c6c0d27619d, type: 3}
     - SpaceLayerType: 1
       SpaceObject: {fileID: 8012323219867591048, guid: 233f7c8a569d6bf4396f8dadb02d9545, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 5405458135924450854, guid: 00fef8993825c3743aadd773306deb06, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 5020357048022639880, guid: 6dff4dc22760e574282115ac0f8b93d7, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 6155291491469575642, guid: 41503c62090e9004297968515adfbcb8, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 2264940017630002499, guid: 6a937f03191f3014487016de5ab1050d, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 4412065872043374810, guid: 35e9fba8d52828c4dbad94ba10361a6d, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 9110028079255206157, guid: 984a48f3875fd154c8ad03c8b4afcfd4, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 7292146618429997641, guid: 7c970cb72b4ef5041950666968d28535, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 7985641160163751842, guid: f0520876678791b42960e665e4252345, type: 3}
-    - SpaceLayerType: 1
-      SpaceObject: {fileID: 2254665151927760393, guid: a322a02c049a9d641bff30a5d1dbcf39, type: 3}

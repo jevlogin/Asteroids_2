@@ -157,8 +157,13 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void OnCnageIsStopControl(bool value)
         {
-            if (!value)
+            if (value)
             {
+                _playerInitialization.PlayerModel.Components.RigidbodyPlayer.isKinematic = true;
+            }
+            else
+            {
+                _playerInitialization.PlayerModel.Components.RigidbodyPlayer.isKinematic = false;
                 ActivateEnergyBlockRigidbody();
             }
         }

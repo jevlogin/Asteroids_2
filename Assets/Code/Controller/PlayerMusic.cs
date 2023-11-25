@@ -22,7 +22,6 @@ namespace WORLDGAMEDEVELOPMENT
                 _audioSource.Source.gameObject.SetActive(true);
             if (_audioSource.Source.clip == null)
                 _audioSource.Source.clip = _audioClips.First();
-
         }
 
         internal void PauseOrPlay()
@@ -31,19 +30,23 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 _audioSource.Source.Pause();
                 _isPaused = true;
+                Debug.Log($"Звук играет. Поставил звук на паузу.");
             }
             else
             {
+                Debug.Log($"Звук не играет.");
+
                 if (_isPaused)
                 {
                     _audioSource.Source.UnPause();
-                    _isPaused = false;
+                    Debug.Log($"Стояла пауза. Снял с паузы.");
                 }
-
-                if (!_audioSource.Source.isPlaying)
+                else
                 {
+                    Debug.Log($"Паузы не было. Воспроизвел звук текущий. если нет клипа, меняю.");
                     _audioSource.Source.Play();
                 }
+                _isPaused = false;
             }
         }
 
@@ -84,7 +87,7 @@ namespace WORLDGAMEDEVELOPMENT
 
         internal void TimeLeft(float deltaTime)
         {
-            if (_audioSource.Source.isPlaying)
+            if (_audioSource.Source.isPlaying && !_isPaused)
             {
                 _audioSource.Delay -= deltaTime;
                 if (_audioSource.Delay <= 0)

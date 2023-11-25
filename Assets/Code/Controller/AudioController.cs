@@ -13,6 +13,7 @@ namespace WORLDGAMEDEVELOPMENT
         private readonly EnemyController _enemyController;
         private readonly CanvasController _canvasController;
         private readonly CanvasModel _canvasModel;
+        private readonly SceneController _sceneController;
         private AudioModel _audioModel;
         private AudioClip _shotAudioClip;
         private readonly AudioClip _explosionAudioClip;
@@ -25,10 +26,11 @@ namespace WORLDGAMEDEVELOPMENT
         private List<AudioSourceInfo> audioSourcesInUse = new List<AudioSourceInfo>();
         private PlayerMusic _playerMusic;
         private List<Button> _listButtons = new();
+        private bool _isStopControl;
 
         public AudioController(AudioModel audioModel, PlayerModel playerModel,
             PlayerShooterController playerShooterController, EnemyController enemyController,
-            CanvasController canvasController, CanvasModel canvasModel)
+            CanvasController canvasController, CanvasModel canvasModel, SceneController sceneController)
         {
             _audioModel = audioModel;
             _playerModel = playerModel;
@@ -36,6 +38,9 @@ namespace WORLDGAMEDEVELOPMENT
             _enemyController = enemyController;
             _canvasController = canvasController;
             _canvasModel = canvasModel;
+            _sceneController = sceneController;
+            _sceneController.IsStopControl += IsStopControl;
+            _sceneController.IsCanPlayBackgroundMusic += IsCanPlayBackgroundMusic;
 
             _playerModel.Components.AudioSource.outputAudioMixerGroup = _audioModel.AudioStruct.AudioMixer.FindMatchingGroups(AudioMixerGroupName.EFFECTS)[0];
 
@@ -51,10 +56,19 @@ namespace WORLDGAMEDEVELOPMENT
 
             _canvasController.StartGame += StartGame;
             _playerShooterController.IsShotInvoke += IsShotInvoke;
-
             _enemyController.IsAsteroidExplosionByType += PlayExplosionEnemy;
 
             _panelResults = _canvasModel.CanvasStruct.CanvasView.panelViews.FirstOrDefault(p => p is PanelResultsView panelResults) as PanelResultsView;
+        }
+
+        private void IsCanPlayBackgroundMusic(bool value)
+        {
+            _playerMusic?.PauseOrPlay();
+        }
+
+        private void IsStopControl(bool value)
+        {
+            _isStopControl = value;
         }
 
         private void PlayExplosionEnemy(Vector3 vector, EnemyType type)
@@ -73,10 +87,7 @@ namespace WORLDGAMEDEVELOPMENT
         {
             var sourceMusic = _audioModel.AudioStruct.PoolsByMixerTypes[MixerGroupByName.Music].Get();
             sourceMusic.clip = _musicList[0];
-            sourceMusic.gameObject.SetActive(true);
-            sourceMusic.Play();
-
-            //TODO - сериализовать - вынести в настройки
+            sourceMusic.playOnAwake = false;
 
             _playerMusic = new PlayerMusic(new AudioSourceInfo(sourceMusic, sourceMusic.clip.length), _musicList);
 
@@ -122,6 +133,9 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Cleanup()
         {
+            _sceneController.IsStopControl -= IsStopControl;
+            _sceneController.IsCanPlayBackgroundMusic -= IsCanPlayBackgroundMusic;
+
             _playerShooterController.IsShotInvoke -= IsShotInvoke;
             _enemyController.IsAsteroidExplosionByType -= PlayExplosionEnemy;
 

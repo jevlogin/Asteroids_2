@@ -34,9 +34,9 @@ namespace WORLDGAMEDEVELOPMENT
             _sceneController = sceneController;
             _backgroundModel = backgroundModel;
             _camera = camera;
-
             minSpacingSqr = Mathf.Pow(minSpacing, 2);
         }
+
 
         public void Initialization()
         {

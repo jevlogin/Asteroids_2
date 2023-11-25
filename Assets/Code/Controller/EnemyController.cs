@@ -263,28 +263,31 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void FixedExecute(float fixedDeltaTime)
         {
-            float _minSqrDistance = 30.0f;
-
-            for (int i = _activeAsteroidsList.Count - 1; i >= 0; i--)
+            if (!_isStopControl)
             {
-                var enemy = _activeAsteroidsList[i];
-                var distance = Vector3.Distance(_playerModel.Components.PlayerTransform.position, enemy.transform.position);
-                if (distance > _minSqrDistance)
-                {
-                    ReturnToPoolByType(enemy, enemy.Type);
-                    GetPoolEnemyAsteroid(1, enemy.Type);
-                }
-            }
+                float _minSqrDistance = 30.0f;
 
-            for (int i = _activeShipsList.Count - 1; i >= 0; i--)
-            {
-                var ship = _activeShipsList[i];
-                var distance = Vector3.Distance(_playerModel.Components.PlayerTransform.position, ship.transform.position);
-                if (distance > _minSqrDistance)
+                for (int i = _activeAsteroidsList.Count - 1; i >= 0; i--)
                 {
-                    ReturnToPoolByType(ship, ship.Type);
-                    GetPoolEnemyAsteroid(1, ship.Type);
+                    var enemy = _activeAsteroidsList[i];
+                    var distance = Vector3.Distance(_playerModel.Components.PlayerTransform.position, enemy.transform.position);
+                    if (distance > _minSqrDistance)
+                    {
+                        ReturnToPoolByType(enemy, enemy.Type);
+                        GetPoolEnemyAsteroid(1, enemy.Type);
+                    }
                 }
+
+                for (int i = _activeShipsList.Count - 1; i >= 0; i--)
+                {
+                    var ship = _activeShipsList[i];
+                    var distance = Vector3.Distance(_playerModel.Components.PlayerTransform.position, ship.transform.position);
+                    if (distance > _minSqrDistance)
+                    {
+                        ReturnToPoolByType(ship, ship.Type);
+                        GetPoolEnemyAsteroid(1, ship.Type);
+                    }
+                } 
             }
 
         }

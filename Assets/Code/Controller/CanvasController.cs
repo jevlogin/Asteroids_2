@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace WORLDGAMEDEVELOPMENT
 {
-    internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute, IExecute
+    internal class CanvasController : IController, ICleanup, IInitialization, ILateExecute, IExecute, IEventPaused
     {
         private CanvasModel _canvasModel;
         private readonly SceneModel _sceneModel;
@@ -22,9 +22,12 @@ namespace WORLDGAMEDEVELOPMENT
         private bool _isGameStarted;
 
         internal event Action<EventCanvas> StartGame;
+        public event Action<bool> OnPause;
+
         private Timer _timerToLeftInGame;
         private Timer _timerLevelLeft;
         private float _distanceTravel;
+        private Dictionary<PanelView, bool> _viewsStateActive;
         private readonly SceneControllerUIView _sceneControllerUIView;
         private readonly panelDieView _panelDie;
 
@@ -32,7 +35,7 @@ namespace WORLDGAMEDEVELOPMENT
         {
             _canvasModel = canvasModel;
             _sceneModel = sceneModel;
-            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame += BroadcastEventManager_OnStartGame;
+            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame += OnStartGame;
 
             _playerModel = playerModel;
             _playerModel.PlayerStruct.Player.Health.OnChangeHealth += OnChangeHealth;
@@ -78,11 +81,11 @@ namespace WORLDGAMEDEVELOPMENT
             }
         }
 
-        private void BroadcastEventManager_OnStartGame()
+        private void OnStartGame()
         {
             if (!_isGameStarted)
             {
-                ButtonStartGame(); 
+                ButtonStartGame();
             }
             else
             {
@@ -162,12 +165,9 @@ namespace WORLDGAMEDEVELOPMENT
 
         public void Initialization()
         {
-            if (!_panelMainMenu.gameObject.activeSelf)
-                _panelMainMenu.gameObject.SetActive(true);
-
+            _viewsStateActive = new Dictionary<PanelView, bool>();
+         
             _panelMainMenu.ButtonQuit.onClick.AddListener(ApplicationQuit);
-
-            _panelMainMenu.ButtonStart.onClick.AddListener(ButtonStartGame);
 
             UpdateHUDPlayer();
         }
@@ -181,26 +181,13 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void ButtonStartGame()
         {
-            _panelMainMenu.gameObject.SetActive(false);
+            _panelMainMenu.gameObject.SetActive(true);
             _panelResults.gameObject.SetActive(true);
-
             _sceneControllerUIView.gameObject.SetActive(true);
 
             _isGameStarted = true;
 
-            //Воспроизводит звук ракеты...
             StartGame?.Invoke(EventCanvas.StartGame);
-
-            if (_isGameStarted)
-            {
-                var text = _panelMainMenu.ButtonStart.transform.GetComponentsInChildren<TextMeshProUGUI>().First();
-                if (text != null)
-                {
-                    text.text = ManagerName.CONTINUE;
-                    _panelMainMenu.ButtonStart.onClick.RemoveAllListeners();
-                    _panelMainMenu.ButtonStart.onClick.AddListener(ResumeGame);
-                }
-            }
 
             if (_isPaused)
             {
@@ -216,32 +203,23 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void ResumeGame()
         {
-            _panelMainMenu.gameObject.SetActive(!_panelMainMenu.gameObject.activeSelf);
-            PauseOrResume(_panelMainMenu.gameObject.activeSelf);
+            PauseOrResume(!_isPaused);
         }
 
         public void LateExecute(float deltatime)
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && _isGameStarted)
+            //TODO - переделать - убрать в Сценеконтроллер, и подписываться на него...
+            if (Input.GetKeyDown(KeyCode.Escape) && !_isPaused)
             {
-                _panelMainMenu.gameObject.SetActive(!_panelMainMenu.gameObject.activeSelf);
-
-                PauseOrResume(_panelMainMenu.gameObject.activeSelf);
+                ApplicationQuit();
             }
         }
 
         private void PauseOrResume(bool value)
         {
             _isPaused = value;
-
-            if (_isPaused)
-            {
-                Time.timeScale = 0.0f;
-            }
-            else
-            {
-                Time.timeScale = 1.0f;
-            }
+            SwitchPanelView(_isPaused);
+            OnPause?.Invoke(_isPaused);
         }
 
         public void Execute(float deltatime)
@@ -260,7 +238,7 @@ namespace WORLDGAMEDEVELOPMENT
             _playerModel.PlayerStruct.Player.IsDeadPlayer -= IsDeadPlayer;
             _panelDie.ButtonContinue.onClick.RemoveAllListeners();
 
-            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame -= BroadcastEventManager_OnStartGame;
+            _sceneModel.SceneStruct.BroadcastEventManager.OnStartGame -= OnStartGame;
 
             foreach (var eventAction in _listEvent)
             {
@@ -289,6 +267,8 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void ApplicationQuit()
         {
+            PauseOrResume(!_isPaused);
+
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBGL
@@ -296,6 +276,24 @@ namespace WORLDGAMEDEVELOPMENT
 #else
             Application.Quit();
 #endif
+        }
+
+        private void SwitchPanelView(bool isPaused)
+        {
+            foreach (var panelView in _canvasModel.CanvasStruct.CanvasView.panelViews)
+            {
+                if (panelView is panelDieView)
+                    continue;
+                if (isPaused)
+                {
+                    _viewsStateActive[panelView] = panelView.gameObject.activeSelf;
+                    panelView.gameObject.SetActive(!isPaused);
+                }
+                else
+                {
+                    panelView.gameObject.SetActive(_viewsStateActive[panelView]);
+                }
+            }
         }
 
         #endregion

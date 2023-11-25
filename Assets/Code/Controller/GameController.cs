@@ -30,6 +30,7 @@ namespace WORLDGAMEDEVELOPMENT
             var canvasFactory = new CanvasFactory(_data.CanvasData);
             var canvasInitialization = new CanvasInitialization(canvasFactory);
             var canvasController = new CanvasController(canvasInitialization.CanvasModel, playerInitialization.PlayerModel, sceneInitialization.SceneModel);
+            sceneController.Add(canvasController);
 
             sceneController.Add(canvasInitialization.CanvasModel);
             _controllers.Add(canvasController);
@@ -70,7 +71,7 @@ namespace WORLDGAMEDEVELOPMENT
             var audioFactory = new AudioFactory(_data.AudioData);
             var audioInitialization = new AudioInitialization(audioFactory);
             var audioController = new AudioController(audioInitialization.AudioModel, playerInitialization.PlayerModel,
-                playerShooterController, enemyController, canvasController, canvasInitialization.CanvasModel);
+                playerShooterController, enemyController, canvasController, canvasInitialization.CanvasModel, sceneController);
             _controllers.Add(audioController);
 
             var VFXFactory = new VFXFactory(_data.VFXData);

@@ -111,7 +111,6 @@ namespace WORLDGAMEDEVELOPMENT
                     OnChangeBlockReset?.Invoke();
                 }
 
-                //Disable Energy Block
                 if (!_isDisableEnergyBlock && elapsedTime > _playerModel.Settings.TimeForShipToTakeOff)
                 {
                     _isDisableEnergyBlock = true;
@@ -168,7 +167,8 @@ namespace WORLDGAMEDEVELOPMENT
             OnChangePositionAxisY?.Invoke(realHeight);
 
             var movement = new Vector3(_horizontal, _vertical, 0.0f).normalized;
-            if (_isMovingFreeControl)
+            
+            if (!_isStopControl && _isMovingFreeControl)
             {
                 movement *= _speed.CurrentSpeed * fixedDeltatime;
 
