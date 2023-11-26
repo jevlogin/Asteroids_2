@@ -56,7 +56,7 @@ namespace WORLDGAMEDEVELOPMENT
         private void OnPause(bool value)
         {
             IsStopControl?.Invoke(value);
-            IsCanPlayBackgroundMusic?.Invoke(value);
+            IsCanPlayBackgroundMusic?.Invoke(!value);
         }
 
         internal void Add(IAddedModel addedModel)

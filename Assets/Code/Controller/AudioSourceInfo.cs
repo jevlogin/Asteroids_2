@@ -13,5 +13,8 @@ namespace WORLDGAMEDEVELOPMENT
             Source = source;
             Delay = length;
         }
+
+        public bool IsPaused { get; internal set; }
+        public float CurrentPlaybackPosition { get; internal set; }
     }
 }

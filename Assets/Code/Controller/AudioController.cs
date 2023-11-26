@@ -63,7 +63,14 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void IsCanPlayBackgroundMusic(bool value)
         {
-            _playerMusic?.PauseOrPlay();
+            if (value)
+            {
+                _playerMusic?.Play();
+            }
+            else
+            {
+                _playerMusic?.Pause();
+            }
         }
 
         private void IsStopControl(bool value)
@@ -87,14 +94,15 @@ namespace WORLDGAMEDEVELOPMENT
         {
             var sourceMusic = _audioModel.AudioStruct.PoolsByMixerTypes[MixerGroupByName.Music].Get();
             sourceMusic.clip = _musicList[0];
+            sourceMusic.loop = false;
             sourceMusic.playOnAwake = false;
 
             _playerMusic = new PlayerMusic(new AudioSourceInfo(sourceMusic, sourceMusic.clip.length), _musicList);
 
-            _panelResults.WebPlayer.ButtonPlay.onClick.AddListener(_playerMusic.PauseOrPlay);
-            _panelResults.WebPlayer.ButtonPause.onClick.AddListener(_playerMusic.PauseOrPlay);
-            _panelResults.WebPlayer.ButtonNext.onClick.AddListener(_playerMusic.Next);
-            _panelResults.WebPlayer.ButtonPrev.onClick.AddListener(_playerMusic.Prev);
+            _panelResults.WebPlayer.ButtonPlay.onClick.AddListener(_playerMusic.Play);
+            _panelResults.WebPlayer.ButtonPause.onClick.AddListener(_playerMusic.Pause);
+            _panelResults.WebPlayer.ButtonNext.onClick.AddListener(_playerMusic.NextTrack);
+            _panelResults.WebPlayer.ButtonPrev.onClick.AddListener(_playerMusic.PreviousTrack);
 
             _listButtons.Add(_panelResults.WebPlayer.ButtonPause);
             _listButtons.Add(_panelResults.WebPlayer.ButtonPlay);

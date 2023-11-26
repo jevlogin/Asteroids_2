@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+
 
 namespace WORLDGAMEDEVELOPMENT
 {
@@ -10,90 +10,86 @@ namespace WORLDGAMEDEVELOPMENT
     {
         internal AudioSourceInfo _audioSource;
         private List<AudioClip> _audioClips;
-        private int _indexClip = 0;
-        private bool _isPaused;
-        private bool _isContinuedPlay;
+        private int _currentClipIndex = 0;
+        private bool _isPlayNextTrack;
 
         public PlayerMusic(AudioSourceInfo audioSource, List<AudioClip> audioClips)
         {
             _audioSource = audioSource ?? new AudioSourceInfo(new GameObject(ManagerName.AUDIOSOURCE).GetOrAddComponent<AudioSource>(), 0.0f);
             _audioClips = audioClips ?? new List<AudioClip>();
+
             if (!_audioSource.Source.gameObject.activeSelf)
                 _audioSource.Source.gameObject.SetActive(true);
+
             if (_audioSource.Source.clip == null)
-                _audioSource.Source.clip = _audioClips.First();
+            {
+                if (_audioClips.Count > 0)
+                    _audioSource.Source.clip = _audioClips[0];
+                else
+                    throw new ArgumentNullException(nameof(_audioSource.Source.clip), "Отсутствует клип");
+            }
         }
 
-        internal void PauseOrPlay()
+        public void Play()
         {
             if (_audioSource.Source.isPlaying)
             {
+                return;
+            }
+            if (_audioSource.IsPaused)
+            {
+                _audioSource.Source.time = _audioSource.CurrentPlaybackPosition;
+                _audioSource.Source.UnPause();
+            }
+            else
+            {
+                _audioSource.Delay = _audioSource.Source.clip.length;
+                _audioSource.Source.Play();
+            }
+            _audioSource.IsPaused = false;
+        }
+
+        public void Pause()
+        {
+            if (_audioSource.Source.isPlaying)
+            {
+                _audioSource.IsPaused = true;
+                _audioSource.CurrentPlaybackPosition = _audioSource.Source.time;
+
                 _audioSource.Source.Pause();
-                _isPaused = true;
-                Debug.Log($"Звук играет. Поставил звук на паузу.");
-            }
-            else
-            {
-                Debug.Log($"Звук не играет.");
-
-                if (_isPaused)
-                {
-                    _audioSource.Source.UnPause();
-                    Debug.Log($"Стояла пауза. Снял с паузы.");
-                }
-                else
-                {
-                    Debug.Log($"Паузы не было. Воспроизвел звук текущий. если нет клипа, меняю.");
-                    _audioSource.Source.Play();
-                }
-                _isPaused = false;
             }
         }
 
-        internal void Next()
+        public void NextTrack()
         {
-            _isContinuedPlay = _audioSource.Source.isPlaying;
-            _audioSource.Source.Stop();
-            _indexClip++;
-            _indexClip %= _audioClips.Count;
-            _audioSource.Source.clip = _audioClips[_indexClip];
-            _audioSource.Delay = _audioSource.Source.clip.length;
-            _isPaused = false;
-
-            if (_isContinuedPlay)
-            {
-                PauseOrPlay();
-            }
+            _currentClipIndex = (_currentClipIndex + 1) % _audioClips.Count;
+            PlayCurrentTrack();
         }
 
-        internal void Prev()
+        public void PreviousTrack()
         {
-            _isContinuedPlay = _audioSource.Source.isPlaying;
-            _audioSource.Source.Stop();
-            _indexClip--;
-            if (_indexClip < 0)
-                _indexClip = _audioClips.Count - 1;
-            else
-                _indexClip %= _audioClips.Count;
-
-            _audioSource.Source.clip = _audioClips[_indexClip];
-            _audioSource.Delay = _audioSource.Source.clip.length;
-            _isPaused = false;
-            if (_isContinuedPlay)
-            {
-                PauseOrPlay();
-            }
+            _currentClipIndex = (_currentClipIndex - 1 + _audioClips.Count) % _audioClips.Count;
+            PlayCurrentTrack();
         }
+
+        private void PlayCurrentTrack()
+        {
+            _audioSource.Source.Stop();
+            _audioSource.Source.clip = _audioClips[_currentClipIndex];
+            Play();
+        }
+
 
         internal void TimeLeft(float deltaTime)
         {
-            if (_audioSource.Source.isPlaying && !_isPaused)
+            if (_audioSource.Source.isPlaying)
             {
                 _audioSource.Delay -= deltaTime;
-                if (_audioSource.Delay <= 0)
-                {
-                    Next();
-                }
+                return;
+            }
+            if (_audioSource.Delay <= 0)
+            {
+                NextTrack();
             }
         }
     }
