@@ -63,6 +63,9 @@ namespace WORLDGAMEDEVELOPMENT
 
         private void IsCanPlayBackgroundMusic(bool value)
         {
+            if (_playerMusic.IsStopedMusic)
+                return;
+
             if (value)
             {
                 _playerMusic?.Play();
@@ -100,7 +103,11 @@ namespace WORLDGAMEDEVELOPMENT
             _playerMusic = new PlayerMusic(new AudioSourceInfo(sourceMusic, sourceMusic.clip.length), _musicList);
 
             _panelResults.WebPlayer.ButtonPlay.onClick.AddListener(_playerMusic.Play);
+            _panelResults.WebPlayer.ButtonPlay.onClick.AddListener(_playerMusic.PlayMusic);
+
             _panelResults.WebPlayer.ButtonPause.onClick.AddListener(_playerMusic.Pause);
+            _panelResults.WebPlayer.ButtonPause.onClick.AddListener(_playerMusic.StopMusic);
+            
             _panelResults.WebPlayer.ButtonNext.onClick.AddListener(_playerMusic.NextTrack);
             _panelResults.WebPlayer.ButtonPrev.onClick.AddListener(_playerMusic.PreviousTrack);
 

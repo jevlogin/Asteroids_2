@@ -159,6 +159,7 @@
     <Compile Include="Assets\Code\Controller\InputController.cs" />
     <Compile Include="Assets\Code\Data\Audio\AudioData.cs" />
     <Compile Include="Assets\Code\Factory\AmmunitionFactory.cs" />
+    <Compile Include="Assets\Code\PanelAuthorizationView.cs" />
     <Compile Include="Assets\Code\View\UpdateCharachtersView.cs" />
     <Compile Include="Assets\Code\Data\Scene\SceneStruct.cs" />
     <Compile Include="Assets\Code\View\Enemy\EnemyView.cs" />

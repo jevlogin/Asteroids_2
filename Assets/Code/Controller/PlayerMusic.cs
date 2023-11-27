@@ -11,7 +11,8 @@ namespace WORLDGAMEDEVELOPMENT
         internal AudioSourceInfo _audioSource;
         private List<AudioClip> _audioClips;
         private int _currentClipIndex = 0;
-        private bool _isPlayNextTrack;
+
+        public bool IsStopedMusic { get; private set; }
 
         public PlayerMusic(AudioSourceInfo audioSource, List<AudioClip> audioClips)
         {
@@ -47,6 +48,7 @@ namespace WORLDGAMEDEVELOPMENT
                 _audioSource.Source.Play();
             }
             _audioSource.IsPaused = false;
+
         }
 
         public void Pause()
@@ -91,6 +93,16 @@ namespace WORLDGAMEDEVELOPMENT
             {
                 NextTrack();
             }
+        }
+
+        internal void StopMusic()
+        {
+            IsStopedMusic = true;
+        }
+
+        internal void PlayMusic()
+        {
+            IsStopedMusic = false;
         }
     }
 }
